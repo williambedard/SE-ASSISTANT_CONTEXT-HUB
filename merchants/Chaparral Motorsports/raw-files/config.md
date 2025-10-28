@@ -55,8 +55,13 @@
 - **Physical Store**: 180,000 sq ft
 - **Demo Scheduled**: Week of Oct 27, Tuesday 10 AM PT
 
+## Demo Details
+- **Demo Date**: October 28, 2025 @ 10:00 AM PT
+- **Demo Deck**: https://docs.google.com/presentation/d/1NOj4hwkGawZ_4DAY6bqDWY30P4t6qZJFz_g1_xMv574
+- **Status**: Ready for demo
+
 ## Last Synced
-2025-10-27 (Updated with Drive documents)
+2025-10-28 (Post-demo sync: Demo missed, Nov 7 reconnect scheduled)
 
 
 

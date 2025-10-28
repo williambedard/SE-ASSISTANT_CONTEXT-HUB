@@ -44,7 +44,7 @@
   - Homework email from Steve: Oct 16
 
 ## Last Synced
-2025-10-27 (Updated with Salesforce, Salesloft, Gmail, Google Drive, Slack)
+2025-10-28 (Incremental sync: Oct 23-28, Oct 29 Payments call + partner scope)
 
 
 

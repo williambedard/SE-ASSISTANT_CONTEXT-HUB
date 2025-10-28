@@ -1,56 +1,28 @@
-# Personal Context Configuration - TEMPLATE
+# Personal Context Configuration (LLM-Optimized) - TEMPLATE
 
-**Owner:** [Your Full Name]  
+**Owner:** [Your Name]  
 **Role:** Solutions Engineer (Mid-Market)  
-**Last Updated:** [Today's Date]
+**Last Updated:** [Date]  
+**Version:** 2.0 (Optimized for LLM parsing)
 
 ---
 
-## 🔑 Salesforce Identity
+## 🔑 IDENTITY & CONTEXT (Facts)
 
-**Email:** [your.email@shopify.com]  
-**Salesforce User ID:** [Get this from step below]
-
-**How to get your Salesforce User ID:**
-```
-@revenue-mcp SELECT Id, Email FROM User WHERE Email = 'your.email@shopify.com'
-```
-
-**Why this matters:**
-- When querying OpportunityTeamMember, ALWAYS filter by `UserId = '[YOUR_USER_ID]'`
-- This ensures queries only return YOUR opportunities (not other SEs)
-- Critical for accurate pipeline dashboards and priority calculations
-- Prevents accidentally including opportunities you're not assigned to
-
-**Example Query Pattern:**
-```soql
-SELECT OpportunityId, Opportunity.Name, Opportunity.Total_Revenue__c 
-FROM OpportunityTeamMember 
-WHERE UserId = '[YOUR_USER_ID]'
-  AND TeamMemberRole = 'Solutions Engineer' 
-  AND Primary__c = true
-  AND Opportunity.IsClosed = false
-  AND Opportunity.StageName != 'Closed Lost'
-  AND Opportunity.StageName != 'Pre-Qualified'
+### Salesforce Identity
+```yaml
+email: [your.email@shopify.com]
+salesforce_user_id: [Get from: @revenue-mcp SELECT Id, Email FROM User WHERE Email = 'your.email@shopify.com']
+role: Solutions Engineer
 ```
 
----
+**Critical for queries:** Always filter `OpportunityTeamMember` by `UserId = '[YOUR_USER_ID]'`
 
-## 📅 Current Quarter (Update Each Quarter!)
-
-**Quarter:** [e.g., Q1 2025, Q2 2025, Q3 2025, Q4 2025]  
-**Start Date:** [YYYY-MM-DD, e.g., 2025-01-01]  
-**End Date:** [YYYY-MM-DD, e.g., 2025-03-31]
-
-**Why this matters:**
-- Default queries filter to current quarter (focuses on actionable opportunities)
-- Without quarter filter, queries return too many opps (includes future quarters)
-- Update these dates at the start of each new quarter
-
-**SOQL Filter Pattern:**
-```soql
-AND Opportunity.CloseDate >= [Start Date]
-AND Opportunity.CloseDate <= [End Date]
+### Current Quarter
+```yaml
+quarter: [Q# YYYY, e.g., Q4 2025]
+start_date: [YYYY-MM-DD, e.g., 2025-10-01]
+end_date: [YYYY-MM-DD, e.g., 2025-12-31]
 ```
 
 **Shopify Fiscal Quarters:**
@@ -59,135 +31,270 @@ AND Opportunity.CloseDate <= [End Date]
 - Q3: Jul 1 - Sep 30
 - Q4: Oct 1 - Dec 31
 
----
-
-## 📁 Google Drive (OPTIONAL)
-
-**Opportunities Folder:** [Your folder name, e.g., "Will SE - Opportunities"]  
-**Folder ID:** [Run command below to get this]  
-**Direct Link:** [Full Google Drive URL]
-
-**Structure:**
-```
-Will SE - Opportunities/
-├── Mixbook/
-├── DAZ Productions/
-├── Injectors Direct/
-└── [Other Merchant Names]/
+### Google Drive (Optional)
+```yaml
+opportunities_folder: [e.g., "Your Name SE - Opportunities"]
+folder_id: [Get from Drive search]
+structure: "[Opportunity Name]/" subfolder per opportunity
 ```
 
-Each merchant has a subfolder named after the Salesforce Opportunity. Model can navigate from your root folder to find merchant-specific documents.
-
-**How to get your Folder ID:**
+### Account Executives
+```yaml
+primary_ae_1: [Full Name of AE 1]
+primary_ae_2: [Full Name of AE 2, or remove if N/A]
 ```
-@gworkspace Search for folder "Will SE - Opportunities"
-```
-Copy the folder ID from results (long alphanumeric string after `/folders/`)
 
-**Why this matters:**
-- Model can navigate directly to your opportunities folder
-- Finds merchant-specific subfolders automatically  
-- Fetches documents without searching Drive each time
-- Used for context sync and document discovery
-
----
-
-## 👥 Account Executives (AEs)
-
-List the AEs you work closely with. These names are used in "potential assignments" queries.
-
-**Primary AE #1:** [Full Name of AE 1]  
-**Primary AE #2:** [Full Name of AE 2]  
-**Additional AEs (optional):** [Other AEs if applicable]
-
----
-
-## 🔍 How to Use This File
-
-**When you see placeholders in queries:**
-- `[Your AE 1]` → Replace with **[AE 1's Full Name]**
-- `[Your AE 2]` → Replace with **[AE 2's Full Name]**
-
-**Example Query Pattern:**
-```
-@revenue-mcp Show open opportunities where (Owner is [AE 1 Name] OR Owner is [AE 2 Name]) AND no Solutions Engineer assigned to team
+### Work Schedule
+```yaml
+timezone: [e.g., EDT, PST, GMT]
+typical_hours: [e.g., 9am-5pm]
+work_location: [e.g., Home (Monday-Friday), Hybrid, Office]
 ```
 
 ---
 
-## 📊 Pod/Team Information
+## 📋 CALENDAR MANAGEMENT RULES (Actions)
 
-**SE Pod:** [Your pod name, e.g., "America Mid-Market DTC"]  
-**Manager:** [Your manager's name]  
-**Region:** [Your region, e.g., "North America", "EMEA"]  
+### 🚨 HARD BOUNDARIES (Never Violate Without Explicit Permission)
+
+| Rule ID | Condition | Action | Parameters |
+|---------|-----------|--------|------------|
+| **HB-1** | Meeting scheduled before work hours | **FLAG** as boundary violation + suggest reschedule | `time < [YOUR_START_TIME]` |
+| **HB-2** | Meeting scheduled after work hours | **FLAG** as boundary violation + suggest reschedule | `time > [YOUR_END_TIME]` |
+| **HB-3** | Meeting scheduled over morning planning block (optional) | **FLAG** as critical violation + **NEVER** suggest this time | `[YOUR_MORNING_BLOCK_TIME, if you have one]` |
+| **HB-4** | Attempting to schedule over "Focus time" blocks | **PROTECT** + treat as unavailable time | `event.title contains "Focus time"` |
+
+**Example values to fill in:**
+- `[YOUR_START_TIME]`: e.g., `09:00`
+- `[YOUR_END_TIME]`: e.g., `16:00` or `17:00`
+- `[YOUR_MORNING_BLOCK_TIME]`: e.g., `09:00-10:00 every weekday` (optional - remove HB-3 if not applicable)
 
 ---
 
-## ⚙️ Personal Preferences
+### 🎯 STRONG PREFERENCES (Enforce Unless Critical Need)
 
-**Preferred Slack Status Duration:** [e.g., 60 minutes]  
-**Typical Work Hours:** [e.g., 9am-5pm EST]  
-**Time Zone:** [e.g., EST, PST, GMT]
+| Rule ID | Condition | Action | Parameters |
+|---------|-----------|--------|------------|
+| **SP-1** | Meeting during lunch hour | **FLAG** as suboptimal + suggest alternative | `[YOUR_LUNCH_TIME, e.g., 12:00-13:00]` |
+| **SP-2** | Tentative optional meeting | **IGNORE** in meeting count + assume NOT attending | `event.responseStatus == "tentative" AND event.title contains ["L&L", "Office Hours", "Optional"]` |
+| **SP-3** | Missing prep block before critical demo | **FLAG** + suggest adding prep block | If `demo_duration >= 60min` and no buffer >= 30min before |
+| **SP-4** | Back-to-back meetings exceeding threshold | **WARN** + suggest break | If continuous meetings > [YOUR_THRESHOLD, e.g., 120min] |
+| **SP-5** | Recurring merchant touchbase | **PROTECT** + never suggest rescheduling | `event.summary contains ["Weekly Touch base", "Weekly sync", etc.]` |
 
 ---
 
-## 📝 Notes for LLMs
+### 💡 NICE-TO-HAVE (Suggestions, Not Requirements)
 
-**When generating queries or prompts:**
-1. Read this file for personal context
-2. Replace `[Your AE 1]` with the actual AE name from this file
-3. Replace `[Your AE 2]` with the actual AE name from this file
-4. Use this as the single source of truth for personalization
+| Rule ID | Condition | Action | Parameters |
+|---------|-----------|--------|------------|
+| **NH-1** | Multiple merchant meetings in one day | **NOTE** heavy meeting load | Count meetings with external attendees >= [YOUR_LIMIT, e.g., 4] |
+| **NH-2** | Total meeting hours exceeds threshold | **WARN** + suggest declining optional meetings | Sum meeting duration >= [YOUR_LIMIT, e.g., 360min] |
+| **NH-3** | Protected recurring block has meetings | **FLAG** as flex-but-suboptimal + suggest alternatives | `day == [YOUR_DAY] AND time == [YOUR_BLOCK]` |
+| **NH-4** | Weekly ritual disrupted | **FLAG** + note disrupts important routine | `day == [YOUR_DAY] AND time == [YOUR_RITUAL_TIME]` |
 
-**Example:**
+**Customize these rules based on your work style:**
+- Adjust meeting thresholds based on your capacity
+- Add/remove rules as needed for your scheduling preferences
+- Make rules stricter (move to STRONG PREFERENCES) if they're critical for you
+
+---
+
+## 🧠 TIME BLOCKING INTERPRETATION
+
+### Calendar Event Classification
+
+```yaml
+# Events that are NOT meetings (don't count in meeting load)
+protected_time_blocks:
+  - title_contains: ["Focus time", "demo prep", "Block", "Planning", "L&D Time", "[YOUR_BLOCK_NAMES]"]
+  - treatment: PROTECTED (treat as unavailable, don't count as meetings)
+  
+# Meetings to ignore (assume NOT attending)
+ignored_meetings:
+  - responseStatus: "declined"
+  - responseStatus: "tentative" AND title_contains: ["L&L", "Office Hours", "Optional", "[YOUR_OPTIONAL_KEYWORDS]"]
+  
+# Merchant meetings (count toward meeting load)
+merchant_meetings:
+  - has_external_attendees: true
+  - OR title_contains: [merchant_name, "Demo", "Discovery", "Touch base"]
+  
+# Internal meetings (lower priority)
+internal_meetings:
+  - all_attendees_domain: "shopify.com"
 ```
-User: "Show me potential assignments from my AEs"
 
-LLM should read personal-config.md and generate:
-@revenue-mcp Show opportunities where (Owner is [AE 1] OR [AE 2]) AND no SE assigned
+---
+
+## 🤖 LLM EXECUTION INSTRUCTIONS
+
+### Priority Update Workflow
+
 ```
+STEP 1: Query Google Calendar
+  - time_range: current_week + next_week (7-14 days)
+  - include_attendees: true
+  - max_results: 100
+
+STEP 2: Classify Events
+  - Separate: protected_time_blocks vs meetings vs ignored
+  - Categorize meetings: merchant vs internal
+  - Extract: Focus time blocks, demo prep blocks, recurring blocks
+
+STEP 3: Apply Rules (in order)
+  a) Check HARD BOUNDARIES (HB-1 through HB-4)
+     - Flag ALL violations
+  b) Check STRONG PREFERENCES (SP-1 through SP-5)
+     - Flag violations with severity
+  c) Check NICE-TO-HAVE (NH-1 through NH-4)
+     - Note patterns, provide suggestions
+
+STEP 4: Calculate Metrics
+  - merchant_meeting_count (per day)
+  - total_meeting_hours (per day, excluding protected blocks)
+  - missing_prep_blocks (count and list)
+
+STEP 5: Generate Output
+  - Priority-ranked calendar analysis by day
+  - Specific actionable suggestions with Rule IDs
+  - Meeting load warnings with thresholds
+  - Boundary violations with severity levels
+```
+
+### Example Output Format
+
+```markdown
+## [Day of Week] - Calendar Analysis
+
+**Metrics:**
+- Merchant meetings: X (✅/⚠️ NH-1: threshold status)
+- Total meeting hours: X (✅/⚠️ Under/over threshold)
+- Protected time: X hours (Focus blocks)
+- Missing prep blocks: X
+
+**Rule Violations:**
+- ⚠️ [RULE-ID]: [Description of violation]
+  - Action: [Specific suggestion]
+
+**Suggestions:**
+- 💡 [RULE-ID]: [Pattern or concern]
+  - Suggestion: [Specific action]
+```
+
+---
+
+## 📊 QUERY PATTERNS
+
+### Salesforce Opportunity Query Template
+```soql
+SELECT OpportunityId, Opportunity.Name, Opportunity.Total_Revenue__c 
+FROM OpportunityTeamMember 
+WHERE UserId = '[YOUR_SALESFORCE_USER_ID]' 
+  AND TeamMemberRole = 'Solutions Engineer' 
+  AND Primary__c = true
+  AND Opportunity.IsClosed = false
+  AND Opportunity.StageName != 'Closed Lost'
+  AND Opportunity.StageName != 'Pre-Qualified'
+  AND Opportunity.CloseDate >= [QUARTER_START_DATE]
+  AND Opportunity.CloseDate <= [QUARTER_END_DATE]
+```
+
+### Calendar Query Template
+```javascript
+mcp_gworkspace-mcp_calendar_events({
+  calendar_id: "primary",
+  time_min: "YYYY-MM-DDT00:00:00Z",
+  time_max: "YYYY-MM-DDT23:59:59Z",
+  max_results: 100,
+  include_attendees: true
+})
+```
+
+---
+
+## ✅ SETUP CHECKLIST
+
+After copying this template to `personal-config.md`:
+
+### 🚨 Critical (Required)
+- [ ] Set Salesforce User ID
+- [ ] Set current quarter dates
+- [ ] Set timezone and typical work hours
+- [ ] Define hard boundaries (HB-1, HB-2, HB-3)
+- [ ] Replace [YOUR_*] placeholders in rules
+
+### ⭐ Important (Recommended)
+- [ ] Add primary AE names
+- [ ] Set Google Drive folder ID
+- [ ] Customize meeting thresholds (NH-2, NH-3, NH-5)
+- [ ] Define protected time block names
+- [ ] Set energy patterns (NH-4, NH-5)
+
+### 💡 Optional (Nice to Have)
+- [ ] Add recurring merchant touchbase keywords (SP-6)
+- [ ] Customize ignored meeting keywords
+- [ ] Add weekly ritual blocks (NH-7)
+- [ ] Adjust cognitive load rules based on your needs
+
+---
+
+## 🎯 QUERY DISAMBIGUATION RULES (AI Response Optimization)
+
+### Decision Logic
+
+```
+IF temporal reference (today/tomorrow/this week):
+  → Calendar First → Add deal context to meetings
+  
+ELSE IF deal/pipeline terms (focus/pipeline/quarter):
+  → Salesforce First → Add calendar touchpoints if relevant
+  
+ELSE IF ambiguous:
+  → <7 days: Calendar-first
+  → 7+ days: Deal-first
+```
+
+---
+
+### Response Type Matrix
+
+| Query Pattern | Timeframe | Primary Source | Response Format |
+|--------------|-----------|----------------|-----------------|
+| **"today"** / **"tomorrow"** | 0-1 days | Calendar + Salesforce (meetings only) | Daily schedule with deal flags (🔥/🟡/👀) |
+| **"this week"** | 2-7 days | Calendar + Salesforce (meetings only) | Week view + Top 3 deal actions |
+| **"next week"** | 8-14 days | Calendar + Salesforce (all active) | Hybrid: meetings + tier list |
+| **"this month"** / **"quarter"** | 15+ days | Salesforce + Calendar (key dates) | Full tier prioritization |
+| **"what should I focus on"** | Context-dependent | Salesforce → Calendar (this week) | Tier 1 deals + urgent meetings |
+| **"prep me for [merchant]"** | Pre-meeting | Merchant files → Salesforce → Calendar | Briefing doc + deal status |
+
+**Key triggers:**
+- Calendar-first: "schedule", "meetings", "booked", "free time"
+- Deal-first: "pipeline", "forecast", "quota", "close", "committed", "at risk"
+- Hybrid: "priorities for [timeframe]", "what's important", "game plan"
+
+---
+
+### Edge Cases
+
+| Scenario | Behavior |
+|----------|----------|
+| Empty calendar | Show deal priorities + note "Focus time for [Top 3 deals]" |
+| No active deals | Show calendar only + note "Pipeline building mode" |
+| Ambiguous timeframe ("soon") | Default to next 7 days (calendar-first) |
+| "What should I do NOW?" | Next meeting (if <2hrs away) OR Top Tier 1 action |
+
+---
+
+### Response Requirements
+
+**Every priority/schedule response MUST include:**
+1. **TL;DR** - 1-2 sentences summarizing key info
+2. **Flag urgent items** - Closing this week (⚡), At risk (⚠️)
+3. **Deal tier emojis** - 🔥 Tier 1, 🟡 Tier 2, 👀 Tier 3 (when showing deals)
+4. **Actionable next steps** - Specific actions, not generic advice
 
 ---
 
 ## 🔒 Privacy Note
 
-This file contains personal work context. It's in `.gitignore` by default, so it won't be committed unless you explicitly force-add it.
-
----
-
-## ✅ Setup Checklist
-
-After copying this template to `personal-config.md`:
-
-### 🚨 Critical (Required for Accurate Queries)
-- [ ] **Got my Salesforce User ID** → Run: `@se-assistant "Get my Salesforce UserId"`
-- [ ] Added my Shopify email: [your.email@shopify.com]
-- [ ] **Set current quarter dates** (Q1: Jan-Mar, Q2: Apr-Jun, Q3: Jul-Sep, Q4: Oct-Dec)
-  - Current quarter: [Q# YYYY]
-  - Start date: [YYYY-MM-DD]
-  - End date: [YYYY-MM-DD]
-
-### ⭐ Important (Improves Functionality)
-- [ ] Filled in Primary AE #1 name: [Full Name]
-- [ ] Filled in Primary AE #2 name: [Full Name] (or removed if N/A)
-- [ ] **Got Google Drive Folder ID** → Run: `@se-assistant "Find my Google Drive opportunities folder"`
-- [ ] Added Google Drive Folder Name: [e.g., "Will SE - Opportunities"]
-- [ ] **Verified filtering works** → Run: `@se-assistant "Show my open SE opportunities"`
-
-### 💡 Optional (Nice to Have)
-- [ ] Added my name as Owner
-- [ ] Updated date to today
-- [ ] Added Pod/Team information
-- [ ] Set personal preferences (Slack status duration, work hours, timezone)
-- [ ] Tested AE query: `@se-assistant "Find opportunities where my AEs have no SE assigned"`
-
----
-
-**Ready!** SE-Assistant can now:
-- ✅ Filter queries to YOUR opportunities only (prevents seeing other SEs' deals)
-- ✅ Auto-apply current quarter date filters (focuses on actionable deals)
-- ✅ Navigate your Google Drive structure (faster context gathering)
-- ✅ Personalize queries with your AE names (finds assignment opportunities)
-
-**Troubleshooting:** See `README.md` troubleshooting section if queries return unexpected results.
-
+This file contains personal work context. It's in `.gitignore` by default.

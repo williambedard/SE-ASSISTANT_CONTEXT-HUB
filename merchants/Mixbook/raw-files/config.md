@@ -38,5 +38,5 @@
   - Multiple partner syncs (SDG, Domaine, Codal, Lazer)
 
 ## Last Synced
-2025-10-27 (Updated with Salesloft, Gmail, Google Drive, Slack)
+2025-10-28 (Incremental sync: $80k PDFs approved for Q4 close)
 

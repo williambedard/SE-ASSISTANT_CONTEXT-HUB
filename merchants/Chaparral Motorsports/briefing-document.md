@@ -124,11 +124,12 @@ Chaparral Motorsports is a $1.4M automotive/powersports retailer evaluating Shop
 - ETL or similar (freight shipping)
 - Partner YMM tools (automotive fitment)
 
-### Demo Scheduled
-- **Date**: Tuesday, week of Oct 27, 2025
+### Demo Today - October 28, 2025
 - **Time**: 10:00 AM Pacific
 - **Duration**: 1.5 hours
+- **Status**: ✅ Confirmed (Sarah sent confirmation 9:11 AM MT)
 - **Attendees**: Crystal Ashby (solo), Sarah Roberts, William Bédard
+- **Deck**: https://docs.google.com/presentation/d/1NOj4hwkGawZ_4DAY6bqDWY30P4t6qZJFz_g1_xMv574
 
 **Demo Focus:**
 1. Year/Make/Model backend functionality (PRIMARY)
