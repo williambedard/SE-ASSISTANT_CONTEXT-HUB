@@ -304,15 +304,54 @@ cp templates/personal-config-template.md personal-config.md
 
 ## 🎓 For Peer SEs (Team Adoption)
 
-**Just cloned the repo? Run this:**
+### Step 1: Clone the Repo
+
+**If you don't have a folder for projects yet:**
+1. Create one: `mkdir -p ~/Documents/GitHub\ Repos`
+2. Open Cursor → File → Open Folder → Select that folder
+3. Open Cursor's terminal (`` Ctrl+` `` or View → Terminal)
+
+**In Cursor's terminal:**
+```bash
+# Clone the repository
+git clone https://github.com/williambedard/SE_AGENT_MANAGER
+
+# Enter the directory
+cd SE-NTRAL
+```
+
+You're now in the SE-NTRAL project folder. Continue to Step 2.
+
+---
+
+### Step 2: Set Up Your Personal Config (2 minutes)
+
+In Cursor, run:
 
 ```bash
 @se-assistant "Set up SE-NTRAL for me"
 ```
 
-Interactive setup walks you through everything in 2 minutes. No manual config needed.
+This will:
+- Get your Salesforce UserId automatically
+- Configure quarter dates and AE names
+- Validate everything works
 
-**Manual setup (if needed):** See [Onboarding Setup Guide](workflows/core/onboarding-setup.md)
+---
+
+### Step 3: Create Your First Merchant Folder
+
+```bash
+@se-assistant "New Opportunity: [Company Name]"
+```
+
+This auto-creates the folder structure and pulls context from Salesforce, Gmail, Slack, and Drive.
+
+**Daily workflows:** See [Quick Start Guide](workflows/core/quick-start.md)
+
+---
+
+**Troubleshooting:** See [Onboarding Setup Guide](workflows/core/onboarding-setup.md) if setup fails
 
 ---
 
