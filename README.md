@@ -335,7 +335,7 @@ SE-NTRAL relies on Model Context Protocol (MCP) servers to access Shopify's inte
 **In Cursor's terminal:**
 ```bash
 # Clone the repository into your root projects folder
-git clone https://github.com/williambedard/SE_AGENT_MANAGER
+git clone https://github.com/williambedard/SE-NTRAL_CONTEXT_HUB
 
 ```
 
