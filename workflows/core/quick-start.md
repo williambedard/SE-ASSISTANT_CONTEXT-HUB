@@ -1,6 +1,8 @@
 # Quick Start Guide
 
-**Purpose:** Get up and running with the SE Merchant Framework in minutes. This is your "just tell me what to do" guide.
+**Purpose:** Daily workflows for using SE-NTRAL after initial setup
+
+**Haven't set up yet?** Run `@se-assistant "Set up SE-NTRAL for me"` or see `onboarding-setup.md` first.
 
 ---
 
@@ -562,6 +564,12 @@ Generates tiered opportunity list using scoring from `workflows/reference/opport
 @se-assistant "Create technical assessment for [Company Name]"
 ```
 Generates clean markdown technical assessment per rules file Section 3.1.
+
+**Update Salesforce SE Next Steps:**
+```
+@se-assistant "Update SE Next Steps in Salesforce for [Company Name]"
+```
+Pushes Outstanding Actions to Salesforce SE Next Steps field via Gumloop, validates the update per rules file Section 12.
 
 ---
 

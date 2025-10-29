@@ -1,6 +1,13 @@
 # Personal configuration files (contain Salesforce User IDs, Drive folder IDs, AE names, etc.)
 personal-config.md
 
+# Auto-generated priority dashboard (contains personal opportunities, revenue, meeting schedules)
+# Generated via: @se-assistant "Update my priority dashboard"
+Current-Q-Priority-Dashboard.md
+
+# Personal merchant work
+merchants/
+
 # OS files
 .DS_Store
 Thumbs.db

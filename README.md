@@ -25,30 +25,34 @@ Think of it as your tireless research partner who never sleeps and always has th
 
 ---
 
-## ⚡ Quick Start (2 Minutes)
+## ⚡ First Time? Start Here (30 seconds)
 
-### Setup Option 1: Single User (Just You)
+### Just Cloned This Repo?
+
+**One command to set up:**
+
 ```bash
-@se-assistant
-```
-That's it! You're ready to roll.
-
-### Setup Option 2: Multi-User (Team Adoption)
-```bash
-# 1. Copy template
-cp personal-config-template.md personal-config.md
-
-# 2. Get your Salesforce UserId
-@se-assistant "Get my Salesforce UserId"
-
-# 3. Fill in personal-config.md with your details
-# (UserId, AE names, current quarter dates)
-
-# 4. Done! Now use:
-@se-assistant
+@se-assistant "Set up SE-NTRAL for me"
 ```
 
-The `@se-assistant` command automatically checks for `personal-config.md` and loads your context if present.
+This points you to [Onboarding Setup](workflows/core/onboarding-setup.md) which configures:
+1. ✅ Your personal-config.md (gitignored)
+2. ✅ Salesforce UserId (automatic)
+3. ✅ Quarter dates and preferences
+4. ✅ Validation that everything works
+
+**Takes 2 minutes. Then see [Quick Start Guide](workflows/core/quick-start.md) for daily workflows.**
+
+---
+
+## 🎓 Already Set Up?
+
+Jump straight to:
+- `@se-assistant "New Opportunity: [Company Name]"` - Create merchant folder
+- `@se-assistant "Update my priority dashboard"` - See your top deals
+- `@se-assistant "What should I focus on this week?"` - Get priorities
+
+**Daily workflows:** [Quick Start Guide](workflows/core/quick-start.md)
 
 ---
 
@@ -238,13 +242,13 @@ SE-NTRAL doesn't just store files – it makes them discoverable:
 ```
 SE-NTRAL/
 ├── .cursor/rules/se-assistant.mdc    # SE-NTRAL rules (source of truth)
-├── personal-config-template.md       # Template for personal setup
+├── templates/                        # Document templates
+│   └── personal-config-template.md   # Template for personal setup
 ├── personal-config.md                # Your config (gitignored)
 ├── Current-Q-Priority-Dashboard.md   # Auto-generated priority dashboard
 ├── workflows/                        # Workflow documentation
 │   ├── core/                         # Core workflows
 │   └── reference/                    # Reference guides (prioritization, etc.)
-├── templates/                        # Document templates
 └── merchants/                        # One folder per merchant
     └── [Merchant Name]/
         ├── briefing-document.md      # Executive summary, stakeholders, timeline
@@ -276,7 +280,7 @@ Create `personal-config.md` with your Salesforce UserId:
 
 ```bash
 # 1. Copy template
-cp personal-config-template.md personal-config.md
+cp templates/personal-config-template.md personal-config.md
 
 # 2. Get your UserId
 @se-assistant "Get my Salesforce UserId"
@@ -300,16 +304,15 @@ cp personal-config-template.md personal-config.md
 
 ## 🎓 For Peer SEs (Team Adoption)
 
-**Setting up SE-NTRAL on your machine:**
+**Just cloned the repo? Run this:**
 
-1. Copy personal config template: `cp personal-config-template.md personal-config.md`
-2. Get your Salesforce UserId: `@se-assistant "Get my Salesforce UserId"`
-3. Fill in `personal-config.md` (UserId, quarter dates, AE names)
-4. Test it: `@se-assistant "Show my open SE opportunities"`
+```bash
+@se-assistant "Set up SE-NTRAL for me"
+```
 
-Should return only YOUR opportunities (filtered by your UserId).
+Interactive setup walks you through everything in 2 minutes. No manual config needed.
 
-**That's it!** Now use `@se-assistant` with your own context.
+**Manual setup (if needed):** See [Onboarding Setup Guide](workflows/core/onboarding-setup.md)
 
 ---
 

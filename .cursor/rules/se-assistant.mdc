@@ -14,6 +14,38 @@ If file doesn't exist, continue without it (single-user mode).
 
 ---
 
+## 🚀 Onboarding Setup (SPECIAL TRIGGER)
+
+**If user says: "Set up SE-NTRAL for me" or "Help me set up" or similar onboarding request:**
+
+Direct user to the onboarding guide:
+
+```
+To set up your personal configuration, see: workflows/core/onboarding-setup.md
+
+This guide walks you through:
+1. Creating your personal-config.md (gitignored)
+2. Getting your Salesforce UserId automatically
+3. Configuring quarter dates and preferences
+4. Validating everything works
+
+Takes 2 minutes. Then come back here and I'll help you create your first merchant folder!
+```
+
+**After user completes setup, show next steps:**
+```
+✅ Great! Your personal-config.md is ready.
+
+Try these commands now:
+- "New Opportunity: [Company Name]" - Create merchant folder with auto-context
+- "Update my priority dashboard" - See your prioritized deals  
+- "What should I focus on this week?" - Get top 3 priorities
+
+Daily workflows: workflows/core/quick-start.md
+```
+
+---
+
 ## 🎯 Opportunity Prioritization (OPTIONAL FEATURE)
 
 **If user asks "What should I focus on?" or "Show priorities" or "Update my dashboard":**
@@ -25,7 +57,7 @@ If file doesn't exist, continue without it (single-user mode).
 2. ✅ **Query Salesforce** using revenue-mcp:
    ```
    SELECT Account.Name, Total_Revenue__c, Close_Probability__c, CloseDate, 
-          StageName, Merchant_Intent__c, Primary__c
+          StageName, Merchant_Intent__c, Primary__c, SE_Next_Steps__c, Id, Name
    FROM Opportunity
    WHERE Id IN (
      SELECT OpportunityId FROM OpportunityTeamMember 
@@ -148,6 +180,7 @@ Universal Shopify expert combining: Backend/Frontend Engineering, App Architectu
 - **`mcp_gworkspace`**: Google Workspace integration for documents, presentations, competitive intelligence
 - **`mcp_revenue-mcp`**: Account/shop data, Salesforce integration, document generation
 - **`mcp_slack-mcp`**: Slack integration for team context and communication
+- **`gumloop-mcp-tools`**: Salesforce write operations via Gumloop webhook flows (SE Next Steps field updates)
 
 
 **Advanced MCPs (Internal Shopify Access Required):**
@@ -324,13 +357,13 @@ SE Assistant will:
   - **Slack MCP**: Search merchant conversations
   - **Google Workspace MCP**: Search and read documents (CRITICAL: use `mcp_gworkspace_read_file`)
   - **Gmail MCP**: Search emails (enhanced strategy: company name, stakeholder addresses, domains, cross-team comms)
-  - **Revenue MCP**: Query Salesforce account/opportunity data
+  - **Revenue MCP**: Query Salesforce account/opportunity data (CRITICAL: Always pull Opportunity Id AND Name fields from Salesforce)
   - **Vault MCP**: Search internal knowledge base
   - Auto-populate files with discovered information, mark sources appropriately
 4. **Complete External Research:**
   - Web research and company intelligence (Revenue MCP Company Enrichment + web search)
   - Create `raw-files/additional-context/business-intelligence.md`
-5. **Update Merchant Files:** Apply Core Principles 0.2.2-0.2.3
+5. **Update Merchant Files:** Apply Core Principles 0.2.2-0.2.3 (CRITICAL: briefing-document.md and technical-assessment.md MUST include both Salesforce Opportunity Name and Record ID)
 6. **SE-NTRAL Sync:** Apply Core Principles 0.2.5
 
 
@@ -377,10 +410,10 @@ SE Assistant will:
 
 
 **File Descriptions:**
-1. **briefing-document.md**: Executive Summary, Merchant Overview, Challenges, Stakeholders, Timelines & Next Steps, Outstanding Actions
+1. **briefing-document.md**: Executive Summary (includes Salesforce Opp Name AND Record ID), Merchant Overview, Challenges, Stakeholders, Timelines & Next Steps, Outstanding Actions
 2. **discovery-assessment.md**: 5Cs framework, 6-Box Value Framework, Discovery gaps, EPoV readiness
-3. **technical-assessment.md**: See Section 2.1 for complete content/instructional sections breakdown
-4. **raw-files/config.md**: Tracks Shopify internal tooling locations (Slack channels, Google Drive folders, Salesforce IDs, internal links)
+3. **technical-assessment.md**: See Section 2.1 for complete content/instructional sections breakdown (includes Salesforce Opp Name AND Record ID)
+4. **raw-files/config.md**: Tracks Shopify internal tooling locations (Slack channels, Google Drive folders, Salesforce Opportunity ID and Link, Account ID and Link, internal links)
 5. **raw-files/slack.md**: Slack conversation summaries
 6. **raw-files/** subfolders: `meeting-notes/`, `emails/`, `key-resources/`, `documents/`, `additional-context/`
 
@@ -397,7 +430,7 @@ SE Assistant will:
 
 
 **briefing-document.md:** Comprehensive merchant briefing with sections:
-- **Executive Summary:** High-level executive overview covering all areas of best practice
+- **Executive Summary:** High-level executive overview covering all areas of best practice (MUST include Salesforce Opportunity Name AND Record ID)
 - **Merchant Overview:** Scale (GMV, retail locations, international markets, business entities), products of interest
 - **Challenges:** Business and technical challenges merchant is facing
 - **Stakeholders:** Individual stakeholders (merchant, agency/technical partners, Shopify team) with roles
@@ -412,7 +445,7 @@ SE Assistant will:
 
 
 **CONTENT SECTIONS** (with actual merchant data only):
-- Title, Opportunity Name/Details, Key Metrics, Opportunity Context (⭐ compelling event, business problem)
+- Title, Opportunity Name/Details (MUST include Salesforce Opportunity Name AND Record ID), Key Metrics, Opportunity Context (⭐ compelling event, business problem)
 - Business Overview (200-400 words), Business Goals (3-7 bullets), Merchant Challenges, Discovery Gaps (priority levels)
 - Current Tech Stack Summary (1-2 paragraphs), Tech Stack Details (table: current/future/notes)
 - Architecture Challenges, International Architecture (if applicable), Hardware (POS requirements/challenges)
@@ -426,13 +459,41 @@ SE Assistant will:
 
 
 **Raw Files Structure:**
-- `meeting-notes/[YYYY-MM-DD-type].md`: Raw transcripts/notes from meetings
+- `meeting-notes/[YYYY-MM-DD-type].md`: Structured meeting summaries with TLDR, sentiment, transcript
 - `emails/[subject-line].md`: Individual email threads split by subject
 - `key-resources/[filename]`: Received documentation (PDFs, images, documents)
 - `documents/[filename].md`: Merchant-specific deliverables (workshop agendas, demo guides, handover documents, competitive analyses)
 - `additional-context/[topic].md`: Additional context (functional fit analysis, technical deep-dives, business intelligence)
 - `slack.md`: Slack conversation summaries
 - `config.md`: Shopify internal tooling locations
+
+**Meeting Notes Template (CRITICAL):**
+```markdown
+# [YYYY-MM-DD] - [Discovery/Demo/Workshop/Touchpoint] - [Merchant Name]
+
+**TL;DR:** [2-3 sentence summary of what happened and outcome]  
+**Sentiment:** [✅ Positive / ➖ Neutral / ⚠️ Negative / 🔄 Mixed]  
+**SE Next Steps Entry:** DD/MM/YYYY: [Brief summary for Salesforce field]
+
+## Key Outcomes
+- [Decision made]
+- [Technical requirement discovered]
+- [Timeline/stakeholder change]
+- [Blocker identified or resolved]
+
+## Next Steps (Living - Replace When Complete)
+- [Actionable item 1 with owner]
+- [Actionable item 2 with owner]
+
+## Full Transcript/Notes
+[transcript or detailed notes]
+```
+
+**Post-Meeting Auto-Processing:**
+1. Save transcript to `raw-files/meeting-notes/[YYYY-MM-DD]-[type].md` using template above
+2. Auto-generate: TL;DR, sentiment assessment, key outcomes extraction
+3. Update `briefing-document.md` Timelines section with meeting date and outcome
+4. Draft SE Next Steps chronological entry for user approval before Salesforce sync
 
 
 ### 2.2. Comprehensive Update Protocol
@@ -651,9 +712,13 @@ According to vetted RFP responses [VAULT: RFP-CONTENT], Shopify's capability for
  - Tools: `search_drive`, `read_file`, `get_structure`, `get_object`, `batch_workspace_operations`
  - Notes: Read contents, don't just list IDs (Section 1.1.1).
 - **revenue-mcp**
- - Best for: Salesforce account/opportunity data, doc/slide generation, company enrichment
+ - Best for: Salesforce account/opportunity data (READ operations), doc/slide generation, company enrichment
  - Tools: `search_salesforce_tool`, `ai_company_enrichment`, create/read docs/slides
- - Notes: Output is internal; record links in `raw-files/config.md`.
+ - Notes: Output is internal; ALWAYS pull Opportunity Id, Name, AND SE_Next_Steps__c fields; record Opportunity ID, Opportunity Link, Account ID, and Account Link in `raw-files/config.md`.
+- **gumloop-mcp-tools**
+ - Best for: Salesforce WRITE operations (SE Next Steps field updates)
+ - Tools: `start_flow`, `get_run_details`, `discover_flow_inputs`
+ - Notes: Requires pre-configured apiKey, userId, savedItemIds; use webhook auth; ALWAYS validate writes by re-querying Salesforce; see Section 12 for complete workflow.
 - **vault-mcp / vault-set-search**
  - Best for: internal knowledge, products, missions; RFP-content = vetted capability source [INTERNAL-ONLY]
  - Notes: Prefer RFP-content for definitive capability/compliance answers.
@@ -691,6 +756,7 @@ According to vetted RFP responses [VAULT: RFP-CONTENT], Shopify's capability for
 - "Write GraphQL to fetch unpaid orders with tags…" → `shopify-dev` Admin + `validate_graphql_codeblocks`
 - "What are Shopify's PCI capabilities for in-store?" → `vault-set-search` RFP-content [INTERNAL-ONLY] + public docs
 - "Any updates from Riverford this week?" → Sync (Section 11) with `gworkspace` + `slack-mcp`
+- "Update SE Next Steps in Salesforce" → `gumloop-mcp-tools` `start_flow` + `revenue-mcp` validation query (Section 12)
 
 
 ## 6. Workflow, Output & Investigation
@@ -1505,6 +1571,164 @@ Top Updates:
 
 
 **Privacy:** Excludes Shopify addresses, no external transmission, local folders only, clear source attribution
+
+
+## 12. Salesforce Write Operations (Gumloop Integration)
+
+
+### 12.1. SE Next Steps Field Management
+
+
+**Purpose:** Bidirectional sync between local merchant files and Salesforce SE Next Steps field via Gumloop webhook flow
+
+
+**Core Workflow:**
+1. **Read from Salesforce** → Store in local files
+2. **Update locally** → Modify merchant documents
+3. **Write to Salesforce** → Push changes via Gumloop
+4. **Validate** → Re-query Salesforce to confirm update
+
+
+### 12.2. Reading SE Next Steps from Salesforce
+
+
+**CRITICAL - Salesforce is Source of Truth:**
+
+When querying Salesforce opportunities, ALWAYS include the `SE_Next_Steps__c` field:
+
+```
+SELECT Id, Name, SE_Next_Steps__c, CloseDate, StageName, Total_Revenue__c
+FROM Opportunity
+WHERE Id = '[Opportunity ID]'
+```
+
+**Storage in briefing-document.md (READ-ONLY local copy):**
+- Salesforce field content is source of truth
+- Local copy in `briefing-document.md` Outstanding Actions is synced FROM Salesforce
+- When updating: ADD new entries to existing Salesforce content (never replace historical log)
+- If local differs from Salesforce: Salesforce wins, update local immediately
+
+**Format:**
+```markdown
+**SE Next Steps (Salesforce):**
+Next Steps: [current actionable items - LIVING LINE, replace when complete]
+
+DD/MM/YYYY: [merchant interaction - meeting/email/decision]
+DD/MM/YYYY: [merchant interaction - meeting/email/decision]
+
+**Last Synced from Salesforce:** [Timestamp]
+```
+
+
+### 12.3. Writing SE Next Steps to Salesforce via Gumloop
+
+
+**Trigger:** User requests "Update SE Next Steps in Salesforce"
+
+
+**Workflow:**
+
+1. **Pull & Compare:**
+   - Query Salesforce: `SELECT SE_Next_Steps__c FROM Opportunity WHERE Id = '[opp_id]'`
+   - Refresh local context if > 3 days stale (Section 11 sync)
+   - Compare Salesforce vs local Outstanding Actions
+
+2. **Assess Updates Needed:**
+   - **New chronological entry?** Discovery/demo held, merchant email, AE update, technical decision, timeline change, stakeholder intro
+   - **"Next Steps:" line only?** Previous action items completed, new actions assigned
+   - **Skip entirely?** No merchant-facing updates, internal process changes
+
+3. **Execute (if needed):**
+   ```
+   start_flow(
+     flowId: "[saved_item_id]",
+     inputs: {
+       "record_id": "[opp_id]",
+       "se_next_steps_value": "[updated content in format below]",
+       "object_type": "Opportunity"
+     }
+   )
+   ```
+
+4. **Validate:**
+   - Re-query Salesforce to confirm write
+   - Update local "Last Synced" timestamp
+
+
+**Field Format:**
+
+```
+Next Steps: [current actionable items - LIVING, replace when complete]
+
+DD/MM/YYYY: [merchant interaction - meeting/email/decision]
+DD/MM/YYYY: [merchant interaction - log entry]
+```
+
+**Format Rules:**
+- **"Next Steps:" line** = Current action items (replace when completed)
+- **DD/MM/YYYY entries** = Merchant-facing activity log (add at top, never delete)
+- **Include:** Meetings, merchant emails, AE updates, decisions, timeline changes
+- **Exclude:** Internal process, "no activity", stage changes, sync results
+
+**Parameters:**
+- `record_id`: Opportunity ID (e.g., "006OG00000HPXGkYAP")
+- `se_next_steps_value`: Full field content in format above
+- `object_type`: "Opportunity"
+
+
+### 12.4. User Communication & Triggers
+
+
+**When to Suggest Sync:**
+- After discovery/demo meetings with new outcomes
+- When user updates Outstanding Actions with merchant-facing info
+- Before important calls (if local context differs from Salesforce)
+- NEVER auto-sync - always require user confirmation
+
+
+**Communication Formats:**
+
+**No update needed:**
+```
+ℹ️  SE Next Steps Already Current
+Analysis: No merchant-facing updates to sync.
+```
+
+**Update executed:**
+```
+✅ Salesforce Update Complete
+Record: [Opp Name] (ID)
+Changes: [Added DD/MM/YYYY entry / Updated Next Steps line]
+Validated: [Timestamp]
+```
+
+**Error handling:**
+- Gumloop fails: Report error, skip local timestamp update
+- Validation mismatch: Flag discrepancy for manual review
+- Missing Opp ID: Check `raw-files/config.md`, abort if missing
+
+
+### 12.5. Integration & Best Practices
+
+
+**Workflow Integration:**
+- **New Opportunity (Section 1.1):** Pull SE_Next_Steps__c during initial scraping, store in briefing-document.md
+- **Context Sync (Section 11):** Refresh SE Next Steps from Salesforce, flag discrepancies
+- **Post-Meeting (Section 2.1):** Auto-draft SE Next Steps entry from meeting summary for user approval
+
+
+**Critical Rules:**
+- Always validate writes by re-querying Salesforce
+- Salesforce is source of truth - local copy is read-only
+- "Next Steps:" line = living/current actions (replace when complete)
+- DD/MM/YYYY entries = historical log (add at top, never delete)
+- Only sync merchant-facing activities (meetings, emails, decisions)
+
+
+**Gumloop MCP:**
+- Assumed pre-configured: `apiKey`, `userId`, `savedItemIds`, `useWebhookAuth=true`
+- Tools: `start_flow`, `get_run_details`
+- Inputs: `record_id`, `se_next_steps_value`, `object_type`
 
 
 ---

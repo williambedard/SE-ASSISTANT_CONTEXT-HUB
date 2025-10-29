@@ -10,6 +10,7 @@ Chick's Saddlery is an Animals & Pet Supplies merchant evaluating Shopify Plus. 
 - **Stage**: Deal Craft
 - **Close Probability**: Very Low
 - **Salesforce Opp**: Chick's Saddlery - Plus
+- **Salesforce Record ID**: 006OG00000HPXGkYAP
 
 ## Merchant Overview
 
@@ -40,6 +41,14 @@ Chick's Saddlery is an Animals & Pet Supplies merchant evaluating Shopify Plus. 
 - Limited recent engagement activity
 
 ### Outstanding Actions
+
+**SE Next Steps (Salesforce):**
+Next Steps: Re-engage with merchant to understand current status and timeline. Conduct discovery if merchant still active.
+
+**Last Synced from Salesforce:** October 29, 2025
+
+---
+
 - **Shopify (Sarah/Will)**: Re-engage with merchant to understand current status and timeline
 - **Shopify (Will)**: Conduct discovery if merchant still active
 
