@@ -1,10 +1,8 @@
 # SE-NTRAL: Your AI-Powered Companion for Solutions Engineering Excellence
 
-*It's a cult. A movement. A following of devoted believers who have seen the light and refuse to go back to the dark ages of manual research and context gathering.*
+**Built on the foundation of Stephen Brook's [SE-NTRAL platform](https://se-ntral.quick.shopify.io/)** – the semantic search tool that revolutionized how SEs share and discover merchant context across the team.
 
-Just joking... 😅
-
-**But seriously:** SE-NTRAL has been described as *"the best f\* resource I've ever had for my work"* – and for good reason.
+**This project extends SE-NTRAL locally:** We've taken Stephen's vision of intelligent SE collaboration and added comprehensive Cursor-based workflows, automated context gathering, and structured merchant management. Think of it as SE-NTRAL's local companion – build your context here, sync to [SE-NTRAL platform](https://se-ntral.quick.shopify.io/) for team-wide sharing.
 
 ---
 
@@ -14,6 +12,7 @@ SE-NTRAL is a Cursor-based AI assistant specifically designed for Shopify Soluti
 
 - 🔍 **Research merchants** faster than ever before
 - 📞 **Prepare for calls** with complete context
+- 🎯 **Prioritize work** with smart opportunity scoring and dashboards
 - 🛠️ **Analyze technical requirements** across all commerce functions
 - 🚀 **Craft solutions** with confidence
 
@@ -21,7 +20,7 @@ Think of it as your tireless research partner who never sleeps and always has th
 
 **Here's the magic:** SE-NTRAL combines your full merchant context (every file, note, and email in your Cursor workspace) with direct access to Shopify's internal tools via MCPs and LLMs. It's like having a research team that knows everything about your deals and has instant access to every Shopify system.
 
-💡 **The Formula:** Your local merchant files + Shopify's internal data universe = unstoppable SE efficiency.
+💡 **The Formula:** Your merchant context + Shopify's internal data universe + MCPs = unstoppable SE efficiency.
 
 ---
 
@@ -304,6 +303,28 @@ cp templates/personal-config-template.md personal-config.md
 
 ## 🎓 For Peer SEs (Team Adoption)
 
+### Prerequisites: Set Up MCP Servers
+
+**Before cloning, ensure your Cursor has MCP servers configured:**
+
+SE-NTRAL relies on Model Context Protocol (MCP) servers to access Shopify's internal tools (Salesforce, Vault, Scout, etc.). Without these, many features won't work.
+
+**Setup guide:** [Shopify MCP Server Documentation](https://vault.shopify.io/ai/mcp_servers)
+
+**Required MCPs:**
+- ✅ Revenue MCP (Salesforce data, company enrichment)
+- ✅ Vault MCP (internal knowledge base)
+- ✅ GWorkspace MCP (Gmail, Drive, Calendar)
+- ✅ Slack MCP (conversations, mentions)
+
+**Optional but recommended:**
+- Scout MCP (support tickets, merchant frustrations)
+- Shopify Dev MCP (API docs, GraphQL validation)
+
+**Already have MCPs configured?** Continue to Step 1 below.
+
+---
+
 ### Step 1: Clone the Repo
 
 **If you don't have a folder for projects yet:**
@@ -404,6 +425,8 @@ Pulls latest from Gmail, Slack, Drive and updates local files.
 - **GWorkspace MCP:** Drive docs, Calendar, Gmail
 - **Slack MCP:** Team conversations, merchant mentions
 
+**Setup required:** See [Shopify MCP Server Documentation](https://vault.shopify.io/ai/mcp_servers) for configuration instructions.
+
 ### 🗂️ Merchant-Centric Organization
 - One folder per merchant with complete engagement history
 - No cross-folder information bleed
@@ -432,6 +455,7 @@ Pulls latest from Gmail, Slack, Drive and updates local files.
 ### "MCP not working"
 → Verify MCP servers configured in Cursor settings  
 → Check authentication status (may need to re-auth with Google/Salesforce/Slack)  
+→ Setup guide: [Shopify MCP Server Documentation](https://vault.shopify.io/ai/mcp_servers)  
 → See rules file Section 0.4 for MCP prerequisites and degraded mode operations
 
 ### "Priority scores don't match expectations"
@@ -457,13 +481,10 @@ Pulls latest from Gmail, Slack, Drive and updates local files.
 → Just use `@se-assistant` in any Cursor chat
 
 **Do I need to create personal-config.md?**  
-→ Only if you want accurate query filtering (highly recommended for multi-user setups)
-
-**Can multiple SEs use SE-NTRAL?**  
-→ Yes! Each creates their own `personal-config.md` (gitignored)
+→ Only if you want accurate query filtering (highly recommended) and add your own personal rules/context
 
 **Where are the complete rules?**  
-→ `.cursor/rules/se-assistant.mdc` (1318 lines, loaded via `@se-assistant`)
+→ `.cursor/rules/se-assistant.mdc` (1318 lines, loaded via `@se-assistant`). Ideally avoid to edit this file, as it has been optimized for LLM readability. Use personal-config.md to add your own logic and rules instead.
 
 **How do I sync to the SE-NTRAL team platform?**  
 → Visit [SE-NTRAL Sync](https://se-ntral.quick.shopify.io/sync.html) after building context locally
@@ -477,5 +498,5 @@ Pulls latest from Gmail, Slack, Drive and updates local files.
 "Let's get started!"
 ```
 
-Welcome to the cult. 🎉
+Welcome to the future. 🎉
 
