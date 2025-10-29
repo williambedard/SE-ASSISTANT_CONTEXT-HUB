@@ -336,6 +336,20 @@ SE Assistant will:
 **Conclusion:** Local-first with intelligent refresh is optimal for Cursor's architecture.
 
 
+**Context Loading & Prioritization:**
+
+For operational guidance on context loading patterns and prioritization:
+- **Auto-load patterns:** See `workflows/reference/context-loader-guide.md` for @-mention patterns, batch operations, usage examples
+- **Priority framework:** See `workflows/reference/context-priorities-guide.md` for P0/P1/P2/P3 prioritization, question-type routing, degradation strategy
+
+**Key Implementation Principles:**
+- Batch file reads (3-5 at once) vs sequential
+- Load by priority (P0 → P1 → P2 → P3)
+- Apply recency multiplier (last 7 days = 3x weight)
+- Use @folder mentions for full merchant context
+- Leverage 1M token context window efficiently
+
+
 ## 1. Directory-Scoped Context & Opportunity Management
 
 

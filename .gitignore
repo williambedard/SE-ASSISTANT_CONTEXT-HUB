@@ -1,7 +1,13 @@
 # Personal configuration files (contain Salesforce User IDs, Drive folder IDs, AE names, etc.)
 personal-config.md
+
+# Presentation materials
 presentation-deck.md
 speaker-notes.md
+presentation-deck-v2.md
+speaker-notes-v2.md
+research-summary.md
+visual-guide.md
 
 # Auto-generated priority dashboard (contains personal opportunities, revenue, meeting schedules)
 # Generated via: @se-assistant "Update my priority dashboard"
