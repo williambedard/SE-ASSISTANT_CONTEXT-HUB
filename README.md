@@ -307,20 +307,18 @@ cp templates/personal-config-template.md personal-config.md
 ### Step 1: Clone the Repo
 
 **If you don't have a folder for projects yet:**
-1. Create one: `mkdir -p ~/Documents/GitHub\ Repos`
+1. Create one
 2. Open Cursor → File → Open Folder → Select that folder
-3. Open Cursor's terminal (`` Ctrl+` `` or View → Terminal)
+3. Open Cursor's terminal (View → Terminal)
 
 **In Cursor's terminal:**
 ```bash
-# Clone the repository
+# Clone the repository into your root projects folder
 git clone https://github.com/williambedard/SE_AGENT_MANAGER
 
-# Enter the directory
-cd SE-NTRAL
 ```
 
-You're now in the SE-NTRAL project folder. Continue to Step 2.
+You're now in the SE-NTRAL project folder, good to go.
 
 ---
 
@@ -339,10 +337,10 @@ This will:
 
 ---
 
-### Step 3: Create Your First Merchant Folder
+### Step 3: Create Your Merchant Folders
 
 ```bash
-@se-assistant "New Opportunity: [Company Name]"
+@se-assistant "generate folders for all my active merchants, place them under a parent 'merchants' folder."
 ```
 
 This auto-creates the folder structure and pulls context from Salesforce, Gmail, Slack, and Drive.
@@ -351,7 +349,7 @@ This auto-creates the folder structure and pulls context from Salesforce, Gmail,
 
 ---
 
-**Troubleshooting:** See [Onboarding Setup Guide](workflows/core/onboarding-setup.md) if setup fails
+**Troubleshooting:** See [Onboarding Setup Guide](workflows/core/onboarding-setup.md) if setup fails, or contact @william.bedard in slack
 
 ---
 
