@@ -1,11 +1,5 @@
 # SE-NTRAL: Your AI-Powered Companion for Solutions Engineering Excellence
 
-**Built on the foundation of Stephen Brook's [SE-NTRAL platform](https://se-ntral.quick.shopify.io/)** – the semantic search tool that revolutionized how SEs share and discover merchant context across the team.
-
-**This project extends SE-NTRAL locally:** We've taken Stephen's vision of intelligent SE collaboration and added comprehensive Cursor-based workflows, automated context gathering, and structured merchant management. Think of it as SE-NTRAL's local companion – build your context here, sync to [SE-NTRAL platform](https://se-ntral.quick.shopify.io/) for team-wide sharing.
-
----
-
 ## 🎯 What is SE-NTRAL?
 
 SE-NTRAL is a Cursor-based AI assistant specifically designed for Shopify Solutions Engineers. Built to understand the unique challenges of SE work, it helps you:
@@ -21,6 +15,12 @@ Think of it as your tireless research partner who never sleeps and always has th
 **Here's the magic:** SE-NTRAL combines your full merchant context (every file, note, and email in your Cursor workspace) with direct access to Shopify's internal tools via MCPs and LLMs. It's like having a research team that knows everything about your deals and has instant access to every Shopify system.
 
 💡 **The Formula:** Your merchant context + Shopify's internal data universe + MCPs = unstoppable SE efficiency.
+
+---
+
+**Built on the foundation of the [SE-NTRAL platform](https://se-ntral.quick.shopify.io/)** (kudos to Stephen Brook!) – the semantic search tool that revolutionized how SEs share and discover merchant context across the team.
+
+**This project extends SE-NTRAL locally:** We've added comprehensive Cursor-based workflows, automated context gathering, and structured merchant management. Think of it as your local companion for SE work – build your context locally, sync to [SE-NTRAL platform](https://se-ntral.quick.shopify.io/) for team-wide sharing.
 
 ---
 
