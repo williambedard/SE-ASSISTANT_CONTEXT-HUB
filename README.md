@@ -60,7 +60,7 @@ Jump straight to:
 ### 🎯 Smart Opportunity Management
 - **Create opportunities** with `New Opportunity: [Name]` – auto-builds folder structure and pulls internal/external context
 - **Auto-updates** briefings, discovery assessments, and technical docs as you learn more
-- **Syncs context** from Gmail, Slack, and Google Drive automatically
+- **Syncs context** from Gmail, Slack, Drive, Salesforce, automatically
 
 ### 🔍 Deep Research Arsenal
 - **Shopify Intelligence:** Product docs, API guidance, support tickets, internal knowledge via Vault
@@ -97,7 +97,7 @@ Open a new chat in Cursor and tag `@se-assistant`. Here are the power moves:
 @se-assistant
 "New Opportunity: Acme Corp"
 ```
-Creates new merchant folder with automatic context scraping from Gmail, Slack, Drive, Salesforce, and web research.
+Creates new merchant folder with automatic context scraping from Gmail, Slack, Salesloft, Drive, Salesforce, and web research.
 
 ### Sync Merchant Context
 ```
