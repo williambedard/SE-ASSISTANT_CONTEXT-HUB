@@ -57,10 +57,12 @@ Jump straight to:
 
 ## 🚀 What Can SE-NTRAL Do?
 
-### 🎯 Smart Opportunity Management
-- **Create opportunities** with `New Opportunity: [Name]` – auto-builds folder structure and pulls internal/external context
-- **Auto-updates** briefings, discovery assessments, and technical docs as you learn more
+### 🎯 Smart Opportunity & Launch Case Management
+- **Create opportunities** with `New Opportunity: [Name]` – auto-builds pre-sales folder structure and context
+- **Create launch cases** with `New Launch Case: [Name]` – auto-builds post-sales folder structure
+- **Auto-updates** briefings, discovery assessments, technical docs, and launch plans as you learn more
 - **Syncs context** from Gmail, Slack, Drive, Salesforce, automatically
+- **Context continuity** – `raw-files/` shared between pre-sales and post-sales for seamless handoff
 
 ### 🔍 Deep Research Arsenal
 - **Shopify Intelligence:** Product docs, API guidance, support tickets, internal knowledge via Vault
@@ -92,12 +94,19 @@ Jump straight to:
 
 Open a new chat in Cursor and tag `@se-assistant`. Here are the power moves:
 
-### Create & Manage Opportunities
+### Create & Manage Opportunities (Pre-Sales)
 ```
 @se-assistant
 "New Opportunity: Acme Corp"
 ```
-Creates new merchant folder with automatic context scraping from Gmail, Slack, Salesloft, Drive, Salesforce, and web research.
+Creates merchant folder with `pre-sales/` structure and automatic context scraping from Gmail, Slack, Drive, Salesforce, and web research.
+
+### Create & Manage Launch Cases (Post-Sales)
+```
+@se-assistant
+"New Launch Case: Acme Corp"
+```
+Creates or updates merchant folder with `post-sales/` structure, pulls Launch Case details from Salesforce, and links to pre-sales context if available.
 
 ### Sync Merchant Context
 ```
@@ -250,20 +259,25 @@ SE-NTRAL/
 │   └── reference/                    # Reference guides (prioritization, etc.)
 └── merchants/                        # One folder per merchant
     └── [Merchant Name]/
-        ├── briefing-document.md      # Executive summary, stakeholders, timeline
-        ├── discovery-assessment.md   # 5Cs framework, EPoV readiness
-        ├── technical-assessment.md   # Technical solution architecture
-        └── raw-files/                # All supporting files
+        ├── pre-sales/                # PRE-SALES WORK (Opportunities)
+        │   ├── briefing-document.md  # Executive summary, stakeholders, timeline
+        │   ├── discovery-assessment.md # 5Cs framework, EPoV readiness
+        │   └── technical-assessment.md # Technical solution architecture
+        ├── post-sales/               # POST-SALES WORK (Launch Cases)
+        │   └── launch-plan.md        # Launch Case tracking, SE consultation
+        └── raw-files/                # SHARED CONTEXT (continuity)
             ├── config.md             # Internal tool links (Salesforce, Slack, Drive)
             ├── slack.md              # Slack conversation summaries
             ├── meeting-notes/        # Meeting transcripts
             ├── emails/               # Email threads
+            ├── case-notes/           # Launch Case specific notes
+            ├── handoff-docs/         # CSM handoff materials
             ├── documents/            # Merchant deliverables
             ├── key-resources/        # Received documentation
             └── additional-context/   # Research, competitive analysis
 ```
 
-**Critical:** Core merchant files (`briefing-document.md`, `discovery-assessment.md`, `technical-assessment.md`) live at merchant root level. Supporting files go in `raw-files/` subfolders. See rules file Section 1.1.1 for details.
+**Critical:** Pre-sales files live in `pre-sales/` directory, post-sales files in `post-sales/` directory, and `raw-files/` is shared for context continuity. See rules file Section 1.1.1 for details.
 
 ---
 

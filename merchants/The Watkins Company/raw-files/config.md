@@ -1,13 +1,19 @@
 # The Watkins Company - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000Gq122YAB
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000Gq122YAB/view
 - **Opportunity Name**: The Watkins Inc.- Plus, Payments
-- **Account Name**: The Watkins Company
 - **Close Date**: 2025-12-31
 - **Stage**: Solution
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: The Watkins Company
+- **Account Link**: [To be added]
 
 ## Slack Channels
 - **DM Thread**: Steve Popov

@@ -1,13 +1,19 @@
 # Miami Open (Hard Rock Stadium) - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000FwSZZYA3
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000FwSZZYA3/view
 - **Opportunity Name**: Hard Rock Stadium: Miami Open & Miami F1 GP - PLUS, POS #AEOB #giftingcampaign
-- **Account Name**: Miami Open
 - **Close Date**: 2025-12-31
 - **Stage**: Demonstrate
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: Miami Open
+- **Account Link**: [To be added]
 
 ## Google Drive
 - **Meeting Notes**: August 5, 2025; September 15, 2025 (Intermiami demo sync)

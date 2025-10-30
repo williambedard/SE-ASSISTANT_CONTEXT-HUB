@@ -1,13 +1,19 @@
 # Injectors Direct - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000G4Sm5YAF
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000G4Sm5YAF/view
 - **Opportunity Name**: Injectors Direct - Plus, SP, SPi
-- **Account Name**: Injectors Direct
 - **Close Date**: 2025-11-21
 - **Stage**: Deal Craft
 - **Amount**: $78,200.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: Injectors Direct
+- **Account Link**: [To be added]
 
 ## Slack Channels
 - **Primary Channel**: #injectorsdirect

@@ -46,15 +46,17 @@ Daily workflows: workflows/core/quick-start.md
 
 ---
 
-## 🎯 Opportunity Prioritization (OPTIONAL FEATURE)
+## 🎯 Work Prioritization (Pre-Sales + Post-Sales)
 
 **If user asks "What should I focus on?" or "Show priorities" or "Update my dashboard":**
+
+### Pre-Sales (Opportunities)
 
 1. ✅ **Read personal-config.md** for:
    - Salesforce UserId (CRITICAL - prevents showing other SEs' deals)
    - Current quarter dates (focuses on actionable opportunities)
 
-2. ✅ **Query Salesforce** using revenue-mcp:
+2. ✅ **Query Salesforce Opportunities** using revenue-mcp:
    ```
    SELECT Account.Name, Total_Revenue__c, Close_Probability__c, CloseDate, 
           StageName, Merchant_Intent__c, Primary__c, SE_Next_Steps__c, Id, Name
@@ -79,19 +81,39 @@ Daily workflows: workflows/core/quick-start.md
      - **Tier 2 (Warm 🟡)**: Score 8-11 → Focus 30% time
      - **Tier 3 (Watch 👀)**: Score 4-7 → Focus 10% time
 
-4. ✅ **Generate dashboard** in format of `Current-Q-Priority-Dashboard.md`:
-   - List opportunities by tier (highest score first within each tier)
+### Post-Sales (Launch Cases)
+
+1. ✅ **Query Salesforce Launch Cases** using revenue-mcp:
+   ```
+   SELECT Id, CaseNumber, Subject, Status, Health__c, Type, RecordType.Name,
+          AccountId, Account.Name, CreatedDate, LastModifiedDate
+   FROM Case
+   WHERE RecordType.Name = 'Launch'
+     AND OwnerId = '[FROM personal-config.md]'
+     AND IsClosed = false
+   ORDER BY Health__c (Red > Yellow > Green), Status, CreatedDate DESC
+   ```
+
+2. ✅ **Prioritize by Health + Status**:
+   - **Critical**: Health = "Red" (stalled/blocked, immediate attention)
+   - **At Risk**: Health = "Yellow" (monitor closely)
+   - **High Priority**: Health = "Green" AND Status = "Launch" or "Test"
+   - **Active**: Health = "Green" AND Status = "Build" or "Explore"
+   - **Lower Priority**: Status = "Awaiting Handover" or "On Hold"
+
+### Unified Dashboard
+
+4. ✅ **Generate dashboard** with SEPARATED sections:
+   - **Pre-Sales Work** (Opportunities by tier)
+   - **Post-Sales Work** (Launch Cases by status/priority)
    - Highlight deals closing THIS WEEK
+   - Highlight launches THIS WEEK
    - Flag "Committed - At Risk" deals (⚠️)
-   - Flag "Uncommitted" deals with near close dates (⏸️)
-   - Include weighted forecast by tier
-   - Show time allocation guidance (60/30/10 split)
+   - Include time allocation guidance
 
 5. ✅ **Present actionable insights:**
-   - Tier 1 opportunities (immediate focus)
-   - This week's closing deals (URGENT)
-   - Risk mitigation needs (At Risk deals)
-   - Commitment gaps (Uncommitted + closing soon)
+   - **Pre-Sales**: Tier 1 opportunities, this week's closing deals
+   - **Post-Sales**: Launch Cases needing SE consultation, upcoming go-lives
 
 **Google Drive Access (OPTIONAL):**
 - If personal-config.md contains Drive folder location:
@@ -361,11 +383,17 @@ For operational guidance on context loading patterns and prioritization:
 - **Local Asset Scan:** Always scan merchant root folder and `raw-files/` before MCP queries 
 - **Context Confirmation:** State: _"Operating within `[merchant-name]` context using `[files]`"_
 
+**Update Scope Interpretation:**
+- **"Update all opps"** / **"Update opportunities"**: Pre-sales only → Query and update merchants with `pre-sales/` directories (active Opportunities)
+- **"Update all merchant data"** / **"Update all merchants"**: Both pre-sales AND post-sales → Update merchants with `pre-sales/` AND/OR `post-sales/` directories (active Opportunities and Launch Cases)
+- **"Update launch cases"** / **"Update post-sales"**: Post-sales only → Query and update merchants with `post-sales/` directories (active Launch Cases)
+
 
 **New Opportunity Trigger:** "New Opportunity: [Name]"
 1. **Check directory exists** (abort if yes)
 2. **Create Merchant Folder & Structure:**
   - Root folder: `[MERCHANT-NAME]/`
+  - Pre-sales subfolder: `pre-sales/`
   - Subfolders: `raw-files/` → `meeting-notes/`, `emails/`, `key-resources/`, `additional-context/`, `documents/`
 3. **Execute MCP Context Scraping** (discover AND READ):
   - **Slack MCP**: Search merchant conversations
@@ -377,7 +405,25 @@ For operational guidance on context loading patterns and prioritization:
 4. **Complete External Research:**
   - Web research and company intelligence (Revenue MCP Company Enrichment + web search)
   - Create `raw-files/additional-context/business-intelligence.md`
-5. **Update Merchant Files:** Apply Core Principles 0.2.2-0.2.3 (CRITICAL: briefing-document.md and technical-assessment.md MUST include both Salesforce Opportunity Name and Record ID)
+5. **Update Merchant Files:** Apply Core Principles 0.2.2-0.2.3 (CRITICAL: pre-sales/briefing-document.md and pre-sales/technical-assessment.md MUST include both Salesforce Opportunity Name and Record ID)
+6. **SE-NTRAL Sync:** Apply Core Principles 0.2.5
+
+**New Launch Case Trigger:** "New Launch Case: [Name]" or when Launch Case assigned
+1. **Check if merchant directory exists** (create if not)
+2. **Create Post-Sales Structure:**
+  - Post-sales subfolder: `post-sales/`
+  - Case notes subfolder: `raw-files/case-notes/`
+  - Handoff docs subfolder: `raw-files/handoff-docs/`
+3. **Query Salesforce Launch Case:**
+  - Pull Case details (CaseNumber, Subject, Status, Type, Account)
+  - Check for related Opportunity (pre-sales context)
+  - Update `raw-files/config.md` with Case ID and Link
+4. **Create Launch Plan:**
+  - Create `post-sales/launch-plan.md` from template
+  - Populate with Case details and SE role clarity
+5. **Link Pre-Sales Context (if exists):**
+  - Reference `pre-sales/` folder for historical context
+  - Note: raw-files/ is shared, providing continuity
 6. **SE-NTRAL Sync:** Apply Core Principles 0.2.5
 
 
@@ -402,19 +448,25 @@ For operational guidance on context loading patterns and prioritization:
 - The ONLY subfolders at merchant root level are within `raw-files/`
 
 
-**Correct Structure:**
+**Correct Structure (Pre-Sales + Post-Sales):**
 ```
 [merchant-name]/
-├── briefing-document.md              ← ROOT LEVEL
-├── discovery-assessment.md           ← ROOT LEVEL 
-├── technical-assessment.md           ← ROOT LEVEL
-└── raw-files/                        ← ONLY SUBFOLDER AT ROOT
-   ├── config.md
+├── pre-sales/                        ← PRE-SALES WORK (Opportunities)
+│   ├── briefing-document.md
+│   ├── discovery-assessment.md
+│   └── technical-assessment.md
+├── post-sales/                       ← POST-SALES WORK (Launch Cases)
+│   ├── launch-plan.md
+│   └── launch-readiness-checklist.md (if needed)
+└── raw-files/                        ← SHARED CONTEXT (continuity)
+   ├── config.md                      ← Contains BOTH Opp AND Case details
    ├── slack.md
    ├── meeting-notes/
    ├── emails/
    ├── key-resources/
-   ├── documents/                    ← MERCHANT-SPECIFIC DOCUMENTS HERE
+   ├── case-notes/                    ← Launch Case specific notes
+   ├── handoff-docs/                  ← CSM handoff materials
+   ├── documents/                     ← MERCHANT-SPECIFIC DOCUMENTS
    │   ├── workshop-agenda.md
    │   ├── demo-user-journeys.md
    │   ├── handover-content.md
@@ -422,14 +474,28 @@ For operational guidance on context loading patterns and prioritization:
    └── additional-context/
 ```
 
+**Key Principles:**
+- `pre-sales/` directory created ONLY when there is an Opportunity assigned to SE
+- `post-sales/` directory created ONLY when there is a Launch Case assigned to SE
+- `raw-files/` is ALWAYS at merchant root, shared by both pre-sales and post-sales
+- Context continuity: raw-files/ provides seamless context from pre-sales → post-sales
+
 
 **File Descriptions:**
+
+**Pre-Sales Files (`pre-sales/` directory):**
 1. **briefing-document.md**: Executive Summary (includes Salesforce Opp Name AND Record ID), Merchant Overview, Challenges, Stakeholders, Timelines & Next Steps, Outstanding Actions
 2. **discovery-assessment.md**: 5Cs framework, 6-Box Value Framework, Discovery gaps, EPoV readiness
 3. **technical-assessment.md**: See Section 2.1 for complete content/instructional sections breakdown (includes Salesforce Opp Name AND Record ID)
-4. **raw-files/config.md**: Tracks Shopify internal tooling locations (Slack channels, Google Drive folders, Salesforce Opportunity ID and Link, Account ID and Link, internal links)
-5. **raw-files/slack.md**: Slack conversation summaries
-6. **raw-files/** subfolders: `meeting-notes/`, `emails/`, `key-resources/`, `documents/`, `additional-context/`
+
+**Post-Sales Files (`post-sales/` directory):**
+1. **launch-plan.md**: Launch Case tracking, SE consultation log, go-live information, CSM handoff planning (minimal, SE consultative focus)
+2. **launch-readiness-checklist.md**: (Optional) Simple checklist if SE needs to track specific platform validations
+
+**Shared Context (`raw-files/` directory):**
+1. **config.md**: Tracks Shopify internal tooling (Slack channels, Drive folders, Salesforce Opportunity ID/Link, Launch Case ID/Link, Account ID/Link)
+2. **slack.md**: Slack conversation summaries
+3. **Subfolders**: `meeting-notes/`, `emails/`, `key-resources/`, `case-notes/` (Launch Cases), `handoff-docs/` (CSM handoffs), `documents/`, `additional-context/`
 
 
 ## 2. Knowledge Management & Templates

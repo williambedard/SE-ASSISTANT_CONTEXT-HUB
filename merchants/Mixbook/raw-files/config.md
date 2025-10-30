@@ -1,12 +1,19 @@
 # Mixbook - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000FJnh7YAD
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000FJnh7YAD/view
-- **Account Name**: Mixbook
+- **Opportunity Name**: [To be added]
 - **Close Date**: 2025-11-21
 - **Stage**: Deal Craft
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: Mixbook
+- **Account Link**: [To be added]
 
 ## Slack Channels
 - **Primary Channel**: #mixbook

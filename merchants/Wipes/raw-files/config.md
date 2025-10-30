@@ -1,18 +1,23 @@
 # Wipes - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000I2iYuYAJ
-- **Opportunity Name**: Wipes, PLUS, SP #AEOB
-- **Account ID**: 0018V00002iSvo5QAC
-- **Account Name**: Wipes.com
 - **Opportunity Link**: https://banff.my.salesforce.com/006OG00000I2iYuYAJ
-- **Owner**: Steve Popov (0058V00000E7qZQQAZ)
-- **Amount**: $82,800
-- **Total Revenue**: $409,062.94
+- **Opportunity Name**: Wipes, PLUS, SP #AEOB
 - **Close Date**: 2025-12-31
 - **Stage**: Envision
+- **Amount**: $82,800
+- **Total Revenue**: $409,062.94
+- **Owner**: Steve Popov (0058V00000E7qZQQAZ)
 - **Created**: 2025-10-24
 - **Last Modified**: 2025-10-28
+
+**Account:**
+- **Account ID**: 0018V00002iSvo5QAC
+- **Account Name**: Wipes.com
+- **Account Link**: https://banff.lightning.force.com/lightning/r/Account/0018V00002iSvo5QAC/view
 
 ## Slack
 - **DM with Steve Popov**: https://shopify.slack.com/archives/D081ZCMKR9S

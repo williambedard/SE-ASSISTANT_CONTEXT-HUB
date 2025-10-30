@@ -1,13 +1,19 @@
 # RST Brands - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 0068V00000zOEP8QAO
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/0068V00000zOEP8QAO/view
 - **Opportunity Name**: RST Brands-PLUS
-- **Account Name**: SCIRST LLC dba RST Brands
 - **Close Date**: 2025-12-31
 - **Stage**: Demonstrate
 - **Amount**: $165,600.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: SCIRST LLC dba RST Brands
+- **Account Link**: [To be added]
 
 ## Slack Channels
 - **DM Thread**: Steve Popov (June 2025)

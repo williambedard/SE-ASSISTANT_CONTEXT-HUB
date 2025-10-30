@@ -1,13 +1,19 @@
 # Chaparral Motorsports - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000HNMMFYA5
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000HNMMFYA5/view
 - **Opportunity Name**: Chaparral Motorsports - Plus, SP, SPi
-- **Account Name**: Chaparral Motorsports
 - **Close Date**: 2025-12-31
 - **Stage**: Demonstrate
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: Chaparral Motorsports
+- **Account Link**: [To be added]
 
 ## Slack Channels
 - **DM Thread**: Forrest Riddle (SE assignment discussion)

@@ -1,13 +1,19 @@
 # Gosselin Photo Vidéo - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000GSFfdYAH
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000GSFfdYAH/view
 - **Opportunity Name**: Gosselin Photo Vidéo Inc. - POS #AEOB
-- **Account Name**: Gosselin Photo Vidéo Inc.
 - **Close Date**: 2025-12-31
 - **Stage**: Demonstrate
 - **Amount**: $0.00 (POS only)
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: Gosselin Photo Vidéo Inc.
+- **Account Link**: [To be added]
 
 ## Key Contacts
 - **Merchant POC**: Miguel Cabral (m.cabral@gosselinphoto.ca)

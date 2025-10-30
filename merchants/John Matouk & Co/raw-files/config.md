@@ -1,13 +1,19 @@
 # John Matouk & Co - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 0068V000011Ai0nQAC
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/0068V000011Ai0nQAC/view
 - **Opportunity Name**: John Matouk & Co.
-- **Account Name**: John Matouk & Co.
 - **Close Date**: 2025-11-30
 - **Stage**: Deal Craft
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: John Matouk & Co.
+- **Account Link**: [To be added]
 
 ## Slack Channels
 - **Primary Channel**: #matouk-q1-2025 (Q1 2025 effort)

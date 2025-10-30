@@ -1,15 +1,24 @@
-# Moore & Giles - Opportunity Configuration
+# Moore & Giles - Internal Configuration
 
-**Merchant Name:** Moore & Giles  
-**Salesforce Opportunity ID:** 006OG00000CoRnmYAF  
-**Total Revenue:** $259,594.74  
-**Close Date:** December 19, 2025  
-**Stage:** Deal Craft  
-**Account Owner:** Sarah Roberts
+## Salesforce
+
+### Opportunity
+- **Opportunity ID**: 006OG00000CoRnmYAF
+- **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000CoRnmYAF/view
+- **Opportunity Name**: [To be added]
+- **Close Date**: 2025-12-19
+- **Stage**: Deal Craft
+- **Amount**: $259,594.74
+- **Account Owner**: Sarah Roberts
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: Moore & Giles
+- **Account Link**: [To be added]
 
 ---
 
-## 🎯 Opportunity Details
+## Opportunity Details
 
 **Products in Scope:**
 - Shopify Plus

@@ -110,7 +110,7 @@ cp templates/personal-config-template.md personal-config.md
 
 After setup, verify:
 - ✅ `personal-config.md` exists in workspace root
-- ✅ Salesforce UserId is populated (format: `0058V00000DjUuaQAF`)
+- ✅ Salesforce UserId is populated (format: 18-character ID starting with `005`)
 - ✅ Quarter dates match current Shopify fiscal quarter
 - ✅ Query returns ONLY your opportunities (not other SEs')
 - ✅ merchants/ folder exists (empty until first opportunity created)
@@ -144,14 +144,17 @@ After setup, verify:
 **Start working:**
 ```
 @se-assistant "New Opportunity: [First Company Name]"
+@se-assistant "New Launch Case: [First Company Name]"
 ```
 
 This creates your first merchant folder with auto-populated context from:
-- Salesforce (opportunity data)
+- Salesforce (opportunity/case data)
 - Gmail (email threads)
 - Slack (conversations)
 - Google Drive (documents)
 - Web research (company intelligence)
+
+**Note:** Use "New Opportunity" for pre-sales work, "New Launch Case" for post-sales implementation advisory.
 
 ---
 

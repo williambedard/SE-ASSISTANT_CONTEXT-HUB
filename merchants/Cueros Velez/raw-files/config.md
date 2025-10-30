@@ -1,13 +1,19 @@
 # Cueros Vélez - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000DqA2KYAV
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000DqA2KYAV/view
 - **Opportunity Name**: Cueros Velez - Plus #LATAM
-- **Account Name**: Cueros Velez
 - **Close Date**: 2025-12-31
 - **Stage**: Deal Craft
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: Cueros Velez
+- **Account Link**: [To be added]
 
 ## Google Drive
 - **Meeting Recording**: July 10, 2025 call with Read AI summary

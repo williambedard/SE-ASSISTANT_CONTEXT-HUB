@@ -1,13 +1,19 @@
 # Barrington Gifts - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000Hk57lYAB
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000Hk57lYAB/view
 - **Opportunity Name**: Barrington Gifts - Plus #OB
-- **Account Name**: Barrington Gifts
 - **Close Date**: 2025-12-31
 - **Stage**: Envision
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: Barrington Gifts
+- **Account Link**: [To be added]
 
 ## Google Drive
 - **Meeting Notes**: October 24, 2025 call

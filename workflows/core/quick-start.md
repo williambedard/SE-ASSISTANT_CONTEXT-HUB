@@ -37,9 +37,11 @@
 
 ## Starting a New Engagement
 
+### Pre-Sales: New Opportunity
+
 **You've been assigned a new opportunity. Now what?**
 
-### Step 1: Let SE-Assistant Create Everything (2 minutes)
+#### Step 1: Let SE-Assistant Create Everything (2 minutes)
 
 **RECOMMENDED:** Use SE-Assistant's automated merchant creation:
 
@@ -52,7 +54,7 @@
 2. ✅ Queries Salesforce for account/opportunity data (Revenue MCP)
 3. ✅ Searches Gmail, Slack, Drive for existing context (GWorkspace/Slack MCPs)
 4. ✅ Runs external company research (web search + company enrichment)
-5. ✅ Populates initial `briefing-document.md`, `discovery-assessment.md`, and `raw-files/config.md`
+5. ✅ Populates initial `pre-sales/briefing-document.md`, `pre-sales/discovery-assessment.md`, and `raw-files/config.md`
 6. ✅ Saves all discovered context to appropriate folders
 
 **Result:** Complete merchant folder with pre-populated context in 2-5 minutes.
@@ -60,10 +62,11 @@
 **Folder structure created:**
 ```
 merchants/[Company-Name]/
-├── briefing-document.md          # Auto-populated from MCP data
-├── discovery-assessment.md       # Initial 5Cs framework
-├── technical-assessment.md       # Created when needed
-└── raw-files/
+├── pre-sales/                     # Pre-sales work
+│   ├── briefing-document.md      # Auto-populated from MCP data
+│   ├── discovery-assessment.md   # Initial 5Cs framework
+│   └── technical-assessment.md   # Created when needed
+└── raw-files/                     # Shared context
     ├── config.md                 # Salesforce/Slack/Drive links
     ├── slack.md                  # Slack conversation summaries
     ├── meeting-notes/
@@ -73,6 +76,47 @@ merchants/[Company-Name]/
     └── additional-context/
         └── business-intelligence.md  # External research
 ```
+
+---
+
+### Post-Sales: New Launch Case
+
+**You've been assigned a Launch Case. Now what?**
+
+#### Step 1: Create Launch Case Structure
+
+```
+@se-assistant "New Launch Case: [Company Name]"
+```
+
+**This automatically:**
+1. ✅ Creates `post-sales/` directory (if doesn't exist)
+2. ✅ Queries Salesforce for Launch Case details (CaseNumber, Subject, Status, Type)
+3. ✅ Creates `post-sales/launch-plan.md` with Case details
+4. ✅ Updates `raw-files/config.md` with Case ID and Link
+5. ✅ Creates `raw-files/case-notes/` and `raw-files/handoff-docs/` folders
+6. ✅ Links to pre-sales context if merchant has both Opportunity and Launch Case
+
+**Result:** Launch Case folder ready for consultative SE work
+
+**Folder structure created:**
+```
+merchants/[Company-Name]/
+├── pre-sales/                     # Pre-sales work (if exists)
+│   └── ...
+├── post-sales/                    # POST-SALES WORK
+│   └── launch-plan.md            # Launch Case tracking
+└── raw-files/                     # SHARED CONTEXT
+    ├── config.md                 # NOW includes Case ID/Link
+    ├── case-notes/               # Launch Case specific notes
+    ├── handoff-docs/             # CSM handoff materials
+    └── ...
+```
+
+**SE Role Reminder:**
+- You're **consultative** - answer platform questions when asked
+- Partner owns implementation timeline and execution
+- You do NOT validate launch readiness or manage project milestones
 
 ---
 
@@ -200,7 +244,43 @@ SE-Assistant can help structure your notes into the proper sections.
 ```
 @se-assistant "What should I focus on this week?"
 ```
-This generates your priority dashboard showing Tier 1 deals (see `workflows/reference/opportunity-prioritization.md`).
+This generates your priority dashboard showing:
+- **Pre-Sales**: Tier 1 deals (see `workflows/reference/opportunity-prioritization.md`)
+- **Post-Sales**: Active Launch Cases (see `workflows/core/launch-case-management.md`)
+
+**Query Launch Cases directly:**
+```
+@se-assistant "Show my active Launch Cases"
+```
+
+**Example Salesforce queries** (using Revenue MCP):
+
+**Get all active Launch Cases (prioritized by Health):**
+```soql
+SELECT Id, CaseNumber, Subject, Status, Health__c, Type, RecordType.Name,
+       AccountId, Account.Name, CreatedDate, LastModifiedDate
+FROM Case
+WHERE RecordType.Name = 'Launch'
+  AND OwnerId = '[Your Salesforce User ID]'
+  AND IsClosed = false
+ORDER BY 
+  CASE Health__c WHEN 'Red' THEN 1 WHEN 'Yellow' THEN 2 WHEN 'Green' THEN 3 ELSE 4 END,
+  Status
+```
+
+**Get Launch Cases needing attention (Red/Yellow health):**
+```soql
+SELECT Id, CaseNumber, Subject, Status, Health__c, Account.Name
+FROM Case
+WHERE RecordType.Name = 'Launch'
+  AND OwnerId = '[Your Salesforce User ID]'
+  AND (Health__c = 'Red' OR Health__c = 'Yellow')
+  AND IsClosed = false
+ORDER BY Health__c, LastModifiedDate DESC
+```
+
+**Valid Statuses:** Awaiting Handover, Explore, Build, Test, Launch, On Hold, Closed  
+**Health Values:** Red (critical), Yellow (at risk), Green (on track)
 
 ---
 

@@ -1,13 +1,19 @@
 # IIBA - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000FtJZFYA3
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000FtJZFYA3/view
 - **Opportunity Name**: IIBA - PLUS, SP
-- **Account Name**: IIBA
 - **Close Date**: 2025-12-31
 - **Stage**: Demonstrate
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: IIBA
+- **Account Link**: [To be added]
 
 ## Google Drive
 - **Requirements Spreadsheet**: Created July 31, 2025 with Scope Planner

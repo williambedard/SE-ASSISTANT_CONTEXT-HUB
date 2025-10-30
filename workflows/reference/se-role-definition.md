@@ -51,16 +51,160 @@
 - **Limited, milestone-based advisory** to keep implementation aligned with the sold solution
 - Not day-to-day implementation management
 - Platform validation and unblocking
+- **Tracked via Salesforce Launch Cases** (RecordType = "Launch")
 
 ### Launch Readiness
 - Participate in go-live checks
 - Focus on platform fit and non-functional readiness
 - Validate performance, scale, support pathways
+- **Complete launch readiness checklist** before go-live approval
 
 ### Post-Launch Exit
 - Hand off ongoing ownership to CSM (adoption/expansion)
 - Support handles incidents
+- **SE exits launch + 0-2 weeks** after go-live validation
 - **SE re-engages only for net-new scope**
+
+---
+
+## Post-Sales Deep Dive: Launch Case Management
+
+### What is a Launch Case?
+
+**Salesforce Object:** Case (RecordType = "Launch")
+
+**Purpose:** Track SE post-sales implementation advisory from contract signing through go-live and CSM handoff
+
+**Key Distinction:**
+- **Opportunity** = Pre-sales work (discovery → contract)
+- **Launch Case** = Post-sales work (implementation → go-live → exit)
+
+### Launch Case Lifecycle
+
+**Typical Statuses:**
+1. **Awaiting Handover** - Case created but not yet assigned to SE
+2. **Explore** - Initial discovery and scoping phase, implementation planning
+3. **Build** - Implementation in progress, SE available for platform questions
+4. **Test** - Solution built, UAT in progress, launch prep starting
+5. **Launch** - Go-live imminent or recently completed, SE providing launch support
+6. **On Hold** - Implementation paused temporarily, waiting on merchant
+7. **Closed** - Launch complete, CSM handoff done, SE exited
+
+**Duration:** 4-12 weeks from kickoff to closure (varies by complexity)
+
+### SE Advisory During Implementation
+
+**SE Role:** Consultative platform advisor - NOT project manager or implementation owner
+
+**Partner/Agency Owns:**
+- Implementation plan and timeline
+- Migration execution
+- Theme/app development
+- Project management
+- Launch readiness validation
+
+**SE Provides:**
+- Platform guidance when consulted
+- Answers to Shopify-specific questions
+- Architectural advisory (when asked)
+- Escalation to Shopify support if needed
+
+**SE Does NOT:**
+- Define implementation milestones
+- Own project timeline
+- Validate completion of tasks
+- Execute hands-on configuration
+- Manage partner/merchant work
+
+**Typical SE Involvement:**
+- Kickoff call: Review pre-sales context with partner
+- Ad-hoc consultations: Answer platform questions as they arise
+- Launch day: Available for platform questions/escalations
+
+**See:** [`launch-case-management.md`](../core/launch-case-management.md)
+
+### Launch Day Support
+
+**SE Role:** Available for platform questions if partner/merchant needs assistance
+
+**SE Availability:**
+- Available during business hours on launch day (if scheduled)
+- Answer platform-specific questions
+- Escalate to Shopify Plus support if needed
+
+**SE Does NOT:**
+- ❌ Execute DNS cutover or store configuration
+- ❌ Validate launch readiness (partner's responsibility)
+- ❌ Troubleshoot merchant/partner code
+- ❌ Manage launch logistics
+- ❌ "Monitor" the launch - only reactive support
+
+### CSM Handoff Process
+
+**Timing:** Launch + 0-2 weeks
+
+**Handoff Trigger:** 
+- Launch complete and stable
+- Post-launch issues resolved or documented
+- No critical blockers
+
+**Handoff Deliverables:**
+- Handoff document created (`merchants/[Merchant]/raw-files/handoff-docs/csm-handoff.md`)
+- Knowledge transfer session with CSM
+- Context on solution architecture and key decisions
+- Outstanding issues or future scope documented
+
+**After Handoff:**
+- Case status → Closed
+- CSM owns ongoing merchant relationship
+- SE exits (no ongoing advisory)
+
+**SE Re-Engagement:**
+- Only for net-new scope (new products, major features)
+- Requires new Opportunity → new Launch Case
+
+### SE Role Boundaries in Post-Sales
+
+#### ✅ SE DOES (Consultative)
+- Answer platform questions when asked
+- Provide guidance on Shopify best practices
+- Escalate platform issues to Shopify support
+- Review architecture if consulted
+
+#### ❌ SE DOES NOT (Execution)
+- Build themes, apps, or integrations
+- Configure store settings hands-on
+- Own implementation timeline or milestones
+- Validate launch readiness
+- Manage project or partner work
+- Troubleshoot partner/merchant code
+- Perform hands-on migration or testing
+
+**Remember:** SE = Answer questions, NOT own implementation
+
+### Post-Sales Folder Structure
+
+**Merchant folders support BOTH pre-sales and post-sales work:**
+
+```
+merchants/[Merchant]/
+  pre-sales/                   # Opportunity work
+    briefing-document.md
+    discovery-assessment.md
+    technical-assessment.md
+  post-sales/                  # Launch Case work
+    launch-plan.md             # Milestone tracking integrated
+    launch-readiness-checklist.md
+  raw-files/                   # SHARED context (continuity)
+    config.md                  # Contains BOTH Opp AND Case details
+    documents/
+    emails/
+    meeting-notes/
+    case-notes/                # Launch Case specific notes
+    handoff-docs/              # CSM handoff materials
+```
+
+**Context Continuity:** raw-files/ shared between pre-sales and post-sales ensures seamless context from discovery through launch
 
 ---
 

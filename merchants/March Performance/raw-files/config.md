@@ -1,15 +1,20 @@
 # March Performance (CVF Racing) - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000HRD2bYAH
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000HRD2bYAH/view
 - **Opportunity Name**: March Performance #OB
-- **Account Name**: CVF Racing
-- **Account ID**: 0018V00002dH5IOQA0
 - **Close Date**: 2025-12-31
 - **Stage**: Solution
 - **Amount**: $82,800.00
 - **Total Revenue**: $559,045.61
+
+**Account:**
+- **Account ID**: 0018V00002dH5IOQA0
+- **Account Name**: CVF Racing
+- **Account Link**: https://banff.lightning.force.com/lightning/r/Account/0018V00002dH5IOQA0/view
 
 ## Google Drive
 - **Technical Assessment Doc**: https://docs.google.com/document/d/1VYxEUcTQxco0B7bUh1yKD7P_LXMP0vU6iZH5xPoYZbg

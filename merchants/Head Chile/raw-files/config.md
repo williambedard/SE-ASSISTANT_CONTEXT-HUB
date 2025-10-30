@@ -1,13 +1,19 @@
 # Head Chile - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000GJNZBYA5
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000GJNZBYA5/view
 - **Opportunity Name**: Head Chile - Plus
-- **Account Name**: Head Chile
 - **Close Date**: 2025-10-31
 - **Stage**: Deal Craft
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: Head Chile
+- **Account Link**: [To be added]
 
 ## Slack Channels
 - **DM Thread**: Forrest Riddle (partner gating issue escalation)

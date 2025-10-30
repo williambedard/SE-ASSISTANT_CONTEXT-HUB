@@ -1,13 +1,19 @@
 # CampusParc - Internal Configuration
 
 ## Salesforce
+
+### Opportunity
 - **Opportunity ID**: 006OG00000CQYlVYAX
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000CQYlVYAX/view
 - **Opportunity Name**: CampusParc - PLUS
-- **Account Name**: CampusParc
 - **Close Date**: 2025-11-30
 - **Stage**: Solution
 - **Amount**: $82,800.00
+
+**Account:**
+- **Account ID**: [To be added]
+- **Account Name**: CampusParc
+- **Account Link**: [To be added]
 
 ## Slack Channels
 - **DM Thread**: Eli Cadesky

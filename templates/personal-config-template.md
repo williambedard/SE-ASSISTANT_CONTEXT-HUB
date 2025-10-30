@@ -185,7 +185,7 @@ STEP 5: Generate Output
 
 ## 📊 QUERY PATTERNS
 
-### Salesforce Opportunity Query Template
+### Salesforce Opportunity Query Template (Pre-Sales)
 ```soql
 SELECT OpportunityId, Opportunity.Name, Opportunity.Total_Revenue__c 
 FROM OpportunityTeamMember 
@@ -198,6 +198,51 @@ WHERE UserId = '[YOUR_SALESFORCE_USER_ID]'
   AND Opportunity.CloseDate >= [QUARTER_START_DATE]
   AND Opportunity.CloseDate <= [QUARTER_END_DATE]
 ```
+
+### Salesforce Launch Case Query Template (Post-Sales)
+```soql
+SELECT 
+  Id,
+  CaseNumber,
+  Subject,
+  Status,
+  Health__c,
+  Type,
+  RecordType.Name,
+  AccountId,
+  Account.Name,
+  CreatedDate,
+  LastModifiedDate,
+  ClosedDate
+FROM Case
+WHERE RecordType.Name = 'Launch'
+  AND OwnerId = '[YOUR_SALESFORCE_USER_ID]'
+  AND IsClosed = false
+ORDER BY 
+  CASE Health__c 
+    WHEN 'Red' THEN 1 
+    WHEN 'Yellow' THEN 2 
+    WHEN 'Green' THEN 3 
+    ELSE 4 
+  END,
+  Status,
+  CreatedDate DESC
+```
+
+**Common Case Statuses:**
+- Awaiting Handover, Explore, Build, Test, Launch, On Hold, Closed
+
+**Health Status (Implementation Progress):**
+- Red: Stalled/blocked, needs immediate attention
+- Yellow: At risk, monitor closely
+- Green: On track
+
+**Note:** No date filter on Launch Cases (continuous work). Prioritize by Health first.
+
+**Case Types:**
+- Launch Services - Complimentary
+- Launch Services - Paid
+- Implementation Advisory
 
 ### Calendar Query Template
 ```javascript
@@ -244,15 +289,34 @@ After copying this template to `personal-config.md`:
 
 ```
 IF temporal reference (today/tomorrow/this week):
-  → Calendar First → Add deal context to meetings
+  → Calendar First → Add Opportunity + Case context to meetings
   
 ELSE IF deal/pipeline terms (focus/pipeline/quarter):
-  → Salesforce First → Add calendar touchpoints if relevant
+  → Salesforce First (Opportunities + Cases) → Add calendar touchpoints if relevant
+  
+ELSE IF launch/post-sales terms (launch/implementation/go-live):
+  → Salesforce Cases First → Show Launch Case work separately
   
 ELSE IF ambiguous:
   → <7 days: Calendar-first
-  → 7+ days: Deal-first
+  → 7+ days: Deal-first (both Opps + Cases)
 ```
+
+### Output Separation Rule
+
+**CRITICAL:** When showing work priorities, ALWAYS separate into two sections:
+
+1. **Pre-Sales Work** (Opportunities)
+   - Deal prioritization
+   - Discovery/scoping work
+   - Technical assessments
+
+2. **Post-Sales Work** (Launch Cases)
+   - Implementation advisory
+   - Launch readiness
+   - Milestone checkpoints
+
+**NEVER blend sales and launch work in the same section.**
 
 ---
 
