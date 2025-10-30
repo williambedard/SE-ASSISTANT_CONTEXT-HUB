@@ -244,7 +244,7 @@ SE-NTRAL/
 ├── templates/                        # Document templates
 │   └── personal-config-template.md   # Template for personal setup
 ├── personal-config.md                # Your config (gitignored)
-├── Current-Q-Priority-Dashboard.md   # Auto-generated priority dashboard
+├── current-q-priorities.md           # Auto-generated priority dashboard
 ├── workflows/                        # Workflow documentation
 │   ├── core/                         # Core workflows
 │   └── reference/                    # Reference guides (prioritization, etc.)

@@ -182,7 +182,7 @@ Based on `CloseDate` field from Salesforce opportunities:
 3. Identify promotions/demotions between tiers
 4. Review Tier 2 deals for promotion opportunities
 5. Check Tier 3 for disqualification candidates
-6. Update Current-Q-Priority-Dashboard.md
+6. Update current-q-priorities.md
 
 **Time:** 5-10 minutes
 
@@ -192,7 +192,7 @@ Based on `CloseDate` field from Salesforce opportunities:
 1. Query Salesforce for all opportunities (current + next quarter)
 2. Recalculate ALL priority scores
 3. Update all merchant profiles with new scores
-4. Generate fresh Current-Q-Priority-Dashboard.md
+4. Generate fresh current-q-priorities.md
 5. Report significant changes to manager
 6. Disqualify stalled Tier 3 deals (no movement in 90 days)
 
@@ -257,7 +257,7 @@ Based on `CloseDate` field from Salesforce opportunities:
 
 ## Dashboard Format Reference
 
-When generating `Current-Q-Priority-Dashboard.md`, use this structure:
+When generating `current-q-priorities.md`, use this structure:
 
 ```markdown
 # Q4 2025 Priority Dashboard
