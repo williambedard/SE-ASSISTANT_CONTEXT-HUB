@@ -6,25 +6,62 @@ Your AI-powered research partner for Shopify SE work. Combines your merchant con
 
 ---
 
-## 🚀 Quick Start (2 minutes)
+## 🚀 Quick Start (5 minutes)
 
-### Prerequisites
-You need [MCP servers](https://vault.shopify.io/ai/mcp_servers) configured in Cursor first (Revenue MCP, Vault MCP, GWorkspace MCP, Slack MCP).
+### Step 0: Configure MCP Servers (REQUIRED)
 
-### Setup
+**⚠️ Most important step** - Without MCPs, this tool won't work properly.
 
-**1. Clone this repo**
+MCPs (Model Context Protocol servers) give the AI access to Shopify's internal tools. Think of them as API connectors.
+
+**Setup guide:** [Shopify MCP Server Documentation](https://vault.shopify.io/ai/mcp_servers)
+
+**Required MCPs:**
+- ✅ **Revenue MCP** - Salesforce data, company enrichment, account info
+- ✅ **Vault MCP** - Internal knowledge base, RFP responses, competitive battle cards
+- ✅ **GWorkspace MCP** - Gmail threads, Drive docs, Calendar
+- ✅ **Slack MCP** - Team conversations, merchant mentions
+
+**Highly Recommended:**
+- Scout MCP - Support tickets, merchant frustrations, sales conversations
+- Shopify Dev MCP - API docs, GraphQL validation
+
+**How to verify MCPs are working:**
+```bash
+@se-assistant "Get my Salesforce UserId"
+```
+If this returns your UserId, MCPs are configured correctly.
+
+**Common MCP issues:**
+- Need to re-authenticate with Google/Salesforce/Slack every few weeks
+- Check Cursor settings → Features → Model Context Protocol
+- Some MCPs require specific permissions (admin for Revenue MCP)
+
+**Already have MCPs configured?** Skip to Step 1 below.
+
+---
+
+### Step 1: Clone & Setup
+
+Clone this repo:
 ```bash
 git clone https://github.com/williambedard/SE-ASSISTANT_CONTEXT-HUB
 ```
 
-**2. Run setup in Cursor**
+---
+
+### Step 2: Run Setup in Cursor
+
+In Cursor, open the cloned folder and run:
 ```bash
 @se-assistant "Set up SE-ASSISTANT_CONTEXT-HUB for me"
 ```
 This creates your `personal-config.md` with your Salesforce UserId and quarter dates (gitignored).
 
-**3. Start working**
+---
+
+### Step 3: Start Working
+
 ```bash
 @se-assistant "New Opportunity: [Company Name]"
 ```
@@ -130,8 +167,12 @@ SE-ASSISTANT_CONTEXT-HUB/
 **"Can't find merchant context"**  
 → Run: `@se-assistant "Sync merchant context for [Name]"`
 
-**"MCP not working"**  
-→ Verify MCP servers configured in Cursor settings: [Shopify MCP Documentation](https://vault.shopify.io/ai/mcp_servers)
+**"MCP not working" / "Tool failed to execute"**  
+→ Check Cursor settings → Features → Model Context Protocol  
+→ Verify all required MCPs are listed and enabled  
+→ Try re-authenticating (may need to re-auth with Google/Salesforce/Slack)  
+→ Setup guide: [Shopify MCP Documentation](https://vault.shopify.io/ai/mcp_servers)  
+→ Test with: `@se-assistant "Get my Salesforce UserId"` - should return your UserId
 
 **More help:** [Onboarding Setup Guide](workflows/core/onboarding-setup.md) or ping @william.bedard in Slack
 
