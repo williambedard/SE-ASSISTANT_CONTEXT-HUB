@@ -1,8 +1,8 @@
-# SE-NTRAL: Your AI-Powered Companion for Solutions Engineering Excellence
+# SE-Assistant: Your AI-Powered Personal Research Genius
 
-## 🎯 What is SE-NTRAL?
+## 🎯 What is SE-Assistant?
 
-SE-NTRAL is a Cursor-based AI assistant specifically designed for Shopify Solutions Engineers. Built to understand the unique challenges of SE work, it helps you:
+SE-Assistant is a Cursor-based AI assistant specifically designed for Shopify Solutions Engineers. Built to understand the unique challenges of SE work, it helps you:
 
 - 🔍 **Research merchants** faster than ever before
 - 📞 **Prepare for calls** with complete context
@@ -12,15 +12,15 @@ SE-NTRAL is a Cursor-based AI assistant specifically designed for Shopify Soluti
 
 Think of it as your tireless research partner who never sleeps and always has the answers ready.
 
-**Here's the magic:** SE-NTRAL combines your full merchant context (every file, note, and email in your Cursor workspace) with direct access to Shopify's internal tools via MCPs and LLMs. It's like having a research team that knows everything about your deals and has instant access to every Shopify system.
+**Here's the magic:** SE-Assistant combines your full merchant context (every file, note, and email in your Cursor workspace) with direct access to Shopify's internal tools via MCPs and LLMs. It's like having a research team that knows everything about your deals and has instant access to every Shopify system.
 
 💡 **The Formula:** Your merchant context + Shopify's internal data universe + MCPs = unstoppable SE efficiency.
 
 ---
 
-**Built on the foundation of the [SE-NTRAL platform](https://se-ntral.quick.shopify.io/)** (kudos to Stephen Brook!) – the semantic search tool that revolutionized how SEs share and discover merchant context across the team.
+**Built to feed into the [SE-NTRAL platform](https://se-ntral.quick.shopify.io/)** (kudos to Stephen Brook!) – the semantic search tool that revolutionized how SEs share and discover merchant context across the team.
 
-**This project extends SE-NTRAL locally:** We've added comprehensive Cursor-based workflows, automated context gathering, and structured merchant management. Think of it as your local companion for SE work – build your context locally, sync to [SE-NTRAL platform](https://se-ntral.quick.shopify.io/) for team-wide sharing.
+**SE-Assistant is your personal research genius. SE-NTRAL is the team's collective intelligence network.** Build your context locally with SE-Assistant, sync to SE-NTRAL platform for team-wide sharing.
 
 ---
 
@@ -31,7 +31,7 @@ Think of it as your tireless research partner who never sleeps and always has th
 **One command to set up:**
 
 ```bash
-@se-assistant "Set up SE-NTRAL for me"
+@se-assistant "Set up SE-Assistant for me"
 ```
 
 This points you to [Onboarding Setup](workflows/core/onboarding-setup.md) which configures:
@@ -55,7 +55,7 @@ Jump straight to:
 
 ---
 
-## 🚀 What Can SE-NTRAL Do?
+## 🚀 What Can SE-Assistant Do?
 
 ### 🎯 Smart Opportunity & Launch Case Management
 - **Create opportunities** with `New Opportunity: [Name]` – auto-builds pre-sales folder structure and context
@@ -205,7 +205,7 @@ Once your context is loaded, unleash the power:
 
 ---
 
-## 🚨 The Problem SE-NTRAL Solves
+## 🚨 The Problem SE-Assistant Solves
 
 The SE-Assistant workflow in Cursor is incredible – you're building amazing solutions, crafting brilliant value props, and gathering competitive intelligence like never before.
 
@@ -215,13 +215,13 @@ Other SEs are solving the same problems, building similar solutions, and researc
 
 ---
 
-## ✨ Enter SE-NTRAL (The Team Intelligence Layer)
+## ✨ The Solution: SE-Assistant + SE-NTRAL
 
-SE-NTRAL bridges local brilliance with team-wide collaboration.
+SE-Assistant is your personal research genius. SE-NTRAL bridges local brilliance with team-wide collaboration.
 
 ### 🔗 How It Works
 1. **You build locally:** Use SE-Assistant in Cursor to create merchant context and solutions
-2. **You sync once:** Push your workspace to SE-NTRAL in seconds
+2. **You sync once:** Push your workspace to SE-NTRAL platform in seconds
 3. **Team benefits forever:** Every SE can now access your merchant context, solutions, and insights
 
 ### 🔍 The Power: AI-Driven Semantic Search
@@ -245,10 +245,10 @@ SE-NTRAL doesn't just store files – it makes them discoverable:
 
 ## 📁 Project Structure
 
-**Note:** SE-NTRAL uses a merchant-centric structure optimized for MCP integration and context preservation. See `.cursor/rules/se-assistant.mdc` for complete structural requirements.
+**Note:** SE-Assistant uses a merchant-centric structure optimized for MCP integration and context preservation. See `.cursor/rules/se-assistant.mdc` for complete structural requirements.
 
 ```
-SE-NTRAL/
+SE-Assistant/
 ├── .cursor/rules/se-assistant.mdc    # SE-NTRAL rules (source of truth)
 ├── templates/                        # Document templates
 │   └── personal-config-template.md   # Template for personal setup
@@ -349,11 +349,11 @@ SE-NTRAL relies on Model Context Protocol (MCP) servers to access Shopify's inte
 **In Cursor's terminal:**
 ```bash
 # Clone the repository into your root projects folder
-git clone https://github.com/williambedard/SE-NTRAL_CONTEXT_HUB
+git clone https://github.com/williambedard/SE-Assistant
 
 ```
 
-You're now in the SE-NTRAL project folder, good to go.
+You're now in the SE-Assistant project folder, good to go.
 
 ---
 
@@ -362,7 +362,7 @@ You're now in the SE-NTRAL project folder, good to go.
 In Cursor, run:
 
 ```bash
-@se-assistant "Set up SE-NTRAL for me"
+@se-assistant "Set up SE-Assistant for me"
 ```
 
 This will:
@@ -491,7 +491,7 @@ Pulls latest from Gmail, Slack, Drive and updates local files.
 
 ## ❓ Questions?
 
-**How do I use SE-NTRAL?**  
+**How do I use SE-Assistant?**  
 → Just use `@se-assistant` in any Cursor chat
 
 **Do I need to create personal-config.md?**  

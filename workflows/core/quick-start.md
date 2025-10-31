@@ -1,8 +1,8 @@
 # Quick Start Guide
 
-**Purpose:** Daily workflows for using SE-NTRAL after initial setup
+**Purpose:** Daily workflows for using SE-Assistant after initial setup
 
-**Haven't set up yet?** Run `@se-assistant "Set up SE-NTRAL for me"` or see `onboarding-setup.md` first.
+**Haven't set up yet?** Run `@se-assistant "Set up SE-Assistant for me"` or see `onboarding-setup.md` first.
 
 ---
 
@@ -205,7 +205,7 @@ SE-Assistant can help structure your notes into the proper sections.
 
 ## Quick Reference: Which Document When?
 
-**SE-NTRAL Core Documents (Rules File Sections 1.1.1 & 2.1):**
+**SE-Assistant Core Documents (Rules File Sections 1.1.1 & 2.1):**
 
 | Activity | Document to Use | Location | Rules Reference |
 |----------|----------------|----------|-----------------|
@@ -325,7 +325,7 @@ ORDER BY Health__c, LastModifiedDate DESC
 
 ### Switching Between Merchants
 
-**SE-NTRAL enforces context isolation (rules file Section 1):**
+**SE-Assistant enforces context isolation (rules file Section 1):**
 
 1. **Close all files** for current merchant
 2. **Open new merchant's folder**
@@ -501,7 +501,7 @@ for the technical requirements."
 - Links to discovery-assessment.md and technical-assessment.md
 - Update it after every session
 
-### 2. **Follow SE-NTRAL Structure**
+### 2. **Follow SE-Assistant Structure**
 - briefing-document.md = executive summary, always up-to-date
 - discovery-assessment.md = 5Cs framework, EPoV readiness
 - technical-assessment.md = solution architecture, migration strategy
@@ -550,7 +550,7 @@ for the technical requirements."
 
 ### "I don't have time to fill out all these templates"
 
-**Response:** Start minimal - SE-NTRAL core structure:
+**Response:** Start minimal - SE-Assistant core structure:
 1. Always do: briefing-document.md (executive summary, status, next steps)
 2. Discovery: discovery-assessment.md (5Cs framework)
 3. Technical: technical-assessment.md (solution architecture)

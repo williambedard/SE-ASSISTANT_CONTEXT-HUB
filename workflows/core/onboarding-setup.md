@@ -1,4 +1,4 @@
-# SE-NTRAL Setup - Interactive Onboarding
+# SE-Assistant Setup - Interactive Onboarding
 
 **Purpose:** ONE-TIME setup to create your personal-config.md
 
@@ -63,7 +63,7 @@ Expected result: Returns ONLY opportunities where user is Primary SE.
 ```
 ✅ Setup Complete!
 
-Your SE-NTRAL workspace is ready. Here's what you can do now:
+Your SE-Assistant workspace is ready. Here's what you can do now:
 
 📋 Essential Commands:
 - "New Opportunity: [Company Name]" - Create merchant folder with auto-context
@@ -120,7 +120,7 @@ After setup, verify:
 ## Common Setup Issues
 
 ### "Can't find personal-config.md"
-→ File must be in workspace root: `/Users/[you]/SE-NTRAL/personal-config.md`  
+→ File must be in workspace root: `/Users/[you]/SE-Assistant/personal-config.md`  
 → Not in merchants/ or workflows/ subfolders
 
 ### "Query returns other SEs' opportunities"
@@ -160,7 +160,7 @@ This creates your first merchant folder with auto-populated context from:
 
 ## ✅ Setup Complete! What's Next?
 
-Your personal-config.md is configured. Now learn how to USE SE-NTRAL:
+Your personal-config.md is configured. Now learn how to USE SE-Assistant:
 
 **👉 Next Step:** Read `workflows/core/quick-start.md`
 

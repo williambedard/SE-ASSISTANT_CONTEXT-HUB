@@ -318,9 +318,9 @@ When generating `current-q-priorities.md`, use this structure:
 
 ---
 
-## Integration with SE-NTRAL
+## Integration with SE-Assistant
 
-This framework integrates with SE-NTRAL's comprehensive SE rules:
+This framework integrates with SE-Assistant's comprehensive SE rules:
 - Discovery frameworks (5Cs, EPoV, 6-Box) inform probability assessment
 - Technical assessment workflows support high-priority deals
 - MCP integration (revenue-mcp) provides Salesforce data
