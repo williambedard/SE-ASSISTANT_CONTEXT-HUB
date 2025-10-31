@@ -121,5 +121,5 @@ After significant context updates, sync to SE-NTRAL platform:
 
 ---
 
-*This file optimizes context loading for the SE-Assistant workflow based on Context Engineering research (OpenAI, Anthropic, Google 2024).*
+*This file optimizes context loading for the SE-ASSISTANT_CONTEXT-HUB workflow based on Context Engineering research (OpenAI, Anthropic, Google 2024).*
 

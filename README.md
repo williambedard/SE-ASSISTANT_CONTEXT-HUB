@@ -1,8 +1,8 @@
-# SE-Assistant: Your AI-Powered Personal Research Genius
+# SE-ASSISTANT_CONTEXT-HUB: Your AI-Powered Personal Research Genius
 
-## 🎯 What is SE-Assistant?
+## 🎯 What is SE-ASSISTANT_CONTEXT-HUB?
 
-SE-Assistant is a Cursor-based AI assistant specifically designed for Shopify Solutions Engineers. Built to understand the unique challenges of SE work, it helps you:
+SE-ASSISTANT_CONTEXT-HUB is a Cursor-based AI assistant specifically designed for Shopify Solutions Engineers. Built to understand the unique challenges of SE work, it helps you:
 
 - 🔍 **Research merchants** faster than ever before
 - 📞 **Prepare for calls** with complete context
@@ -12,7 +12,7 @@ SE-Assistant is a Cursor-based AI assistant specifically designed for Shopify So
 
 Think of it as your tireless research partner who never sleeps and always has the answers ready.
 
-**Here's the magic:** SE-Assistant combines your full merchant context (every file, note, and email in your Cursor workspace) with direct access to Shopify's internal tools via MCPs and LLMs. It's like having a research team that knows everything about your deals and has instant access to every Shopify system.
+**Here's the magic:** SE-ASSISTANT_CONTEXT-HUB combines your full merchant context (every file, note, and email in your Cursor workspace) with direct access to Shopify's internal tools via MCPs and LLMs. It's like having a research team that knows everything about your deals and has instant access to every Shopify system.
 
 💡 **The Formula:** Your merchant context + Shopify's internal data universe + MCPs = unstoppable SE efficiency.
 
@@ -20,7 +20,7 @@ Think of it as your tireless research partner who never sleeps and always has th
 
 **Built to feed into the [SE-NTRAL platform](https://se-ntral.quick.shopify.io/)** (kudos to Stephen Brook!) – the semantic search tool that revolutionized how SEs share and discover merchant context across the team.
 
-**SE-Assistant is your personal research genius. SE-NTRAL is the team's collective intelligence network.** Build your context locally with SE-Assistant, sync to SE-NTRAL platform for team-wide sharing.
+**SE-ASSISTANT_CONTEXT-HUB is your personal research genius. SE-NTRAL is the team's collective intelligence network.** Build your context locally with SE-ASSISTANT_CONTEXT-HUB, sync to SE-NTRAL platform for team-wide sharing.
 
 ---
 
@@ -31,7 +31,7 @@ Think of it as your tireless research partner who never sleeps and always has th
 **One command to set up:**
 
 ```bash
-@se-assistant "Set up SE-Assistant for me"
+@se-assistant "Set up SE-ASSISTANT_CONTEXT-HUB for me"
 ```
 
 This points you to [Onboarding Setup](workflows/core/onboarding-setup.md) which configures:
@@ -55,7 +55,7 @@ Jump straight to:
 
 ---
 
-## 🚀 What Can SE-Assistant Do?
+## 🚀 What Can SE-ASSISTANT_CONTEXT-HUB Do?
 
 ### 🎯 Smart Opportunity & Launch Case Management
 - **Create opportunities** with `New Opportunity: [Name]` – auto-builds pre-sales folder structure and context
@@ -205,9 +205,9 @@ Once your context is loaded, unleash the power:
 
 ---
 
-## 🚨 The Problem SE-Assistant Solves
+## 🚨 The Problem SE-ASSISTANT_CONTEXT-HUB Solves
 
-The SE-Assistant workflow in Cursor is incredible – you're building amazing solutions, crafting brilliant value props, and gathering competitive intelligence like never before.
+The SE-ASSISTANT_CONTEXT-HUB workflow in Cursor is incredible – you're building amazing solutions, crafting brilliant value props, and gathering competitive intelligence like never before.
 
 **But there's a catch:** It's all local. Your genius is trapped on your machine.
 
@@ -215,12 +215,12 @@ Other SEs are solving the same problems, building similar solutions, and researc
 
 ---
 
-## ✨ The Solution: SE-Assistant + SE-NTRAL
+## ✨ The Solution: SE-ASSISTANT_CONTEXT-HUB + SE-NTRAL
 
-SE-Assistant is your personal research genius. SE-NTRAL bridges local brilliance with team-wide collaboration.
+SE-ASSISTANT_CONTEXT-HUB is your personal research genius. SE-NTRAL bridges local brilliance with team-wide collaboration.
 
 ### 🔗 How It Works
-1. **You build locally:** Use SE-Assistant in Cursor to create merchant context and solutions
+1. **You build locally:** Use SE-ASSISTANT_CONTEXT-HUB in Cursor to create merchant context and solutions
 2. **You sync once:** Push your workspace to SE-NTRAL platform in seconds
 3. **Team benefits forever:** Every SE can now access your merchant context, solutions, and insights
 
@@ -234,21 +234,21 @@ SE-NTRAL doesn't just store files – it makes them discoverable:
 🛠️ **Pre-built solutions:** Don't reinvent the wheel – see what's already been done  
 
 ### 🎯 The Workflow
-1. **Build in Cursor:** Create opportunities, gather context, craft solutions with SE-Assistant
+1. **Build in Cursor:** Create opportunities, gather context, craft solutions with SE-ASSISTANT_CONTEXT-HUB
 2. **Sync to SE-NTRAL:** Share your work with the team (visit [SE-NTRAL Sync](https://se-ntral.quick.shopify.io/sync.html))
 3. **Search & Discover:** Use semantic search to find relevant context from across all SEs
 4. **Repeat:** The more everyone syncs, the smarter the system becomes
 
-💡 **Think of it this way:** SE-Assistant is your personal research genius. SE-NTRAL is the team's collective intelligence network.
+💡 **Think of it this way:** SE-ASSISTANT_CONTEXT-HUB is your personal research genius. SE-NTRAL is the team's collective intelligence network.
 
 ---
 
 ## 📁 Project Structure
 
-**Note:** SE-Assistant uses a merchant-centric structure optimized for MCP integration and context preservation. See `.cursor/rules/se-assistant.mdc` for complete structural requirements.
+**Note:** SE-ASSISTANT_CONTEXT-HUB uses a merchant-centric structure optimized for MCP integration and context preservation. See `.cursor/rules/se-assistant.mdc` for complete structural requirements.
 
 ```
-SE-Assistant/
+SE-ASSISTANT_CONTEXT-HUB/
 ├── .cursor/rules/se-assistant.mdc    # SE-NTRAL rules (source of truth)
 ├── templates/                        # Document templates
 │   └── personal-config-template.md   # Template for personal setup
@@ -304,7 +304,7 @@ cp templates/personal-config-template.md personal-config.md
 #    - Your AE names
 #    - Google Drive folder ID (optional)
 
-# 4. Done! @se-assistant automatically uses your config
+# 4. Done! @se-assistant automatically uses your config from SE-ASSISTANT_CONTEXT-HUB
 ```
 
 **What It Does:**
@@ -321,7 +321,7 @@ cp templates/personal-config-template.md personal-config.md
 
 **Before cloning, ensure your Cursor has MCP servers configured:**
 
-SE-NTRAL relies on Model Context Protocol (MCP) servers to access Shopify's internal tools (Salesforce, Vault, Scout, etc.). Without these, many features won't work.
+SE-ASSISTANT_CONTEXT-HUB relies on Model Context Protocol (MCP) servers to access Shopify's internal tools (Salesforce, Vault, Scout, etc.). Without these, many features won't work.
 
 **Setup guide:** [Shopify MCP Server Documentation](https://vault.shopify.io/ai/mcp_servers)
 
@@ -349,11 +349,11 @@ SE-NTRAL relies on Model Context Protocol (MCP) servers to access Shopify's inte
 **In Cursor's terminal:**
 ```bash
 # Clone the repository into your root projects folder
-git clone https://github.com/williambedard/SE-Assistant
+git clone https://github.com/williambedard/SE-ASSISTANT_CONTEXT-HUB
 
 ```
 
-You're now in the SE-Assistant project folder, good to go.
+You're now in the SE-ASSISTANT_CONTEXT-HUB project folder, good to go.
 
 ---
 
@@ -362,7 +362,7 @@ You're now in the SE-Assistant project folder, good to go.
 In Cursor, run:
 
 ```bash
-@se-assistant "Set up SE-Assistant for me"
+@se-assistant "Set up SE-ASSISTANT_CONTEXT-HUB for me"
 ```
 
 This will:
@@ -451,7 +451,7 @@ Pulls latest from Gmail, Slack, Drive and updates local files.
 
 ## 🔧 Troubleshooting
 
-### "SE-Assistant returns other SEs' opportunities"
+### "SE-ASSISTANT_CONTEXT-HUB returns other SEs' opportunities"
 → Check `personal-config.md` has your correct Salesforce UserId  
 → File must be in workspace root (not in merchants folder)  
 → Run: `@se-assistant "Get my Salesforce UserId"` to verify
@@ -459,7 +459,7 @@ Pulls latest from Gmail, Slack, Drive and updates local files.
 ### "Queries return too many results"
 → Update quarter dates in `personal-config.md`  
 → Ensure dates match current Shopify fiscal quarter (Q1: Jan-Mar, Q2: Apr-Jun, Q3: Jul-Sep, Q4: Oct-Dec)  
-→ SE-Assistant automatically filters by quarter when personal-config exists
+→ SE-ASSISTANT_CONTEXT-HUB automatically filters by quarter when personal-config exists
 
 ### "Can't find merchant context"
 → Run: `@se-assistant "Sync merchant context for [Name]"`  
@@ -491,7 +491,7 @@ Pulls latest from Gmail, Slack, Drive and updates local files.
 
 ## ❓ Questions?
 
-**How do I use SE-Assistant?**  
+**How do I use SE-ASSISTANT_CONTEXT-HUB?**  
 → Just use `@se-assistant` in any Cursor chat
 
 **Do I need to create personal-config.md?**  

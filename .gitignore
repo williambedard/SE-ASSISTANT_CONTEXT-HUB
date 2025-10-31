@@ -2,12 +2,7 @@
 personal-config.md
 
 # Presentation materials
-presentation-deck.md
-speaker-notes.md
-presentation-deck-v2.md
-speaker-notes-v2.md
-research-summary.md
-visual-guide.md
+presentation/
 
 # Auto-generated priority dashboard (contains personal opportunities, revenue, meeting schedules)
 # Generated via: @se-assistant "Update my priority dashboard"

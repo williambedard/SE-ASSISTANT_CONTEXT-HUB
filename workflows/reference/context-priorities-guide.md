@@ -8,7 +8,7 @@
 
 ## Priority Framework
 
-This framework helps SE-Assistant determine which context to load based on the question type and available token budget.
+This framework helps SE-ASSISTANT_CONTEXT-HUB determine which context to load based on the question type and available token budget.
 
 ---
 

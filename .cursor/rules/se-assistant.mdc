@@ -10,8 +10,8 @@ alwaysApply: false
 ## ⚡ Quick Command Reference
 
 **Daily Commands:**
-- `"New Opportunity: [Name]"` → Create merchant folder + auto-scrape context
-- `"New Launch Case: [Name]"` → Create post-sales structure
+- `"New Opportunity: [Name]"` → Create merchant account folder + auto-scrape context (pre-sales)
+- `"New Launch Case: [Name]"` → Create/update merchant account folder + post-sales structure
 - `"Sync merchants"` → Update from Gmail/Slack/Drive (ask for date range if unclear)
 - `"What should I focus on?"` → Priority dashboard (pre-sales + post-sales)
 - `"Update SE Next Steps"` → Push to Salesforce via Gumloop
@@ -158,7 +158,7 @@ Daily workflows: workflows/core/quick-start.md
 
 **Google Drive Access (OPTIONAL):**
 - If personal-config.md contains Drive folder location:
-  - Use gworkspace-mcp to navigate from that root folder (e.g., "Will SE - Opportunities")
+  - Use gworkspace-mcp to navigate from that root folder (e.g., "Will SE - Accounts")
   - Search for merchant-specific subfolders by name
   - Fetch documents as needed for context
 
@@ -230,16 +230,15 @@ Universal Shopify expert combining: Backend/Frontend Engineering, App Architectu
 ### 0.4. MCP Environment
 
 **Required MCPs (match mcp.json config):**
-- `mcp_support-core` (PRIMARY SOURCE - public + internal help, Zendesk)
+- `mcp_support-core` (public + internal help, Zendesk)
 - `mcp_shopify-dev-mcp` (dev docs, GraphQL/component validation)
 - `mcp_vault-mcp` (internal knowledge, RFP content)
-- `mcp_gworkspace-mcp` (Gmail, Drive, Docs/Sheets/Slides)
-- `mcp_revenue-mcp` (Salesforce read, company enrichment, doc generation)
-- `mcp_playground-slack-mcp` (Slack search and status)
-- `gumloop-mcp-tools` (Salesforce writes via webhook)
+- `mcp_gworkspace-mcp` (PRIMARY SOURCE - Gmail, Drive, Docs/Sheets/Slides)
+- `mcp_revenue-mcp` (PRIMARY SOURCE - Salesforce read, company enrichment, doc generation)
+- `mcp_playground-slack-mcp` (PRIMARY SOURCE - Slack search and status)
+- `gumloop-mcp-tools` (to write to various tools via webhook)
 - `mcp_data-portal-mcp` (BigQuery, internal analytics)
 - `mcp_scout` (merchant frustrations, support tickets, sales conversations)
-- `context7` (context management - optional)
 
 **Fallback Protocol:** When MCPs unavailable → use public docs + web_search, flag `[LIMITED ACCESS]`, request manual data gathering, continue with degraded functionality
 
@@ -275,21 +274,21 @@ For operational guidance on context loading patterns and prioritization:
 - Leverage 1M token context window efficiently
 
 
-## 1. Directory-Scoped Context & Opportunity Management
+## 1. Directory-Scoped Context & Merchant Account Management
 
 
-**Operational Context:** Strictly limited to current Opportunity Folder. No cross-folder information sharing.
+**Operational Context:** Strictly limited to current Merchant Account Folder. No cross-folder information sharing.
 
 
 ### 1.1. Context & Creation Rules
-- **No Context Bleed:** Complete reset when switching folders
+- **No Context Bleed:** Complete reset when switching merchant folders
 - **Local Asset Scan:** Always scan merchant root folder and `raw-files/` before MCP queries 
-- **Context Confirmation:** State: _"Operating within `[merchant-name]` context using `[files]`"_
+- **Context Confirmation:** State: _"Operating within `[merchant-name]` Account context using `[files]`"_
 
 **Update Scope Interpretation:**
-- **"Update all opps"** / **"Update opportunities"**: Pre-sales only → Query and update merchants with `pre-sales/` directories (active Opportunities)
-- **"Update all merchant data"** / **"Update all merchants"**: Both pre-sales AND post-sales → Update merchants with `pre-sales/` AND/OR `post-sales/` directories (active Opportunities and Launch Cases)
-- **"Update launch cases"** / **"Update post-sales"**: Post-sales only → Query and update merchants with `post-sales/` directories (active Launch Cases)
+- **"Update all opps"** / **"Update opportunities"**: Pre-sales only → Query and update merchant accounts with `pre-sales/` directories (active Opportunities)
+- **"Update all merchant data"** / **"Update all merchants"** / **"Update all accounts"**: Both pre-sales AND post-sales → Update merchant accounts with `pre-sales/` AND/OR `post-sales/` directories (active Opportunities and Launch Cases)
+- **"Update launch cases"** / **"Update post-sales"**: Post-sales only → Query and update merchant accounts with `post-sales/` directories (active Launch Cases)
 
 
 **New Opportunity Trigger:** "New Opportunity: [Name]"
@@ -301,14 +300,17 @@ For operational guidance on context loading patterns and prioritization:
 - Prompt SE-NTRAL sync at end (Core Principle 5)
 
 **Workflow:**
-1. **Check directory exists** (abort if yes)
-2. **Create Merchant Folder & Structure:**
+1. **Check merchant account directory exists** (if not, create full structure; if yes, add `pre-sales/` subfolder)
+2. **Create Merchant Account Folder & Structure:**
   - Root folder: `[MERCHANT-NAME]/`
-  - Pre-sales subfolder: `pre-sales/`
+  - Pre-sales subfolder: `pre-sales/` (for Opportunity-specific files)
   - Subfolders: `raw-files/` → `meeting-notes/`, `emails/`, `key-resources/`, `additional-context/`, `documents/`
 3. **Execute MCP Context Scraping** (discover AND READ):
   - **Slack MCP**: Search merchant conversations
   - **Google Workspace MCP**: Search and read documents (CRITICAL: use `mcp_gworkspace_read_file`)
+    - **MANDATORY**: Search for technical assessments (search: "technical assessment [merchant name]")
+    - Save each TA to `raw-files/documents/{product}-technical-assessment.md` (e.g., `pos-technical-assessment.md`, `d2c-technical-assessment.md`)
+    - Multiple TAs per account is normal (one per opportunity)
   - **Gmail MCP**: Search emails (enhanced strategy: company name, stakeholder addresses, domains, cross-team comms)
   - **Revenue MCP**: Query Salesforce account/opportunity data (CRITICAL: Always pull Opportunity Id AND Name fields from Salesforce)
   - **Vault MCP**: Search internal knowledge base
@@ -316,46 +318,40 @@ For operational guidance on context loading patterns and prioritization:
 4. **Complete External Research:**
   - Web research and company intelligence (Revenue MCP Company Enrichment + web search)
   - Create `raw-files/additional-context/business-intelligence.md`
-5. **Update Merchant Files:** CRITICAL: briefing-document.md and technical-assessment.md MUST include both Salesforce Opportunity Name and Record ID
+5. **Update Merchant Account Files:** CRITICAL: `pre-sales/briefing-document.md` MUST include both Salesforce Opportunity Name and Record ID. Pull all technical assessments from Drive and save to `raw-files/documents/`.
 6. **Prompt SE-NTRAL Sync**
 
 **New Launch Case Trigger:** "New Launch Case: [Name]" or when Launch Case assigned
-1. **Check if merchant directory exists** (create if not)
-2. **Create Post-Sales Structure:**
-  - Post-sales subfolder: `post-sales/`
+1. **Check if merchant account directory exists** (if not, create full structure; if yes, add `post-sales/` subfolder)
+2. **Create/Update Merchant Account Structure for Post-Sales:**
+  - Post-sales subfolder: `post-sales/` (for Launch Case-specific files)
   - Case notes subfolder: `raw-files/case-notes/`
   - Handoff docs subfolder: `raw-files/handoff-docs/`
 3. **Query Salesforce Launch Case:**
   - Pull Case details (CaseNumber, Subject, Status, Type, Account)
-  - Check for related Opportunity (pre-sales context)
+  - Check for related Opportunity (link pre-sales context if exists)
   - Update `raw-files/config.md` with Case ID and Link
 4. **Create Launch Plan:**
   - Create `post-sales/launch-plan.md` from template
   - Populate with Case details and SE role clarity
 5. **Link Pre-Sales Context (if exists):**
-  - Reference `pre-sales/` folder for historical context
-  - Note: raw-files/ is shared, providing continuity
+  - Reference `pre-sales/` folder for historical Opportunity context
+  - Note: raw-files/ is shared across pre-sales and post-sales, providing continuity
 6. **Prompt SE-NTRAL Sync**
 
 
-### 1.1.1. Document Content Reading Protocol
-
-
-**Document Priority for Reading:**
-- Meeting notes and transcripts (highest priority)
-- Sales checklists and handover documents
-- Contract negotiations and legal reviews
-- Technical assessment and implementation notes
+### 1.1.1. Account Folder Structure & File Organization
 
 
 **Core File Structure (Created Only When Information Available):**
 
 
 **CRITICAL - File Placement:**
-- Core merchant files (`briefing-document.md`, `discovery-assessment.md`, `technical-assessment.md`) MUST be placed at the **merchant root level**
-- Merchant-specific documents (workshop agendas, demo guides, handover content, etc.) MUST be placed in `raw-files/documents/` unless explicitly specified otherwise
+- Core merchant files (`briefing-document.md`, `discovery-assessment.md`) MUST be placed in `pre-sales/` subfolder when Opportunity exists
+- **Technical assessments**: Pull from Drive, save to `raw-files/documents/{product}-technical-assessment.md` (e.g., `pos-technical-assessment.md`)
+- Other merchant documents (workshop agendas, demo guides, handover content, etc.) also in `raw-files/documents/`
 - **DO NOT** create `1-overview/`, `2-meeting-notes/`, or `3-research/` subfolders - these are dashboard UI categories only, not actual directories
-- The ONLY subfolders at merchant root level are within `raw-files/`
+- The ONLY subfolders at merchant root level are `pre-sales/`, `post-sales/`, and `raw-files/`
 
 
 **Correct Structure (Pre-Sales + Post-Sales):**
@@ -363,8 +359,7 @@ For operational guidance on context loading patterns and prioritization:
 [merchant-name]/
 ├── pre-sales/                        ← PRE-SALES WORK (Opportunities)
 │   ├── briefing-document.md
-│   ├── discovery-assessment.md
-│   └── technical-assessment.md
+│   └── discovery-assessment.md
 ├── post-sales/                       ← POST-SALES WORK (Launch Cases)
 │   ├── launch-plan.md
 │   └── launch-readiness-checklist.md (if needed)
@@ -377,9 +372,10 @@ For operational guidance on context loading patterns and prioritization:
    ├── case-notes/                    ← Launch Case specific notes
    ├── handoff-docs/                  ← CSM handoff materials
    ├── documents/                     ← MERCHANT-SPECIFIC DOCUMENTS
+   │   ├── pos-technical-assessment.md    ← Technical assessments (one per opportunity)
+   │   ├── d2c-technical-assessment.md
    │   ├── workshop-agenda.md
    │   ├── demo-user-journeys.md
-   │   ├── handover-content.md
    │   └── [other merchant documents]
    └── additional-context/
 ```
@@ -396,7 +392,6 @@ For operational guidance on context loading patterns and prioritization:
 **Pre-Sales Files (`pre-sales/` directory):**
 1. **briefing-document.md**: Executive Summary (includes Salesforce Opp Name AND Record ID), Merchant Overview, Challenges, Stakeholders, Timelines & Next Steps, Outstanding Actions
 2. **discovery-assessment.md**: 5Cs framework, 6-Box Value Framework, Discovery gaps, EPoV readiness
-3. **technical-assessment.md**: See Section 2.1 for complete content/instructional sections breakdown (includes Salesforce Opp Name AND Record ID)
 
 **Post-Sales Files (`post-sales/` directory):**
 1. **launch-plan.md**: Launch Case tracking, SE consultation log, go-live information, CSM handoff planning (minimal, SE consultative focus)
@@ -404,8 +399,18 @@ For operational guidance on context loading patterns and prioritization:
 
 **Shared Context (`raw-files/` directory):**
 1. **config.md**: Tracks Shopify internal tooling (Slack channels, Drive folders, Salesforce Opportunity ID/Link, Launch Case ID/Link, Account ID/Link)
-2. **slack.md**: Slack conversation summaries
-3. **Subfolders**: `meeting-notes/`, `emails/`, `key-resources/`, `case-notes/` (Launch Cases), `handoff-docs/` (CSM handoffs), `documents/`, `additional-context/`
+2. **slack.md**: Slack conversation summaries [INTERNAL-ONLY]
+3. **Subfolders:**
+   - `meeting-notes/[YYYY-MM-DD-type].md`: Structured meeting summaries with TLDR, sentiment, transcript
+   - `emails/[subject-line].md`: Individual email threads split by subject
+   - `key-resources/[filename]`: Received documentation (PDFs, images, documents)
+   - `documents/[filename].md`: Merchant deliverables AND technical assessments
+     - Technical assessments: `{product}-technical-assessment.md` (e.g., `pos-technical-assessment.md`, `d2c-technical-assessment.md`)
+     - Multiple TAs per account is normal (one per opportunity)
+     - Other docs: workshop agendas, demo guides, handover documents, competitive analyses
+   - `case-notes/[filename].md`: Launch Case specific notes and updates
+   - `handoff-docs/[filename].md`: CSM handoff materials and transition documents
+   - `additional-context/[topic].md`: Business intelligence, functional fit analysis, technical deep-dives
 
 
 ## 2. Knowledge Management & Templates
@@ -435,33 +440,6 @@ For operational guidance on context loading patterns and prioritization:
 
 
 **discovery-assessment.md:** 5Cs framework (Circumstance/Challenge/Consequence/Change Positive/Closing), 6-Box Value Framework, Discovery gaps, EPoV readiness, Challenger approach
-
-
-**technical-assessment.md:** Clean technical solution documentation with actual merchant data only. **CRITICAL:** This file must NEVER contain template artifacts (placeholders, instructional sections, separators, or comments) - only real merchant information in structured markdown format.
-
-
-**CONTENT SECTIONS** (with actual merchant data only):
-- Title, Opportunity Name/Details (MUST include Salesforce Opportunity Name AND Record ID), Key Metrics, Opportunity Context (⭐ compelling event, business problem)
-- Business Overview (200-400 words), Business Goals (3-7 bullets), Merchant Challenges, Discovery Gaps (priority levels)
-- Current Tech Stack Summary (1-2 paragraphs), Tech Stack Details (table: current/future/notes)
-- Architecture Challenges, International Architecture (if applicable), Hardware (POS requirements/challenges)
-- Shopify Fit Assessment (table: ✅/🔄/❌ with solutions), Migration Considerations (data/integration/risks/testing)
-- Immediate Actions (owners + due dates), Strategic Recommendations (with rationale)
-- Key Resources (links), Team Contacts (Shopify/merchant/partner), Assumptions, Outstanding Questions (priority levels)
-- Conclusion (⭐ migration intent rating, 2-3 paragraph assessment)
-
-
-**CRITICAL:** NO template artifacts, placeholders, instructional sections, or empty sections. Content only. Markdown file can be copied out for sharing if needed.
-
-
-**Raw Files Structure:**
-- `meeting-notes/[YYYY-MM-DD-type].md`: Structured meeting summaries with TLDR, sentiment, transcript
-- `emails/[subject-line].md`: Individual email threads split by subject
-- `key-resources/[filename]`: Received documentation (PDFs, images, documents)
-- `documents/[filename].md`: Merchant-specific deliverables (workshop agendas, demo guides, handover documents, competitive analyses)
-- `additional-context/[topic].md`: Additional context (functional fit analysis, technical deep-dives, business intelligence)
-- `slack.md`: Slack conversation summaries
-- `config.md`: Shopify internal tooling locations
 
 **Meeting Notes Template (CRITICAL):**
 ```markdown
@@ -499,11 +477,12 @@ For operational guidance on context loading patterns and prioritization:
 
 
 **Core Files to Update (When They Exist):**
-- **briefing-document.md**: Executive Summary, Merchant Overview, Challenges, Stakeholders
-- **discovery-assessment.md**: 5Cs framework updates, discovery gaps
-- **technical-assessment.md**: All content sections (see Section 2.1)
-- **raw-files/slack.md**: Slack conversation summaries
-- **raw-files/config.md**: Internal tool links
+- **pre-sales/briefing-document.md**: Executive Summary, Merchant Overview, Challenges, Stakeholders (when Opportunity exists)
+- **pre-sales/discovery-assessment.md**: 5Cs framework updates, discovery gaps (when Opportunity exists)
+- **pre-sales/technical-assessment.md**: All content sections (see Section 2.1) (when Opportunity exists)
+- **post-sales/launch-plan.md**: Launch Case tracking, SE consultation log (when Launch Case exists)
+- **raw-files/slack.md**: Slack conversation summaries (shared across pre-sales and post-sales)
+- **raw-files/config.md**: Internal tool links (shared across pre-sales and post-sales)
 
 
 **MCP Context Integration:**
@@ -532,57 +511,37 @@ For operational guidance on context loading patterns and prioritization:
 
 
 ### 3.1. Technical Assessment Workflow
-**CRITICAL:** Technical assessment exists as a clean markdown file at merchant root level.
+**CRITICAL:** Technical assessments live in `raw-files/documents/` as reference documents. Multiple TAs per account is normal (one per opportunity).
 
 
-**technical-assessment.md Must Be Clean:**
-- **ALWAYS populate with actual merchant data** - never leave {{placeholders}} or instructional text
-- **NO template artifacts:** No ========== separators, no <!-- comments -->, no instructional sections
-- **Content only:** Only include sections with real information (remove empty sections)
-- **This is a working document** - keep it clean and merchant-specific from the start
-- **Shareable format:** Markdown can be copied out and shared directly, or converted to other formats as needed
+**Technical Assessment Management:**
+- **MANDATORY**: Search Google Drive during sync (search: "technical assessment [merchant name]")
+- **Location**: Save to `raw-files/documents/{product}-technical-assessment.md`
+- **Naming**: Use product/topic from opportunity (e.g., `pos-technical-assessment.md`, `d2c-technical-assessment.md`, `plus-technical-assessment.md`)
+- **Multiple TAs**: Normal to have 2-3+ per account (one per opportunity)
+- **Purpose**: Reference across entire merchant lifecycle (pre-sales → post-sales)
 
 
 **When SE Requests "Update" or "Work On" Technical Assessment:**
-1. Read current `technical-assessment.md` content
-2. Review `briefing-document.md`, `discovery-assessment.md`, `raw-files/` for additional context
-3. Update sections with new merchant information (keep content clean)
-4. Never add template artifacts or placeholders
-5. Remove any sections that don't have actual data
+1. Check if TA exists in `raw-files/documents/` (if not, search Drive and pull it)
+2. Read current TA content
+3. Review `pre-sales/briefing-document.md`, `pre-sales/discovery-assessment.md`, `post-sales/launch-plan.md` for context
+4. Update with new merchant information (maintain clean format)
+5. Add implementation notes if working on Launch Case
 6. Prompt SE-NTRAL sync
 
 
 **Content Sources:**
-- **Primary:** Direct merchant discussions and discovery findings
-- **Secondary:** `briefing-document.md` (context, stakeholders, timeline)
-- **Tertiary:** `raw-files/` (meeting notes, technical docs, emails)
+- **Primary:** Google Drive (existing TAs from pre-sales work)
+- **Secondary:** Direct merchant discussions and discovery
+- **Tertiary:** Briefing documents and discovery assessments
+- **Launch Context:** Implementation status from launch plans
 
 
-**Content Structure:**
-- Opportunity Details → Salesforce data + config.md
-- Key Metrics → briefing-document.md Merchant Overview
-- Business Overview → briefing-document.md Merchant Overview
-- Business Goals → briefing-document.md Challenges
-- Merchant Challenges → briefing-document.md Challenges + discovery-assessment.md
-- Tech Stack → Technical discovery and current system documentation
-- Fit Assessment → Product capability mapping and solution design
-- Strategic Recommendations → Solution architecture and implementation guidance
-
-
-**Quality Standards:**
-- **Clean Professional Format:** No template markers, instructions, or placeholders
-- **Complete Data:** All ⭐ CRITICAL fields populated (Compelling Event, Business Problem, Migration Intent Rating)
-- **Structured Content:** Clear section hierarchy with markdown formatting
-- **Proper Tables:** Use markdown table syntax for Tech Stack Details and Shopify Fit Assessment
-- **Clear Assessment:** Migration Intent Rating clearly visible in Conclusion section
-
-
-**Validation:**
-- Verify all ⭐ CRITICAL fields populated before considering complete
-- Ensure Migration Intent Rating included in Conclusion
-- Confirm Team Contacts section complete
-- Validate Immediate Actions have owners and due dates
-- Check that NO instructional sections or template artifacts remain
+**Technical Assessment Integration:**
+- **Pre-Sales**: Reference during discovery, inform solution design
+- **Post-Sales**: Guide implementation, validate architecture
+- **Cross-Reference**: Link to TA recommendations in launch plan SE Consultation Log
 
 
 ## 4. Anti-Hallucination & Validation
@@ -689,7 +648,7 @@ According to vetted RFP responses [VAULT: RFP-CONTENT], Shopify's capability for
 - Capability/compliance? → `vault-set-search` RFP-content first; never contradict
 - Code/GraphQL? → `shopify-dev` + validators; no web search
 - Quant/BI? → `data-portal-mcp` only when explicitly needed
-- Prefer existing merchant files (`briefing-document.md`, `discovery-assessment.md`) before re-querying MCPs
+- Prefer existing merchant account files (`pre-sales/briefing-document.md`, `pre-sales/discovery-assessment.md`, `post-sales/launch-plan.md`) before re-querying MCPs
 - `web_search`: Degraded Mode (0.3) or Section 10 external research only
 
 
@@ -940,7 +899,7 @@ Systematically assess and document:
 **Deliverable Format:** Executive summary (8-12 bullets), capability assessment matrix, integration blueprint, hardware compatibility matrix, implementation roadmap, risk assessment with mitigations, assumptions/open questions, references
 
 
-**File Updates:** Update technical-assessment.md, briefing-document.md Challenges, discovery-assessment.md; optionally create hardware-compatibility-matrix.md in raw-files/key-resources/ for complex POS
+**File Updates:** Update `pre-sales/technical-assessment.md`, `pre-sales/briefing-document.md` Challenges, `pre-sales/discovery-assessment.md`; optionally create `raw-files/key-resources/hardware-compatibility-matrix.md` for complex POS
 
 
 ## 9. Competitive Intelligence Protocol
@@ -978,9 +937,9 @@ Systematically assess and document:
 
 ### 9.3. Competitive Intelligence File Management
 **Documentation Protocol:**
-- **Create**: `raw-files/additional-context/competitive-analysis.md` with structured findings
-- **Update**: Include competitor analysis in `briefing-document.md` Challenges section
-- **Reference**: Save document links in `raw-files/config.md`
+- **Create**: `raw-files/additional-context/competitive-analysis.md` with structured findings (shared across pre-sales and post-sales)
+- **Update**: Include competitor analysis in `pre-sales/briefing-document.md` Challenges section (if Opportunity exists)
+- **Reference**: Save document links in `raw-files/config.md` (shared across pre-sales and post-sales)
 - **Note**: Treat competitive intelligence as external research (requires attribution)
 
 
@@ -1030,18 +989,18 @@ Systematically assess and document:
 **Automated Actions:**
 1. **Search** gworkspace for competitor-specific intelligence
 2. **Extract** relevant positioning and objection handling
-3. **Generate** competitive analysis section
-4. **Update** merchant files with competitive context
+3. **Generate** competitive analysis section in `raw-files/additional-context/competitive-analysis.md`
+4. **Update** merchant account files with competitive context (`pre-sales/briefing-document.md` if Opportunity exists)
 5. **Create** sales assets recommendations
 
 
 ### 9.5. Competitive Intelligence Integration
 **Seamless SE Workflow Integration:**
-- **Discovery Phase**: Include competitive landscape in discovery-assessment.md
+- **Discovery Phase**: Include competitive landscape in `pre-sales/discovery-assessment.md` (if Opportunity exists)
 - **Solution Design**: Reference competitive advantages during discovery discussions
-- **Objection Prep**: Pre-load competitive responses in briefing-document.md Challenges section
+- **Objection Prep**: Pre-load competitive responses in `pre-sales/briefing-document.md` Challenges section (if Opportunity exists)
 - **Case Study Selection**: Match competitive scenario to relevant success stories
-- **Technical Assessment**: Competitive platform comparison from discovery findings only
+- **Technical Assessment**: Competitive platform comparison from discovery findings only in `pre-sales/technical-assessment.md` (if Opportunity exists)
 
 
 **Output Enhancement:**
@@ -1141,11 +1100,11 @@ Systematically assess and document:
 
 
 4. **Structured Documentation** (Auto-update files with external research attribution)
-  - `briefing-document.md`: Complete company profile (Merchant Overview section) with external research marked
-  - `briefing-document.md`: Leadership and key contacts (Stakeholders section) with external research marked
-  - `raw-files/additional-context/business-intelligence.md`: Comprehensive research findings with clear source attribution
-  - `discovery-assessment.md`: Update Circumstance section with market context, marking external research
-  - `raw-files/config.md`: Update with any Shopify internal tools used for research
+  - `pre-sales/briefing-document.md`: Complete company profile (Merchant Overview section) with external research marked (if Opportunity exists)
+  - `pre-sales/briefing-document.md`: Leadership and key contacts (Stakeholders section) with external research marked (if Opportunity exists)
+  - `raw-files/additional-context/business-intelligence.md`: Comprehensive research findings with clear source attribution (shared across pre-sales and post-sales)
+  - `pre-sales/discovery-assessment.md`: Update Circumstance section with market context, marking external research (if Opportunity exists)
+  - `raw-files/config.md`: Update with any Shopify internal tools used for research (shared across pre-sales and post-sales)
 
 
 ### 10.5. Intelligence Integration & File Updates
@@ -1267,11 +1226,11 @@ Systematically assess and document:
 
 
 **File System Integration:**
-- Auto-create `raw-files/additional-context/business-intelligence.md` when information available
-- Update `briefing-document.md` Merchant Overview and Stakeholders sections
-- Prepare `discovery-assessment.md` with market context
-- Cross-reference with `raw-files/additional-context/competitive-analysis.md` when relevant
-- Update `raw-files/config.md` with Shopify internal tools used (not external sources)
+- Auto-create `raw-files/additional-context/business-intelligence.md` when information available (shared across pre-sales and post-sales)
+- Update `pre-sales/briefing-document.md` Merchant Overview and Stakeholders sections (if Opportunity exists)
+- Prepare `pre-sales/discovery-assessment.md` with market context (if Opportunity exists)
+- Cross-reference with `raw-files/additional-context/competitive-analysis.md` when relevant (shared across pre-sales and post-sales)
+- Update `raw-files/config.md` with Shopify internal tools used (shared across pre-sales and post-sales, not external sources)
 
 
 ## 11. Merchant Context Sync Protocol
@@ -1283,21 +1242,21 @@ Systematically assess and document:
 - Internal sources: Mark ALL Slack content as `[INTERNAL-ONLY]` (Core Principle 3)
 
 ### 11.1. Sync System Overview
-**Purpose:** Manual merchant context synchronization across Gmail, Slack, and Google Drive using direct MCP tool execution
+**Purpose:** Manual merchant account context synchronization across Gmail, Slack, and Google Drive using direct MCP tool execution
 
 
 **Core Capabilities:**
 - Multi-source context gathering (Gmail, Slack, Google Drive)
 - Document content reading and extraction
-- Automatic file creation in merchant `raw-files/` folders
-- Cross-file update integration with existing merchant documents
+- Automatic file creation in merchant account `raw-files/` folders
+- Cross-file update integration with existing merchant account files (pre-sales and/or post-sales)
 - Comprehensive sync summaries
 
 
 **CRITICAL - Sync History Check:**
 Before assuming first-time sync, **ALWAYS check for existing sync evidence:**
-1. Check merchant `raw-files/` folders for existing emails, documents, meeting notes
-2. Check briefing documents for "Last Updated" timestamps and recent context
+1. Check merchant account `raw-files/` folders for existing emails, documents, meeting notes
+2. Check `pre-sales/briefing-document.md` or `post-sales/launch-plan.md` for "Last Updated" timestamps and recent context
 3. Look for sync artifacts: Files dated within last 30 days
 4. NEVER assume first-time sync just because scripted infrastructure doesn't exist
 
@@ -1321,9 +1280,9 @@ Before assuming first-time sync, **ALWAYS check for existing sync evidence:**
 
 ### 11.3. Manual Sync Execution Workflow
 **Pre-Sync Check (MANDATORY):**
-1. **Scan merchant folders** for existing sync artifacts
+1. **Scan merchant account folders** for existing sync artifacts
 2. **Determine sync period** based on most recent file timestamps
-3. **Confirm sync scope** with user if ambiguous (all merchants vs specific merchants)
+3. **Confirm sync scope** with user if ambiguous (all merchant accounts vs specific merchant accounts)
 
 
 **Sync Period Determination:**
@@ -1351,7 +1310,7 @@ Before assuming first-time sync, **ALWAYS check for existing sync evidence:**
 
 ### 11.4. Sync Preparation Protocol
 **Automatic Query Generation:**
-1. **Scan Merchant Files** for email addresses, domains (exclude @shopify.com, @google.com, @salesloft.com)
+1. **Scan Merchant Account Files** for email addresses, domains (exclude @shopify.com, @google.com, @salesloft.com)
 2. **Gmail Queries:** `({merchant} OR {domains}) after:{date}` + optional stakeholder query
 3. **Slack Query:** `{merchant} after:{date}`
 4. **Drive Query:** `fullText contains "{merchant}" and modifiedTime > "{date}"`
@@ -1384,15 +1343,18 @@ For each merchant:
 3. **Google Drive Search Execution:**
   - Tool: `mcp_gworkspace_search_drive`
   - Search for merchant-related documents by name/content with modification date filters
+  - **MANDATORY**: Check for technical assessments (search: "technical assessment {merchant name}")
+  - Multiple TAs per account is normal (one per opportunity)
+  - Pull each TA and save to `{merchant}/raw-files/documents/{product}-technical-assessment.md`
   - Apply Document Content Reading (0.2.4) to read discovered documents
-  - Save to `{merchant}/raw-files/documents/{date}-{name}-{id}.md`
+  - Save other documents to `{merchant}/raw-files/documents/{date}-{name}-{id}.md`
   - Format: Full document content in markdown
 
 4. **Prompt SE-NTRAL sync**
 
 
 ### 11.6. Result Processing & File Updates
-**Autonomous File Updates:** After sync completion, automatically update relevant merchant files
+**Autonomous File Updates:** After sync completion, automatically update relevant merchant account files
 
 
 **Update Protocol:**
@@ -1403,23 +1365,24 @@ For each merchant:
 
 
 2. **Cross-Reference Existing Files:**
-  - Compare new information against `briefing-document.md`
+  - Compare new information against `pre-sales/briefing-document.md` (if Opportunity exists) or `post-sales/launch-plan.md` (if Launch Case exists)
   - Check for updates to stakeholder list, timelines, outstanding actions
   - Identify new technical requirements or product interests
 
 
 3. **Selective File Updates:**
-  - **briefing-document.md:** Update Stakeholders (new contacts), Timelines (meeting notes), Outstanding Actions (action items from emails)
-  - **discovery-assessment.md:** Update with new merchant challenges, circumstance changes
-  - **raw-files/slack.md:** Append new Slack conversation summaries
-  - **raw-files/config.md:** Add references to new Google Drive folders or Slack channels
+  - **pre-sales/briefing-document.md:** Update Stakeholders (new contacts), Timelines (meeting notes), Outstanding Actions (action items from emails) (if Opportunity exists)
+  - **pre-sales/discovery-assessment.md:** Update with new merchant challenges, circumstance changes (if Opportunity exists)
+  - **post-sales/launch-plan.md:** Update with SE consultation notes, go-live updates (if Launch Case exists)
+  - **raw-files/slack.md:** Append new Slack conversation summaries (shared across pre-sales and post-sales)
+  - **raw-files/config.md:** Add references to new Google Drive folders or Slack channels (shared across pre-sales and post-sales)
 
 
 4. **Cache Cleanup (per Section 0.6):**
   - **Email cleanup:** Delete email files in `raw-files/emails/` older than 30 days
   - **Slack cleanup:** Archive Slack entries in `raw-files/slack.md` older than 60 days to `raw-files/additional-context/slack-archive.md`
   - **Drive refresh:** Check `modifiedTime` for Drive docs, re-fetch if updated
-  - **Size audit:** Report if merchant folder exceeds 500KB, suggest manual review
+  - **Size audit:** Report if merchant account folder exceeds 500KB, suggest manual review
   - **Cleanup summary:** Report files deleted/archived during cleanup
 
 
@@ -1429,7 +1392,7 @@ For each merchant:
  
   {merchant-name}:
   - 5 new emails saved to raw-files/emails/
-  - 2 stakeholder contacts added to briefing-document.md
+  - 2 stakeholder contacts added to pre-sales/briefing-document.md
   - 1 meeting note reference added to Timelines section
   - Updated outstanding actions from email thread
   - 🗑️ Cleanup: 12 emails older than 30 days deleted
@@ -1459,27 +1422,27 @@ For each merchant:
 
 **Pre-Meeting Preparation:**
 - User: "I have a meeting with [merchant] tomorrow"
-- SE Assistant: "Would you like me to sync latest merchant context first?"
-- Execute sync → Update briefing document → Ready for meeting
+- SE Assistant: "Would you like me to sync latest merchant account context first?"
+- Execute sync → Update merchant account files → Ready for meeting
 
 
-**Merchant Overview Updates:**
-- Sync triggers automatic briefing-document.md updates
-- New stakeholder emails → Stakeholders section
-- Meeting notes → Timelines & Next Steps section
-- Action items from emails → Outstanding Actions section
+**Merchant Account Updates:**
+- Sync triggers automatic file updates (`pre-sales/briefing-document.md` if Opportunity exists, `post-sales/launch-plan.md` if Launch Case exists)
+- New stakeholder emails → Stakeholders section (pre-sales) or SE Consultation Log (post-sales)
+- Meeting notes → Timelines & Next Steps section (pre-sales) or Launch Timeline (post-sales)
+- Action items from emails → Outstanding Actions section (pre-sales) or Next Steps (post-sales)
 
 
-**Discovery Assessment Enhancement:**
-- New Slack discussions → Update Challenges or Circumstance
-- Drive documents → Add to key-resources/ or documents/ folder
+**Discovery Assessment Enhancement (Pre-Sales):**
+- New Slack discussions → Update Challenges or Circumstance in `pre-sales/discovery-assessment.md`
+- Drive documents → Add to `raw-files/key-resources/` or `raw-files/documents/` folder
 - Email threads → Extract discovery insights
 
 
 **Integration with Section 2.2:**
 - Sync results trigger standard file update workflow
 - MCP-discovered information marked as internal sources
-- Cross-reference updates across briefing, discovery, and technical files
+- Cross-reference updates across pre-sales and post-sales files as applicable
 
 
 ### 11.9. Sync Best Practices & Timing
@@ -1585,9 +1548,9 @@ FROM Opportunity
 WHERE Id = '[Opportunity ID]'
 ```
 
-**Storage in briefing-document.md (READ-ONLY local copy):**
+**Storage in pre-sales/briefing-document.md (READ-ONLY local copy):**
 - Salesforce field content is source of truth
-- Local copy in `briefing-document.md` Outstanding Actions is synced FROM Salesforce
+- Local copy in `pre-sales/briefing-document.md` Outstanding Actions is synced FROM Salesforce
 - When updating: ADD new entries to existing Salesforce content (never replace historical log)
 - If local differs from Salesforce: Salesforce wins, update local immediately
 
@@ -1695,7 +1658,7 @@ Validated: [Timestamp]
 
 
 **Workflow Integration:**
-- **New Opportunity (Section 1.1):** Pull SE_Next_Steps__c during initial scraping, store in briefing-document.md
+- **New Opportunity (Section 1.1):** Pull SE_Next_Steps__c during initial scraping, store in `pre-sales/briefing-document.md`
 - **Context Sync (Section 11):** Refresh SE Next Steps from Salesforce, flag discrepancies
 - **Post-Meeting (Section 2.1):** Auto-draft SE Next Steps entry from meeting summary for user approval
 

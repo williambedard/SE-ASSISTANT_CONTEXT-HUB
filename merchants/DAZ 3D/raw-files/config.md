@@ -52,6 +52,10 @@
   - Partner pitches scheduled: Oct 25, 2025 (Emila & SG)
   - Target signature: Oct 31, 2025
 
+## Recent Documents
+- **Executive Overview**: 1VETyC8NsVBRr0VYLdA3dmN4mm0Aw9r4bfp747WLLY1U (Oct 29-30, 2025)
+- **Mutual Plan**: 109YMLma9YcT4MAf-7fhKr0-NQkaJL7JCQzU2qF0dvUM (Oct 29, 2025)
+
 ## Last Synced
-2025-10-27 (Updated with Salesforce, Salesloft, Gmail, Google Drive, Slack)
+2025-10-30 (Updated with Salesforce, Gmail, Google Drive)
 
