@@ -649,7 +649,7 @@ Generates clean markdown technical assessment per rules file Section 3.1.
 ```
 @se-assistant "Update SE Next Steps in Salesforce for [Company Name]"
 ```
-Pushes Outstanding Actions to Salesforce SE Next Steps field via Gumloop, validates the update per rules file Section 12.
+Pushes Outstanding Actions to Salesforce SE Next Steps field via Gumloop. Format: Rich text with line returns between dates and empty line after "Next Steps" header. See `personal-config.md` Salesforce Field Formatting Rules section.
 
 ---
 

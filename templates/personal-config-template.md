@@ -359,6 +359,49 @@ ELSE IF ambiguous:
 
 ---
 
+## 📝 SALESFORCE FIELD FORMATTING RULES
+
+### SE Next Steps Field (Rich Text)
+
+**Field Type:** Rich Text  
+**Field Name:** SE_Next_Steps__c
+
+**Formatting Requirements:**
+1. Each date entry must have a line return (new line)
+2. Add an empty line between "Next Steps" header and the first historical date
+3. Most recent updates go at the top (reverse chronological order)
+
+**Format Template:**
+```
+Next Steps
+
+[Date] - [Action/Update text]
+[Date] - [Action/Update text]
+[Date] - [Action/Update text]
+```
+
+**Example:**
+```
+Next Steps
+
+Nov 3, 2025 - Completed technical deep-dive, working on custom integration requirements doc
+Oct 28, 2025 - Discovery call scheduled for Oct 30
+Oct 25, 2025 - Initial outreach, merchant interested in POS Pro
+```
+
+**Implementation Notes:**
+- Use `\n\n` for empty line between header and dates
+- Use `\n` for line return between each date entry
+- Date format: `MMM D, YYYY` (e.g., Nov 3, 2025)
+- Each entry format: `[Date] - [Brief action/update]`
+
+**Customization:**
+- Adjust date format if your region uses different conventions
+- Modify entry format to match your communication style
+- Keep formatting consistent with Salesforce rich text requirements
+
+---
+
 ## 🔒 Privacy Note
 
 This file contains personal work context. It's in `.gitignore` by default.

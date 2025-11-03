@@ -5,15 +5,15 @@
 ### Opportunity
 - **Opportunity ID**: 006OG00000FJnh7YAD
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000FJnh7YAD/view
-- **Opportunity Name**: [To be added]
+- **Opportunity Name**: Mixbook - Plus, SP, SPi
 - **Close Date**: 2025-11-21
 - **Stage**: Deal Craft
-- **Amount**: $82,800.00
+- **Total Revenue**: $6,186,158.89
 
 **Account:**
-- **Account ID**: [To be added]
+- **Account ID**: 0018V000030y4geQAA
 - **Account Name**: Mixbook
-- **Account Link**: [To be added]
+- **Account Link**: https://banff.lightning.force.com/lightning/r/Account/0018V000030y4geQAA/view
 
 ## Slack Channels
 - **Primary Channel**: #mixbook

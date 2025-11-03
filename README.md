@@ -197,6 +197,7 @@ SE-ASSISTANT_CONTEXT-HUB/
 - **Technical assessments** - Generate from templates with merchant-specific details
 - **Priority scoring** - Revenue + Probability + Urgency formula with tiered dashboards
 - **Anti-hallucination** - Only references verified data, never synthesizes capabilities
+- **Write operation safety** - 🚨 MANDATORY validation before any Salesforce updates (see `workflows/reference/gumloop-validation-protocol.md`)
 - **MCP-powered** - Direct access to Salesforce, Vault, Scout, Shopify Dev tools
 
 ---
@@ -219,7 +220,10 @@ SE-ASSISTANT_CONTEXT-HUB/
 → Setup guide: [Shopify MCP Documentation](https://vault.shopify.io/ai/mcp_servers)  
 → Test with: `@se-assistant "Get my Salesforce UserId"` - should return your UserId
 
-**More help:** [Onboarding Setup Guide](workflows/core/onboarding-setup.md) or ping @william.bedard in Slack
+**More help:** 
+- [Onboarding Setup Guide](workflows/core/onboarding-setup.md)
+- [MCP Troubleshooting Guide](workflows/reference/mcp-troubleshooting.md) - Auth failures, permission errors, sync issues
+- Ping @william.bedard in Slack
 
 ---
 
@@ -239,6 +243,8 @@ Build your merchant context locally with this tool, then sync to [SE-NTRAL](http
 - **Daily workflows:** [Quick Start Guide](workflows/core/quick-start.md)
 - **First-time setup:** [Onboarding Setup](workflows/core/onboarding-setup.md)
 - **Prioritization:** [Opportunity Prioritization Guide](workflows/reference/opportunity-prioritization.md)
+- **Salesforce writes:** [Gumloop Validation Protocol](workflows/reference/gumloop-validation-protocol.md)
+- **MCP Troubleshooting:** [MCP Troubleshooting Guide](workflows/reference/mcp-troubleshooting.md)
 - **Complete rules:** `.cursor/rules/se-assistant.mdc` (loaded via `@se-assistant`)
 
 ---

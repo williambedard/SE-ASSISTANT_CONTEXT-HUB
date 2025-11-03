@@ -14,7 +14,7 @@ alwaysApply: false
 - `"New Launch Case: [Name]"` → Create/update merchant account folder + post-sales structure
 - `"Sync merchants"` → Update from Gmail/Slack/Drive (ask for date range if unclear)
 - `"What should I focus on?"` → Priority dashboard (pre-sales + post-sales)
-- `"Update SE Next Steps"` → Push to Salesforce via Gumloop
+- `"Update SE Next Steps"` → 🚨 REQUIRES VALIDATION: Shows current → proposed → user confirms → Pushes to Salesforce via Gumloop
 
 **Context Operations:**
 - `"What's new with [merchant]?"` → Suggest sync first, then summarize
@@ -52,6 +52,7 @@ alwaysApply: false
 - [ ] Correct MCP names? (match mcp.json: playground-slack-mcp, shopify-dev-mcp, etc.)
 - [ ] Document reading step completed? (search → read → extract)
 - [ ] GraphQL/components validated? (before returning code)
+- [ ] Gumloop validation completed? (MANDATORY: show current value → show proposed value → get user confirmation → execute)
 
 ---
 
@@ -241,6 +242,12 @@ Universal Shopify expert combining: Backend/Frontend Engineering, App Architectu
 - `mcp_scout` (merchant frustrations, support tickets, sales conversations)
 
 **Fallback Protocol:** When MCPs unavailable → use public docs + web_search, flag `[LIMITED ACCESS]`, request manual data gathering, continue with degraded functionality
+
+**Troubleshooting:** When encountering MCP errors (permission denied, auth failures, "not connected", sync issues):
+1. Identify error pattern from user feedback or tool failure
+2. **MUST** read `workflows/reference/mcp-troubleshooting.md` to find matching issue
+3. Execute diagnostic steps from the guide
+4. Report findings and solution to user
 
 
 ### 0.5. SE-NTRAL Sync
@@ -672,7 +679,7 @@ According to vetted RFP responses [VAULT: RFP-CONTENT], Shopify's capability for
 - **gumloop-mcp-tools**
  - Best for: Salesforce WRITE operations (SE Next Steps field updates)
  - Tools: `start_flow`, `get_run_details`, `discover_flow_inputs`
- - Notes: Requires pre-configured apiKey, userId, savedItemIds; use webhook auth; ALWAYS validate writes by re-querying Salesforce; see Section 12 for complete workflow.
+ - Notes: 🚨 MANDATORY: User validation before execution (see `workflows/reference/gumloop-validation-protocol.md`); pre-configured apiKey/userId/savedItemIds; webhook auth; validate writes by re-querying Salesforce; Section 12 workflow.
 - **vault-mcp / vault-set-search**
  - Best for: internal knowledge, products, missions; RFP-content = vetted capability source [INTERNAL-ONLY]
  - Notes: Prefer RFP-content for definitive capability/compliance answers.
@@ -1456,13 +1463,10 @@ For each merchant:
 
 
 ### 11.10. Troubleshooting & Error Handling
-**Common Issues:**
-- **No sync evidence:** First sync - SE Assistant asks for lookback period
-- **Auth failures:** Re-authenticate MCPs in Cursor settings
-- **Email previews only:** Use specific queries or document IDs
-- **No merchant results:** Try alternate spellings or expand date range
-- **Document not accessible:** Note in summary, manual follow-up if critical
-- **No Slack results:** Normal - not all merchants have Slack activity
+**When sync operations fail** (auth errors, no results, document access issues):
+- **MUST** read `workflows/reference/mcp-troubleshooting.md` Issue 5 for diagnostic steps
+- Common patterns: auth failures, no merchant results, email previews only, document not accessible
+- Execute appropriate fix and inform user of resolution
 
 
 ### 11.11. Output Format & User Communication
@@ -1559,17 +1563,22 @@ WHERE Id = '[Opportunity ID]'
 **SE Next Steps (Salesforce):**
 Next Steps: [current actionable items - LIVING LINE, replace when complete]
 
-DD/MM/YYYY: [merchant interaction - meeting/email/decision]
-DD/MM/YYYY: [merchant interaction - meeting/email/decision]
+MMM D, YYYY: [merchant interaction - meeting/email/decision]
+MMM D, YYYY: [merchant interaction - meeting/email/decision]
 
 **Last Synced from Salesforce:** [Timestamp]
 ```
+
+**Note:** See `personal-config.md` → **SALESFORCE FIELD FORMATTING RULES** for complete rich text formatting specifications (line returns, empty lines, date format).
 
 
 ### 12.3. Writing SE Next Steps to Salesforce via Gumloop
 
 
 **Trigger:** User requests "Update SE Next Steps in Salesforce"
+
+
+**🚨 MANDATORY VALIDATION:** See `workflows/reference/gumloop-validation-protocol.md` for complete validation workflow. MUST show current → proposed → get confirmation → execute.
 
 
 **Workflow:**
@@ -1584,7 +1593,13 @@ DD/MM/YYYY: [merchant interaction - meeting/email/decision]
    - **"Next Steps:" line only?** Previous action items completed, new actions assigned
    - **Skip entirely?** No merchant-facing updates, internal process changes
 
-3. **Execute (if needed):**
+3. **VALIDATION (see gumloop-validation-protocol.md):**
+   - Show current Salesforce value
+   - Show proposed new value
+   - Request explicit confirmation
+   - Only proceed after user approval
+
+4. **Execute (ONLY after user confirms):**
    ```
    start_flow(
      flowId: "[saved_item_id]",
@@ -1596,23 +1611,24 @@ DD/MM/YYYY: [merchant interaction - meeting/email/decision]
    )
    ```
 
-4. **Validate:**
+5. **Validate:**
    - Re-query Salesforce to confirm write
    - Update local "Last Synced" timestamp
 
 
 **Field Format:**
 
-```
-Next Steps: [current actionable items - LIVING, replace when complete]
+**CRITICAL:** SE Next Steps is a rich text field requiring specific formatting.
 
-DD/MM/YYYY: [merchant interaction - meeting/email/decision]
-DD/MM/YYYY: [merchant interaction - log entry]
-```
+See `personal-config.md` → **SALESFORCE FIELD FORMATTING RULES** section for complete formatting specifications including:
+- Line return requirements (each date on new line)
+- Empty line between "Next Steps" header and first date entry
+- Date format: `MMM D, YYYY` (e.g., Nov 3, 2025)
+- Rich text escaping: `\n\n` for empty line, `\n` for line returns
 
-**Format Rules:**
+**Content Rules:**
 - **"Next Steps:" line** = Current action items (replace when completed)
-- **DD/MM/YYYY entries** = Merchant-facing activity log (add at top, never delete)
+- **Date entries** = Merchant-facing activity log (add at top, never delete)
 - **Include:** Meetings, merchant emails, AE updates, decisions, timeline changes
 - **Exclude:** Internal process, "no activity", stage changes, sync results
 
@@ -1648,10 +1664,10 @@ Changes: [Added DD/MM/YYYY entry / Updated Next Steps line]
 Validated: [Timestamp]
 ```
 
-**Error handling:**
-- Gumloop fails: Report error, skip local timestamp update
-- Validation mismatch: Flag discrepancy for manual review
-- Missing Opp ID: Check `raw-files/config.md`, abort if missing
+**Error handling:** When Salesforce write operations fail:
+- **MUST** read `workflows/reference/mcp-troubleshooting.md` Issue 6 for diagnostic steps
+- Common issues: Gumloop flow errors, validation mismatches, missing Opp IDs, format errors
+- Follow troubleshooting protocol before reporting failure to user
 
 
 ### 12.5. Integration & Best Practices
