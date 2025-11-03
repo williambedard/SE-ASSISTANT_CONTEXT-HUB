@@ -230,6 +230,8 @@ Build your merchant context locally with this tool, then sync to [SE-NTRAL](http
 **SE-ASSISTANT_CONTEXT-HUB** = Your personal research genius  
 **SE-NTRAL** = Team's collective intelligence network
 
+*Shoutout to @Stephen.Brook and @Ben Homer for building this great tool!*
+
 ---
 
 ## 📚 Learn More
