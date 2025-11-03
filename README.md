@@ -6,6 +6,43 @@ Your AI-powered research partner for Shopify SE work. Combines your merchant con
 
 ---
 
+## ⚡ What This Adds to SE Assistant v7.0
+
+This repo builds on the foundational SE Assistant rules with operational workflows and tooling:
+
+**1. Work Prioritization & Focus** 🎯
+- Automated "What should I focus on?" dashboard with scored priorities
+- Pre-sales: Opportunities by tier (Revenue + Close Probability + Urgency)
+- Post-sales: Launch Cases by health status (Red/Yellow/Green)
+- Uses personal Salesforce UserId + quarter dates for filtering
+- Time allocation guidance (60% Tier 1, 30% Tier 2, 10% Tier 3)
+
+**2. Launch Case & Post-Sales Support** 🚀
+- New launch cases trigger post-sales structure and pulls existing opp data from the Account
+- `post-sales/launch-plan.md` template for SE consultation tracking
+- SE Consultation Log for platform validations, architecture guidance, technical escalations
+- Context continuity via shared `raw-files/` (pre-sales context flows seamlessly into post-sales)
+- Can manage multiple TAs per Account accessible across merchant lifecycle (ex.: POS opp, B2B opp)
+
+**3. Account-Level Organization** 📁
+- Split directory structure: `pre-sales/` (Opportunities) + `post-sales/` (Launch Cases) + shared `raw-files/`
+- Technical assessments in `raw-files/documents/{product}-technical-assessment.md` (multiple per account supported)
+- Automatic Drive search and pull for TAs during sync
+- Context continuity model: `raw-files/` provides seamless merchant history across phases
+
+**4. Infrastructure & Configuration** 🔧
+- Personal Config: `personal-config.md` with Salesforce UserId, quarterly context window, Drive folders (enables prioritization/queries)
+- MCP Tooling: revenue-mcp enhanced (always pulls Id/Name/SE_Next_Steps__c)
+- More Guardrails: AI Self-Check quality controls, sync history checks, operational validation protocols
+
+**5. Meeting Automation & Salesforce** 🤝📝 **[Coming Soon]**
+- Meeting Workflow: Structured notes with auto-generated TL;DR/sentiment, post-meeting auto-processing, automatic briefing updates
+- Salesforce Writes: Bidirectional SE Next Steps sync via Gumloop MCP (read → update locally → write in SF → validate), eliminates manual field updates
+
+**tl;dr:** Base SE Assistant = foundational rules. This repo = daily workflows + tooling + team collaboration via GitHub.
+
+---
+
 ## 🚀 Quick Start (5 minutes)
 
 ### Step 0: Configure MCP Servers (REQUIRED)
@@ -43,10 +80,18 @@ If this returns your UserId, MCPs are configured correctly.
 
 ### Step 1: Clone & Setup
 
-Clone this repo:
-```bash
-git clone https://github.com/williambedard/SE-ASSISTANT_CONTEXT-HUB
-```
+**First time setting up your work locally?**
+
+1. Create an empty project folder
+2. Open a terminal window at that folder
+3. Run:
+   ```bash
+   git init
+   git clone https://github.com/williambedard/SE-ASSISTANT_CONTEXT-HUB
+   ```
+4. Open the `SE-ASSISTANT_CONTEXT-HUB` folder in Cursor
+
+**Already have the repo?** Just open it in Cursor and continue to Step 2.
 
 ---
 
@@ -66,7 +111,7 @@ This creates your `personal-config.md` with your Salesforce UserId and quarter d
 @se-assistant "New Opportunity: [Company Name]"
 ```
 
-Done! 🎉
+Done, prompt away! 🎉
 
 **Full details:** See [Quick Start Guide](workflows/core/quick-start.md) for daily workflows.
 
