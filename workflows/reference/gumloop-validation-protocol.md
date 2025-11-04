@@ -21,6 +21,7 @@
 
 ## User Communication Template
 
+**Single Record:**
 ```markdown
 📋 Proposed Salesforce Update
 
@@ -40,16 +41,35 @@
 Should I proceed with this update? (yes/no)
 ```
 
+**Batch Updates (Multiple Records):**
+```markdown
+📋 Proposed Salesforce Batch Update
+
+**Record 1:** [Opp Name] (ID)
+Current: [truncated current value]
+Proposed: [truncated proposed value]
+Changes: [summary]
+
+**Record 2:** [Opp Name] (ID)
+Current: [truncated current value]
+Proposed: [truncated proposed value]
+Changes: [summary]
+
+[Additional records...]
+
+Should I proceed with these [N] updates? (yes/no)
+```
+
 ---
 
 ## Workflow Steps
 
-1. **Pull Current Value:** Query Salesforce for current field content
-2. **Generate Proposed Value:** Based on local updates/merchant context
-3. **Show Comparison:** Display both values side-by-side
+1. **Pull Current Values:** Query Salesforce for current field content (single or batch)
+2. **Generate Proposed Values:** Based on local updates/merchant context
+3. **Show Comparison:** Display both values side-by-side (truncate if batch)
 4. **Wait for Confirmation:** User must explicitly approve ("yes") or reject ("no")
-5. **Execute (if approved):** Call `start_flow()` with validated content
-6. **Validate Write:** Re-query Salesforce to confirm update succeeded
+5. **Execute (if approved):** Call `start_flow()` with `records` array
+6. **Validate Writes:** Re-query Salesforce to confirm all updates succeeded
 
 ---
 

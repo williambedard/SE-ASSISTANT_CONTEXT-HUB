@@ -402,6 +402,25 @@ Oct 25, 2025 - Initial outreach, merchant interested in POS Pro
 
 ---
 
+## 🔧 GUMLOOP CONFIGURATION
+
+**Source of Truth:** `~/.cursor/mcp.json` → Always check mcp.json first for credentials
+
+```yaml
+# Current config from mcp.json:
+api_key: [Your Gumloop API Key]
+user_id: [Your Gumloop User ID]
+saved_item_id: [Your Flow ID]  # SE Next Steps updater
+use_webhook_auth: true
+```
+
+**Verify current credentials:**
+```bash
+cat ~/.cursor/mcp.json | grep -A 10 "gumloop-mcp-tools"
+```
+
+---
+
 ## 🔒 Privacy Note
 
 This file contains personal work context. It's in `.gitignore` by default.

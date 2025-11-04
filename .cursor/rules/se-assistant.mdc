@@ -1578,64 +1578,28 @@ MMM D, YYYY: [merchant interaction - meeting/email/decision]
 **Trigger:** User requests "Update SE Next Steps in Salesforce"
 
 
-**🚨 MANDATORY VALIDATION:** See `workflows/reference/gumloop-validation-protocol.md` for complete validation workflow. MUST show current → proposed → get confirmation → execute.
+**🚨 MANDATORY STEPS:**
+1. **Validation Protocol:** `workflows/reference/gumloop-validation-protocol.md` - Show current → proposed → get confirmation
+2. **Execution Details:** `workflows/reference/se-next-steps-sync.md` - Webhook format, batch processing, field formatting
 
 
-**Workflow:**
+**Quick Reference:**
 
-1. **Pull & Compare:**
-   - Query Salesforce: `SELECT SE_Next_Steps__c FROM Opportunity WHERE Id = '[opp_id]'`
-   - Refresh local context if > 3 days stale (Section 11 sync)
-   - Compare Salesforce vs local Outstanding Actions
+**Webhook Body:**
+```javascript
+{
+  "records": [
+    { "record_id": "006...", "se_next_steps_value": "Next Steps\n\n...", "object_type": "Opportunity" }
+  ]
+}
+```
 
-2. **Assess Updates Needed:**
-   - **New chronological entry?** Discovery/demo held, merchant email, AE update, technical decision, timeline change, stakeholder intro
-   - **"Next Steps:" line only?** Previous action items completed, new actions assigned
-   - **Skip entirely?** No merchant-facing updates, internal process changes
-
-3. **VALIDATION (see gumloop-validation-protocol.md):**
-   - Show current Salesforce value
-   - Show proposed new value
-   - Request explicit confirmation
-   - Only proceed after user approval
-
-4. **Execute (ONLY after user confirms):**
-   ```
-   start_flow(
-     flowId: "[saved_item_id]",
-     inputs: {
-       "record_id": "[opp_id]",
-       "se_next_steps_value": "[updated content in format below]",
-       "object_type": "Opportunity"
-     }
-   )
-   ```
-
-5. **Validate:**
-   - Re-query Salesforce to confirm write
-   - Update local "Last Synced" timestamp
-
-
-**Field Format:**
-
-**CRITICAL:** SE Next Steps is a rich text field requiring specific formatting.
-
-See `personal-config.md` → **SALESFORCE FIELD FORMATTING RULES** section for complete formatting specifications including:
-- Line return requirements (each date on new line)
-- Empty line between "Next Steps" header and first date entry
-- Date format: `MMM D, YYYY` (e.g., Nov 3, 2025)
-- Rich text escaping: `\n\n` for empty line, `\n` for line returns
-
-**Content Rules:**
-- **"Next Steps:" line** = Current action items (replace when completed)
-- **Date entries** = Merchant-facing activity log (add at top, never delete)
-- **Include:** Meetings, merchant emails, AE updates, decisions, timeline changes
-- **Exclude:** Internal process, "no activity", stage changes, sync results
-
-**Parameters:**
-- `record_id`: Opportunity ID (e.g., "006OG00000HPXGkYAP")
-- `se_next_steps_value`: Full field content in format above
-- `object_type`: "Opportunity"
+**Key Points:**
+- Always pass `records` as array (supports single or batch updates)
+- Format: `\n\n` for empty line, `\n` for line returns
+- Content: "Next Steps:" line + chronological date entries (MMM D, YYYY)
+- Validation: Show all changes before execution
+- Error handling: See `workflows/reference/mcp-troubleshooting.md` Issue 6
 
 
 ### 12.4. User Communication & Triggers
@@ -1688,9 +1652,9 @@ Validated: [Timestamp]
 
 
 **Gumloop MCP:**
-- Assumed pre-configured: `apiKey`, `userId`, `savedItemIds`, `useWebhookAuth=true`
-- Tools: `start_flow`, `get_run_details`
-- Inputs: `record_id`, `se_next_steps_value`, `object_type`
+- Pre-configured in `~/.cursor/mcp.json` and `personal-config.md`
+- Webhook details: See `workflows/reference/se-next-steps-sync.md`
+- Supports batch updates via `records` array
 
 
 ---

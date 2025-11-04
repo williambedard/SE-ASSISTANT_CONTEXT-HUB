@@ -8,7 +8,11 @@
 - **Opportunity Name**: Injectors Direct - Plus, SP, SPi
 - **Close Date**: 2025-11-21
 - **Stage**: Deal Craft
-- **Amount**: $78,200.00
+- **Amount**: $82,800.00
+- **Total Revenue**: $1,995,010.74
+- **Merchant Intent**: Committed - At Risk
+- **Close Probability**: High
+- **Last Modified**: Nov 3, 2025 6:07 PM
 
 **Account:**
 - **Account ID**: [To be added]
@@ -51,7 +55,7 @@
   - Solution stage reached: Aug 12, 2025
 
 ## Last Synced
-2025-10-28 (Incremental sync: Oct 23-28)
+2025-11-03 18:30 (Full refresh: Salesforce updated Nov 3 6:07 PM, no new Gmail/Slack since Nov 1)
 
 
 

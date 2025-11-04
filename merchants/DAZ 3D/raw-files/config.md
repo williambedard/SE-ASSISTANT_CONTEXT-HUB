@@ -6,14 +6,15 @@
 - **Opportunity ID**: 006OG00000E9VFsYAN
 - **Opportunity Link**: https://banff.lightning.force.com/lightning/r/Opportunity/006OG00000E9VFsYAN/view
 - **Opportunity Name**: DAZ 3D - Plus, Payments
-- **Close Date**: 2025-11-21
+- **Close Date**: 2025-11-12
 - **Stage**: Deal Craft
-- **Amount**: $82,800.00
+- **Amount**: $1,413,631.57
+- **Close Probability**: Very High
 
 **Account:**
-- **Account ID**: [To be added]
+- **Account ID**: 001OG000013mURSYA2
 - **Account Name**: DAZ Productions, Inc.
-- **Account Link**: [To be added]
+- **Account Link**: https://banff.lightning.force.com/lightning/r/Account/001OG000013mURSYA2/view
 
 ## Slack Channels
 - **Primary Channel**: #daz3d
@@ -53,9 +54,9 @@
   - Target signature: Oct 31, 2025
 
 ## Recent Documents
-- **Executive Overview**: 1VETyC8NsVBRr0VYLdA3dmN4mm0Aw9r4bfp747WLLY1U (Oct 29-30, 2025)
-- **Mutual Plan**: 109YMLma9YcT4MAf-7fhKr0-NQkaJL7JCQzU2qF0dvUM (Oct 29, 2025)
+- **Executive Overview**: 1VETyC8NsVBRr0VYLdA3dmN4mm0Aw9r4bfp747WLLY1U (Oct 29-30, 2025) - Saved locally
+- **Mutual Plan**: 109YMLma9YcT4MAf-7fhKr0-NQkaJL7JCQzU2qF0dvUM (Oct 31, 2025) - Saved locally
 
 ## Last Synced
-2025-10-30 (Updated with Salesforce, Gmail, Google Drive)
+2025-11-03 (Updated with Salesforce, Gmail, Google Drive - no new email/Slack activity since Oct 30)
 

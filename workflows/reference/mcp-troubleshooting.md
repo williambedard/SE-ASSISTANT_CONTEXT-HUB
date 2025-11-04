@@ -325,6 +325,8 @@ This prevents unintended data modifications and ensures data integrity.
 - **CloudDo Permits**: https://clouddo.shopify.io/permits
 - **Onboarding Setup**: `workflows/core/onboarding-setup.md`
 - **SE Assistant Rules**: `.cursor/rules/se-assistant.mdc` (Section 0.4 - MCP Environment)
+- **SE Next Steps Sync**: `workflows/reference/se-next-steps-sync.md` (Webhook format, batch processing)
+- **Gumloop Validation**: `workflows/reference/gumloop-validation-protocol.md` (Pre-execution validation)
 
 ---
 

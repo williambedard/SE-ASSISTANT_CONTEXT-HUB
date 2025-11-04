@@ -6,7 +6,7 @@ Your AI-powered research partner for Shopify SE work. Combines your merchant con
 
 ---
 
-## ⚡ What This Adds to SE Assistant v7.0
+## ⚡ What This Adds to SE Assistant v7.1
 
 This repo builds on the foundational SE Assistant rules with operational workflows and tooling:
 
@@ -243,7 +243,7 @@ Build your merchant context locally with this tool, then sync to [SE-NTRAL](http
 - **Daily workflows:** [Quick Start Guide](workflows/core/quick-start.md)
 - **First-time setup:** [Onboarding Setup](workflows/core/onboarding-setup.md)
 - **Prioritization:** [Opportunity Prioritization Guide](workflows/reference/opportunity-prioritization.md)
-- **Salesforce writes:** [Gumloop Validation Protocol](workflows/reference/gumloop-validation-protocol.md)
+- **Salesforce writes:** [SE Next Steps Sync](workflows/reference/se-next-steps-sync.md) + [Validation Protocol](workflows/reference/gumloop-validation-protocol.md)
 - **MCP Troubleshooting:** [MCP Troubleshooting Guide](workflows/reference/mcp-troubleshooting.md)
 - **Complete rules:** `.cursor/rules/se-assistant.mdc` (loaded via `@se-assistant`)
 
