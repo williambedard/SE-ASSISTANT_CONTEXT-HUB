@@ -2,6 +2,35 @@
 
 All notable changes to the SE Assistant will be documented in this file.
 
+## [7.5.4] - 2025-11-06
+
+### Integration Branch (will-se-sandbox)
+This version merges SE-ASSISTANT_CONTEXT-HUB operational workflows into shopify-playground/se-assistant base.
+
+### Added from SE-ASSISTANT_CONTEXT-HUB
+- Work Prioritization & Focus system (Pre-sales Opportunities + Post-sales Launch Cases)
+- Launch Case & Post-Sales Support workflows with SE Consultation Log
+- Account-Level Organization (pre-sales/, post-sales/, raw-files/ structure)
+- Personal Config infrastructure (Salesforce UserId, quarter dates, Drive folders)
+- Priority dashboard generation with scoring formula
+- Enhanced MCP integration protocols
+- AI Self-Check quality controls
+- Gumloop validation protocol for Salesforce writes
+- Context loading and prioritization guides
+- MCP troubleshooting documentation
+
+### Enhanced
+- README.md with comprehensive setup, workflows, and team collaboration details
+- .gitignore with merchant folders, personal-config.md, presentation/ exclusions
+- File structure to support both pre-sales and post-sales merchant lifecycle phases
+- Folder hierarchy optimized for SE-NTRAL dashboard parsing
+
+### Differences from shopify-playground/se-assistant main
+- Expanded operational workflows beyond core rules
+- GitHub-based team collaboration structure
+- Integration with SE-NTRAL for context sharing
+- Daily workflow templates and reference guides
+
 ## [7.5.3] - 2025-11-05
 
 ### Changed
