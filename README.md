@@ -6,40 +6,20 @@ Your AI-powered research partner for Shopify SE work. Combines your merchant con
 
 ---
 
-## ⚡ What This Adds to SE Assistant v7.1
+## ⚡ What This Adds to SE Assistant
 
-This repo builds on the foundational SE Assistant rules with operational workflows and tooling:
+Operational workflows and tooling built on top of the foundational SE Assistant rules:
 
-**1. Work Prioritization & Focus** 🎯
-- Automated "What should I focus on?" dashboard with scored priorities
-- Pre-sales: Opportunities by tier (Revenue + Close Probability + Urgency)
-- Post-sales: Launch Cases by health status (Red/Yellow/Green)
-- Uses personal Salesforce UserId + quarter dates for filtering
-- Time allocation guidance (60% Tier 1, 30% Tier 2, 10% Tier 3)
+- **Work Prioritization** - Smart dashboards for opportunities and launch cases
+- **Post-Sales Support** - Launch case management with SE consultation tracking
+- **Account Organization** - Structured folders for pre-sales, post-sales, and shared context
+- **Personal Config** - Your Salesforce UserId, quarter dates, and preferences
+- **Salesforce Integration** - Bidirectional sync with validation protocols
+- **Team Collaboration** - GitHub-based structure that syncs to SE-NTRAL
 
-**2. Launch Case & Post-Sales Support** 🚀
-- New launch cases trigger post-sales structure and pulls existing opp data from the Account
-- `post-sales/launch-plan.md` template for SE consultation tracking
-- SE Consultation Log for platform validations, architecture guidance, technical escalations
-- Context continuity via shared `raw-files/` (pre-sales context flows seamlessly into post-sales)
-- Can manage multiple TAs per Account accessible across merchant lifecycle (ex.: POS opp, B2B opp)
+**tl;dr:** Base SE Assistant = foundational rules. This repo = daily workflows + tooling + team collaboration.
 
-**3. Account-Level Organization** 📁
-- Split directory structure: `pre-sales/` (Opportunities) + `post-sales/` (Launch Cases) + shared `raw-files/`
-- Technical assessments in `raw-files/documents/{product}-technical-assessment.md` (multiple per account supported)
-- Automatic Drive search and pull for TAs during sync
-- Context continuity model: `raw-files/` provides seamless merchant history across phases
-
-**4. Infrastructure & Configuration** 🔧
-- Personal Config: `personal-config.md` with Salesforce UserId, quarterly context window, Drive folders (enables prioritization/queries)
-- MCP Tooling: revenue-mcp enhanced (always pulls Id/Name/SE_Next_Steps__c)
-- More Guardrails: AI Self-Check quality controls, sync history checks, operational validation protocols
-
-**5. Meeting Automation & Salesforce** 🤝📝 **[Coming Soon]**
-- Meeting Workflow: Structured notes with auto-generated TL;DR/sentiment, post-meeting auto-processing, automatic briefing updates
-- Salesforce Writes: Bidirectional SE Next Steps sync via Gumloop MCP (read → update locally → write in SF → validate), eliminates manual field updates
-
-**tl;dr:** Base SE Assistant = foundational rules. This repo = daily workflows + tooling + team collaboration via GitHub.
+For complete feature list and version history, see [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
@@ -240,6 +220,7 @@ Build your merchant context locally with this tool, then sync to [SE-NTRAL](http
 
 ## 📚 Learn More
 
+- **Version history:** [CHANGELOG.md](CHANGELOG.md) - Latest updates and version changes
 - **Daily workflows:** [Quick Start Guide](workflows/core/quick-start.md)
 - **First-time setup:** [Onboarding Setup](workflows/core/onboarding-setup.md)
 - **Prioritization:** [Opportunity Prioritization Guide](workflows/reference/opportunity-prioritization.md)
