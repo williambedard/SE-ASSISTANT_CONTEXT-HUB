@@ -1,30 +1,22 @@
-# macOS
+# Personal configuration files (contain Salesforce User IDs, Drive folder IDs, AE names, etc.)
+personal-config.md
+
+# Presentation materials
+presentation/
+
+# Auto-generated priority dashboard (contains personal opportunities, revenue, meeting schedules)
+# Generated via: @se-assistant "Update my priority dashboard"
+current-q-priorities.md
+
+# Personal merchant work
+merchants/
+
+# OS files
 .DS_Store
-.AppleDouble
-.LSOverride
+Thumbs.db
 
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-# Editor directories and files
-.idea
-.vscode
+# Editor files
+.vscode/
 *.swp
 *.swo
 *~
@@ -32,4 +24,21 @@ Temporary Items
 # Temporary files
 *.tmp
 *.bak
+*.log
+/tmp/
+
+# Personal notes (if you create these)
+PERSONAL_NOTES.md
+scratch.md
+temp/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Environment files
+.env
+.env.local
 

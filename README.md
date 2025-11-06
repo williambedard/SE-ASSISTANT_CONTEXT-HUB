@@ -1,170 +1,252 @@
-# SE Assistant
+# SE-ASSISTANT_CONTEXT-HUB
 
-Welcome 🚀
+Your AI-powered research partner for Shopify SE work. Combines your merchant context with Shopify's internal tools (via MCPs) to help you research faster, prepare better, and prioritize smarter.
 
-The SE Assistant is a Cursor based, AI assistant for Solutions Engineers and has been described as "the best f* resource I've ever had for my work".
+**Built for SEs. Syncs to [SE-NTRAL](https://se-ntral.quick.shopify.io/) for team sharing.**
 
-SE Assistant allows you to integrate with ⚡️ SE-NTRAL.
+---
 
-Join us in [#se-assistant](https://shopify.enterprise.slack.com/archives/C07JYRCSZH2) for latest updates, tinkering and advice.
+## ⚡ What This Adds to SE Assistant v7.1
 
-This document outlines setup instructions, key capabilities, changelog, quick start commands and stores the latest version of the SE Assistant.
+This repo builds on the foundational SE Assistant rules with operational workflows and tooling:
 
-## Setup Instructions
+**1. Work Prioritization & Focus** 🎯
+- Automated "What should I focus on?" dashboard with scored priorities
+- Pre-sales: Opportunities by tier (Revenue + Close Probability + Urgency)
+- Post-sales: Launch Cases by health status (Red/Yellow/Green)
+- Uses personal Salesforce UserId + quarter dates for filtering
+- Time allocation guidance (60% Tier 1, 30% Tier 2, 10% Tier 3)
 
-The setup is chunky, but it's worth it. You will come through a cursor power user and equipped with a powerful assistant.
+**2. Launch Case & Post-Sales Support** 🚀
+- New launch cases trigger post-sales structure and pulls existing opp data from the Account
+- `post-sales/launch-plan.md` template for SE consultation tracking
+- SE Consultation Log for platform validations, architecture guidance, technical escalations
+- Context continuity via shared `raw-files/` (pre-sales context flows seamlessly into post-sales)
+- Can manage multiple TAs per Account accessible across merchant lifecycle (ex.: POS opp, B2B opp)
 
-You've got this! 💚
+**3. Account-Level Organization** 📁
+- Split directory structure: `pre-sales/` (Opportunities) + `post-sales/` (Launch Cases) + shared `raw-files/`
+- Technical assessments in `raw-files/documents/{product}-technical-assessment.md` (multiple per account supported)
+- Automatic Drive search and pull for TAs during sync
+- Context continuity model: `raw-files/` provides seamless merchant history across phases
 
-### Installing Cursor
+**4. Infrastructure & Configuration** 🔧
+- Personal Config: `personal-config.md` with Salesforce UserId, quarterly context window, Drive folders (enables prioritization/queries)
+- MCP Tooling: revenue-mcp enhanced (always pulls Id/Name/SE_Next_Steps__c)
+- More Guardrails: AI Self-Check quality controls, sync history checks, operational validation protocols
 
-1. [Install Cursor](https://www.cursor.com/)
-2. If prompted for a password, insert the computer password (you will be asked to re-enter it multiple times at once)
+**5. Meeting Automation & Salesforce** 🤝📝 **[Coming Soon]**
+- Meeting Workflow: Structured notes with auto-generated TL;DR/sentiment, post-meeting auto-processing, automatic briefing updates
+- Salesforce Writes: Bidirectional SE Next Steps sync via Gumloop MCP (read → update locally → write in SF → validate), eliminates manual field updates
 
-### Adding the SE Assistant
+**tl;dr:** Base SE Assistant = foundational rules. This repo = daily workflows + tooling + team collaboration via GitHub.
 
-#### Create the merchant project folder
+---
 
-1. Go to your Desktop > Right click > Add Folder > call it 'Merchants'
-2. Open Cursor, in the top bar click File > Open Folder, navigate to desktop, open 'Merchants'
+## 🚀 Quick Start (5 minutes)
 
-#### Add the SE Assistant
+### Step 0: Configure MCP Servers (REQUIRED)
 
-1. Download or copy the `se-assistant.mdc` file from this repository
-2. In cursor, open settings > Rules & Memories > Project Rules 'Add rule'
-3. Name the rule "se-assistant"
-4. Paste the content from `se-assistant.mdc`
-5. Save
+**⚠️ Most important step** - Without MCPs, this tool won't work properly.
 
-### Activating MCP Servers
+MCPs (Model Context Protocol servers) give the AI access to Shopify's internal tools. Think of them as API connectors.
 
-SE Assistant requires MCP Server integration to have access to Shopify context.
+**Setup guide:** [Shopify MCP Server Documentation](https://vault.shopify.io/ai/mcp_servers)
 
-**Tip:** The 'Add to Cursor' button in Vault often breaks your configuration file. Rather copy and paste the provided configuration into your mcp.json file.
+**Required MCPs:**
+- ✅ **Revenue MCP** - Salesforce data, company enrichment, account info
+- ✅ **Vault MCP** - Internal knowledge base, RFP responses, competitive battle cards
+- ✅ **GWorkspace MCP** - Gmail threads, Drive docs, Calendar
+- ✅ **Slack MCP** - Team conversations, merchant mentions
 
-#### Prerequisites
+**Highly Recommended:**
+- Scout MCP - Support tickets, merchant frustrations, sales conversations
+- Shopify Dev MCP - API docs, GraphQL validation
 
-1. **GitHub Access** - ensure you have access to Shopify, Shop and Playground. This can be requested through Okta.
-2. Install [dev](https://github.com/Shopify/dev) (& follow https://technical-learning.docs.shopify.io/setup/github_access for GitHub instructions)
+**How to verify MCPs are working:**
+```bash
+@se-assistant "Get my Salesforce UserId"
+```
+If this returns your UserId, MCPs are configured correctly.
 
-#### Install MCP servers
+**Common MCP issues:**
+- Need to re-authenticate with Google/Salesforce/Slack every few weeks
+- Check Cursor settings → Features → Model Context Protocol
+- Some MCPs require specific permissions (admin for Revenue MCP)
 
-Do them in this order as they get more complicated / less important 'for SE'ing' as you move through:
+**Already have MCPs configured?** Skip to Step 1 below.
 
-1. [G Workspace](https://vault.shopify.io/ai/mcp-servers/194-gworkspace) - guided steps
-2. [Vault MCP](https://vault.shopify.io/ai/mcp-servers/193-vault-mcp) - guided steps
-3. [Vault-set Search](https://vault.shopify.io/ai/mcp-servers/270-vault-set-search-mcp)
-4. [Support Core](https://vault.shopify.io/ai/mcp-servers/215-support-core-mcp)
-5. [Dev MCP](https://vault.shopify.io/ai/mcp-servers/151-dev-mcp)
-6. [Slack MCP](https://vault.shopify.io/ai/mcp-servers/195-slack-mcp) - guided steps
-7. [Shopify Dev](https://vault.shopify.io/ai/mcp-servers/192-shopify-dev-mcp)
-8. [Observe MCP](https://vault.shopify.io/ai/mcp-servers/267-observe-mcp)
-9. [Data Portal MCP](https://vault.shopify.io/ai/mcp-servers/240-data-portal-mcp) (Reference for install - successful install of this should make everything else work)
-10. [Scout MCP](https://vault.shopify.io/ai/mcp-servers/249-scout-mcp)
+---
 
-**Note on Competebot MCP:** Instead of integrating the MCP, which has proved troublesome, we've built the logic directly into the SE Assistant (v5.1+) and then access the appropriate files via the gworkspace mcp.
+### Step 1: Clone & Setup
 
-#### Troubleshooting tips for MCPs
+**First time setting up your work locally?**
 
-1. Ask Cursor to help debug why the MCP server isn't connecting properly, then proceed with the steps it proposes (honestly, this helps)
-2. Check your mac is up to date
-3. Update the CLI Tools (from System Settings -> General -> Software Update)
-4. Hard quit cursor (command + q) and reopen (sometimes it's simply an authentication issue which goes through your browser)
-5. If that still doesn't enable MCPs, turn each MCP on and off again (toggle in settings)
-6. Ask Cursor to debug your brew set-up (use MAX mode with Claude as a model)
-7. If that still doesn't work, try adding the following commands into the agent chat box:
-   - `dev github auth`
-   - `gcloud auth login`
-   - `brew install uv`
-   - `dev update`
-   
-   Run each command one at a time, and repeat steps 2 and 3 for each command.
+1. Create an empty project folder
+2. Open a terminal window at that folder
+3. Run:
+   ```bash
+   git init
+   git clone https://github.com/williambedard/SE-ASSISTANT_CONTEXT-HUB
+   ```
+4. Open the `SE-ASSISTANT_CONTEXT-HUB` folder in Cursor
 
-## Getting Started
+**Already have the repo?** Just open it in Cursor and continue to Step 2.
 
-1. Tag the se-assistant in a prompt, then ask it to create a new Merchant
-2. Prompt the se-assistant to add context from a file / your emails / a slack thread to a specific merchant
-3. Prompt the se-assistant to prepare a technical fit analysis based on known requirements to date.
+---
 
-## Capabilities Summary
+### Step 2: Run Setup in Cursor
 
-### Opportunity & Context Management
+In Cursor, open the cloned folder and run:
+```bash
+@se-assistant "Set up SE-ASSISTANT_CONTEXT-HUB for me"
+```
+This creates your `personal-config.md` with your Salesforce UserId and quarter dates (gitignored).
 
-- Create new opportunities with "New Opportunity: [Name]" - auto-creates folder structure and scrapes internal & external context
-- Auto-update merchant files when new information is manually provided or discovered in the sync (briefing docs, discovery assessments, technical assessments)
+---
 
-### Research & Intelligence
+### Step 3: Start Working
 
-- Shopify product/feature research via support-core MCP (public help docs, internal knowledge, Zendesk tickets)
-- Technical implementation guidance via shopify-dev MCP (APIs, GraphQL, developer docs)
-- Competitive intelligence from Klue data and battle cards via Google Workspace
-- Web research & company enrichment for merchant business intelligence
-- Internal knowledge search via Vault MCPs for strategies, roadmap, RFP content
+```bash
+@se-assistant "New Opportunity: [Company Name]"
+```
 
-### Technical Assessments
+Done, prompt away! 🎉
 
-- Google Doc technical assessments - create/update from template with merchant context
-- Tech stack capability mapping across all commerce functions (catalog, pricing, checkout, fulfillment, etc.)
-- POS hardware validation against Shopify's supported hardware by country
-- Integration blueprint design with API strategy and data architecture
+**Full details:** See [Quick Start Guide](workflows/core/quick-start.md) for daily workflows.
 
-### Discovery & Sales Frameworks
+---
 
-- 5Cs discovery framework application (Circumstance/Challenge/Consequence/Change/Closing)
-- EPoV readiness assessment with gap identification
-- Challenger approach integration with reframe insights
+## 💪 What You Can Do
 
-### Merchant Context Sync
+### Create & Manage Opportunities
+```bash
+@se-assistant "New Opportunity: Acme Corp"
+```
+Auto-creates merchant folder with pre-sales structure and pulls context from Gmail, Slack, Drive, Salesforce, and web research.
 
-- Sync merchant context from Gmail, Slack, and Google Drive with "sync merchants"
-- Auto-extract stakeholders and build intelligent search queries
-- Read document contents and save to merchant raw-files/ folders
-- Update briefing documents automatically with discovered context
+### Create & Manage Launch Cases
+```bash
+@se-assistant "New Launch Case: Acme Corp"
+```
+Auto-creates post-sales structure, pulls Launch Case data from Salesforce, links to pre-sales context.
 
-### File Management
+### Get Priorities & Pipeline Insights
+```bash
+@se-assistant "Update my priority dashboard"
+@se-assistant "What should I focus on this week?"
+@se-assistant "Show my open SE opportunities closing this quarter"
+```
 
-- Briefing documents - executive summaries, stakeholder tracking, timelines
-- Discovery assessments - 5Cs framework, discovery gaps, EPoV status
-- Technical assessments - product snapshots, proposed solutions, tech stacks
-- Raw files organisation - meeting notes, emails, Slack threads, key resources
+### Research & Prep
+```bash
+@se-assistant "Show me latest context for Acme Corp"
+@se-assistant "Give me 5 reasons why this merchant may not choose Shopify"
+@se-assistant "Create technical assessment for Acme Corp"
+```
 
-### Anti-Hallucination & Accuracy
+### Sync & Update Context
+```bash
+@se-assistant "Sync merchant context for Acme Corp"
+@se-assistant "Clean up stale files for Acme Corp"
+```
 
-- 100% verified information - says "I don't know" when uncertain
-- Source hierarchy enforcement - prioritises authoritative sources (RFP content > internal docs > public docs)
-- Explicit internal-only marking for confidential information
-- Tool/service name validation to prevent transcription errors
+---
 
-## Quick Start Commands
+## 🤖 What This Does Automatically
 
-- `"New Opportunity: [Merchant Name]"` - Creates new merchant folder with context scraping
-- `"Sync merchants"` - Updates all merchant context from Gmail/Slack/Drive
-- `"Technical assessment for [merchant]"` - Creates/updates Google Doc assessment
+When you create a merchant folder, it pulls:
+- ✅ Email threads from Gmail
+- ✅ Slack conversations
+- ✅ Google Drive docs
+- ✅ Salesforce opportunity/launch case data
+- ✅ Internal Shopify resources (Vault, Scout)
+- ✅ Company research
 
-## Support & Community
+All organized in your `merchants/[Company Name]/` folder with:
+- `pre-sales/` - Briefing doc, discovery assessment, technical assessment
+- `post-sales/` - Launch plan
+- `raw-files/` - Emails, meeting notes, Slack, docs (shared context for continuity)
 
-Join the [#se-assistant Slack channel](https://shopify.enterprise.slack.com/archives/C07JYRCSZH2) for:
-- Latest updates and announcements
-- Tips and tricks from other users
-- Troubleshooting help
-- Feature requests and feedback
+**You can also add context manually:** Paste Drive links, emails, or notes into chat and ask to add them to the merchant folder.
 
-## SE-NTRAL Integration
+---
 
-SE Assistant integrates with [SE-NTRAL](https://se-ntral.quick.shopify.io/) for centralised merchant context visibility across the team.
+## 📁 Project Structure
 
-After significant updates, the assistant will prompt you to sync your context to SE-NTRAL.
+```
+SE-ASSISTANT_CONTEXT-HUB/
+├── merchants/                # One folder per merchant
+│   └── [Merchant Name]/
+│       ├── pre-sales/        # Opportunities (briefing, discovery, technical)
+│       ├── post-sales/       # Launch Cases (launch plan)
+│       └── raw-files/        # Context (emails, Slack, meeting notes, docs)
+├── personal-config.md        # Your config (gitignored)
+├── current-q-priorities.md   # Auto-generated dashboard
+└── workflows/                # How-to guides
+```
 
-## Version Information
+**See:** [Quick Start Guide](workflows/core/quick-start.md) for folder structure details and daily workflows.
 
-Current Version: **v7.0**
+---
 
-For detailed version history and changelog, see [CHANGELOG.md](CHANGELOG.md)
+## 🎯 Key Features
 
-## Contributing
+- **Smart context gathering** - Automatic sync from Gmail, Slack, Drive, Salesforce
+- **Discovery frameworks** - 5Cs, EPoV, Challenger methodology built-in
+- **Technical assessments** - Generate from templates with merchant-specific details
+- **Priority scoring** - Revenue + Probability + Urgency formula with tiered dashboards
+- **Anti-hallucination** - Only references verified data, never synthesizes capabilities
+- **Write operation safety** - 🚨 MANDATORY validation before any Salesforce updates (see `workflows/reference/gumloop-validation-protocol.md`)
+- **MCP-powered** - Direct access to Salesforce, Vault, Scout, Shopify Dev tools
 
-This is an internal Shopify tool. For questions, feedback, or contributions, please reach out in the #se-assistant Slack channel.
+---
 
-## License
+## 🔧 Common Issues
 
-Internal Shopify use only.
+**"Returns other SEs' opportunities"**  
+→ Check `personal-config.md` has your correct Salesforce UserId
+
+**"Queries return too many results"**  
+→ Update quarter dates in `personal-config.md` (Q1: Jan-Mar, Q2: Apr-Jun, Q3: Jul-Sep, Q4: Oct-Dec)
+
+**"Can't find merchant context"**  
+→ Run: `@se-assistant "Sync merchant context for [Name]"`
+
+**"MCP not working" / "Tool failed to execute"**  
+→ Check Cursor settings → Features → Model Context Protocol  
+→ Verify all required MCPs are listed and enabled  
+→ Try re-authenticating (may need to re-auth with Google/Salesforce/Slack)  
+→ Setup guide: [Shopify MCP Documentation](https://vault.shopify.io/ai/mcp_servers)  
+→ Test with: `@se-assistant "Get my Salesforce UserId"` - should return your UserId
+
+**More help:** 
+- [Onboarding Setup Guide](workflows/core/onboarding-setup.md)
+- [MCP Troubleshooting Guide](workflows/reference/mcp-troubleshooting.md) - Auth failures, permission errors, sync issues
+- Ping @william.bedard in Slack
+
+---
+
+## 🤝 Team Sharing with SE-NTRAL
+
+Build your merchant context locally with this tool, then sync to [SE-NTRAL](https://se-ntral.quick.shopify.io/sync.html) for team-wide semantic search and knowledge sharing.
+
+**SE-ASSISTANT_CONTEXT-HUB** = Your personal research genius  
+**SE-NTRAL** = Team's collective intelligence network
+
+*Shoutout to @Stephen.Brook and @Ben Homer for building this great tool!*
+
+---
+
+## 📚 Learn More
+
+- **Daily workflows:** [Quick Start Guide](workflows/core/quick-start.md)
+- **First-time setup:** [Onboarding Setup](workflows/core/onboarding-setup.md)
+- **Prioritization:** [Opportunity Prioritization Guide](workflows/reference/opportunity-prioritization.md)
+- **Salesforce writes:** [SE Next Steps Sync](workflows/reference/se-next-steps-sync.md) + [Validation Protocol](workflows/reference/gumloop-validation-protocol.md)
+- **MCP Troubleshooting:** [MCP Troubleshooting Guide](workflows/reference/mcp-troubleshooting.md)
+- **Complete rules:** `.cursor/rules/se-assistant.mdc` (loaded via `@se-assistant`)
+
+---
+
+**Questions?** Contact @william.bedard in Slack
