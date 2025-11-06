@@ -46,7 +46,7 @@ This kills all shopify-mcp-bridge processes that are holding old tokens.
 **Step 2: Restart the MCP Server in Cursor**
 1. Open Command Palette: `Cmd+Shift+P`
 2. Type: "MCP: Restart Server"
-3. Select: `mcp_revenue-mcp` (or whichever MCP you're troubleshooting)
+3. Select: `revenue-mcp` (or whichever MCP you're troubleshooting)
 
 **Step 3: Test Immediately**
 Try your query again. The MCP server will:
@@ -152,7 +152,7 @@ ps aux | grep -i "[s]hopify-mcp-bridge" | awk '{print $2}' | xargs kill -9 2>/de
 - **Auth**: Minerva OAuth via CloudDo permits
 - **Required Permit**: `sdp-pii` for Salesforce queries
 - **Client ID**: `0oa1ao6npm85AT2Hr0x8`
-- **Config**: `~/.cursor/mcp.json` → `mcp_revenue-mcp`
+- **Config**: `~/.cursor/mcp.json` → `revenue-mcp`
 
 ### support-core (Help Center, Zendesk)
 - **Auth**: Minerva OAuth
@@ -240,7 +240,7 @@ Problems during merchant context synchronization (Gmail, Slack, Drive).
 - **Solution**: Re-authenticate specific MCP in Cursor
 - **Steps**:
   1. `Cmd+Shift+P` → "MCP: Restart Server"
-  2. Select failing MCP (gworkspace-mcp, slack-mcp, etc.)
+  2. Select failing MCP (gworkspace-mcp, playground-slack-mcp, etc.)
   3. Complete OAuth flow if prompted
 
 **Email previews only (no full content)**

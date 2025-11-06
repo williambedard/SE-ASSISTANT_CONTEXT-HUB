@@ -15,7 +15,7 @@
 
 **How to Access via MCP:**
 ```
-@gworkspace Read file 1mhfgBFdrhrnxseelSJYUi2d7H_TVm50oIxok1tROtM4
+@gworkspace-mcp Read file 1mhfgBFdrhrnxseelSJYUi2d7H_TVm50oIxok1tROtM4
 ```
 
 ---
@@ -78,10 +78,10 @@ This is the actively maintained tab with the core SE approach:
 
 **To pull current content into Cursor:**
 ```
-@gworkspace Read file 1mhfgBFdrhrnxseelSJYUi2d7H_TVm50oIxok1tROtM4
+@gworkspace-mcp Read file 1mhfgBFdrhrnxseelSJYUi2d7H_TVm50oIxok1tROtM4
 ```
 
-**No need to download** - GWorkspace MCP fetches directly from Google Drive.
+**No need to download** - gworkspace-mcp fetches directly from Google Drive.
 
 ---
 
@@ -107,7 +107,7 @@ This SE Merchant Framework complements the playbook:
 
 **Get full playbook content:**
 ```
-@gworkspace Read file 1mhfgBFdrhrnxseelSJYUi2d7H_TVm50oIxok1tROtM4
+@gworkspace-mcp Read file 1mhfgBFdrhrnxseelSJYUi2d7H_TVm50oIxok1tROtM4
 ```
 
 **Ask specific questions about the playbook:**
@@ -117,7 +117,7 @@ This SE Merchant Framework complements the playbook:
 "What's the recommended discovery approach in the playbook?"
 ```
 
-**Future AI agents can reference this doc** by using the document ID above with GWorkspace MCP.
+**Future AI agents can reference this doc** by using the document ID above with gworkspace-mcp.
 
 ---
 

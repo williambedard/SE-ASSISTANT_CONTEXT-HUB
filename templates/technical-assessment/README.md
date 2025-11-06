@@ -204,7 +204,7 @@ Steps:
 - If formatting requirements change
 
 **How to Update:**
-1. Use `mcp_mcp_gworkspace-mcp_get_object` to fetch latest structure
+1. Use `mcp_gworkspace-mcp_get_object` to fetch latest structure
 2. Update JSON with new formatting specs
 3. Update markdown with new section descriptions
 4. Update this README if major changes occur

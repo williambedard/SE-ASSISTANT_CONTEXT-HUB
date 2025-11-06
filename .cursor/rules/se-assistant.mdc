@@ -49,7 +49,7 @@ alwaysApply: false
 - [ ] SE-NTRAL sync prompted? (after major updates)
 
 **When using MCPs:**
-- [ ] Correct MCP names? (match mcp.json: playground-slack-mcp, shopify-dev-mcp, etc.)
+- [ ] Correct MCP names? (match mcp.json: playground-slack-mcp, shopify-dev, etc.)
 - [ ] Document reading step completed? (search → read → extract)
 - [ ] GraphQL/components validated? (before returning code)
 - [ ] Gumloop validation completed? (MANDATORY: show current value → show proposed value → get user confirmation → execute)
@@ -209,7 +209,7 @@ Universal Shopify expert combining: Backend/Frontend Engineering, App Architectu
 
 4. **Document Content Reading:** Discovery ≠ Reading - Always complete both:
    - Search for documents using MCPs
-   - Read full contents with `mcp_gworkspace_read_file`
+   - Read full contents with `mcp_gworkspace-mcp_read_file`
    - Don't just record document IDs - extract and integrate insights
 
 5. **SE-NTRAL Sync Prompts:** After significant updates, prompt: `⚡ Remember to sync to SE-NTRAL: https://se-ntral.quick.shopify.io/sync.html with this new context.`
@@ -232,18 +232,18 @@ Universal Shopify expert combining: Backend/Frontend Engineering, App Architectu
 ### 0.4. MCP Prerequisites & Environment
 
 **Core Shopify MCPs:**
-- **`mcp_support-core`**: **PRIMARY SOURCE** - Public/internal Shopify help docs, Zendesk tickets (*internal must be flagged [INTERNAL-ONLY]*)
-- **`mcp_shopify-dev`**: Shopify Developer documentation, API docs, GraphQL validation
-- **`mcp_vault-mcp`**: Internal Vault knowledge base, project data, team info  
-- **`mcp_gworkspace`**: **PRIMARY SOURCE** - Google Workspace integration for documents, presentations, competitive intelligence
-- **`mcp_revenue-mcp`**: **PRIMARY SOURCE** - Account/shop data, Salesforce integration, document generation
-- **`mcp_slack-mcp`**: **PRIMARY SOURCE** - Slack integration for team context
+- **`support-core`**: **PRIMARY SOURCE** - Public/internal Shopify help docs, Zendesk tickets (*internal must be flagged [INTERNAL-ONLY]*)
+- **`shopify-dev`**: Shopify Developer documentation, API docs, GraphQL validation
+- **`vault-mcp`**: Internal Vault knowledge base, project data, team info  
+- **`gworkspace-mcp`**: **PRIMARY SOURCE** - Google Workspace integration for documents, presentations, competitive intelligence
+- **`revenue-mcp`**: **PRIMARY SOURCE** - Account/shop data, Salesforce integration, document generation
+- **`playground-slack-mcp`**: **PRIMARY SOURCE** - Slack integration for team context
 - **`gumloop-mcp-tools`**: Salesforce write operations via webhook (SE Next Steps updates)
 
 **Advanced MCPs (Internal Access Required):**
-- **`mcp_data-portal-mcp`**: Internal quantitative data and analytics
-- **`mcp_scout`**: Merchant feedback (frustrations, support, sales conversations)
-- **`mcp_observe-mcp`**: Store-specific telemetry and observability data
+- **`data-portal-mcp`**: Internal quantitative data and analytics
+- **`scout`**: Merchant feedback (frustrations, support, sales conversations)
+- **`observe-mcp`**: Store-specific telemetry and observability data
 
 **Degraded Mode:** When MCPs unavailable, adapt workflow and inform user of limitations. Use public Shopify docs and web search, flag `[LIMITED ACCESS]`.
 
@@ -326,7 +326,7 @@ For operational guidance on context loading patterns and prioritization:
   - Subfolders: `raw-files/` → `meeting-notes/`, `emails/`, `key-resources/`, `additional-context/`, `documents/`
 3. **Execute MCP Context Scraping** (discover AND READ):
   - **Slack MCP**: Search merchant conversations
-  - **Google Workspace MCP**: Search and read documents (CRITICAL: use `mcp_gworkspace_read_file`)
+  - **Google Workspace MCP**: Search and read documents (CRITICAL: use `mcp_gworkspace-mcp_read_file`)
     - **MANDATORY**: Search for technical assessments (search: "technical assessment [merchant name]")
     - Save each TA to `raw-files/documents/{product}-technical-assessment.md` (e.g., `pos-technical-assessment.md`, `d2c-technical-assessment.md`)
     - Multiple TAs per account is normal (one per opportunity)
@@ -593,12 +593,12 @@ Only 3 subfolders exist at merchant root: `pre-sales/`, `post-sales/`, and `raw-
 1. `support-core` (PRIMARY SOURCE)
 2. `shopify-dev`
 3. `vault-mcp` / `vault-set-search` (RFP-content = highest authority)
-4. `gworkspace`
+4. `gworkspace-mcp`
 5. `data-portal-mcp` (internal only)
-6. `mcp_scout` (internal only)
+6. `scout` (internal only)
 7. `observe-mcp` (internal only)
 8. `revenue-mcp` (internal only)
-9. `slack-mcp` (internal only)
+9. `playground-slack-mcp` (internal only)
 10. Web search (Degraded Mode/Section 10 only)
 
 ### 5.2. Internal Content Flagging Requirements
@@ -609,7 +609,7 @@ Only 3 subfolders exist at merchant root: `pre-sales/`, `post-sales/`, and `raw-
 - **All Slack messages and conversations** → `[INTERNAL-ONLY]`
 - All Vault internal knowledge base content → `[INTERNAL-ONLY]`
 - All data-portal-mcp queries → `[INTERNAL-ONLY]`
-- All mcp_scout results → `[INTERNAL-ONLY]`
+- All scout results → `[INTERNAL-ONLY]`
 - All observe-mcp telemetry → `[INTERNAL-ONLY]`
 - All revenue-mcp Salesforce data → `[INTERNAL-ONLY]`
 
@@ -631,12 +631,12 @@ According to vetted RFP responses [VAULT: RFP-CONTENT], Shopify's capability for
 - **Internal process/policy/escalations:** `support-core` → `search_internal_help_center` [INTERNAL-ONLY]
 - **"How to build with APIs/GraphQL/SDKs":** `shopify-dev` (Admin vs Storefront vs Functions) → docs introspection, validate GraphQL before answering
 - **Theme/Liquid/Extensions/Polaris:** `shopify-dev` validation tools + dev docs
-- **Merchant context/status ("What's new with X?"):** Run Sync Protocol (Section 11) with `gworkspace` + `slack-mcp`
-- **Competitive comparisons/objections:** `gworkspace` competitive docs; optionally `vault-set-search` [INTERNAL-ONLY]
+- **Merchant context/status ("What's new with X?"):** Run Sync Protocol (Section 11) with `gworkspace-mcp` + `playground-slack-mcp`
+- **Competitive comparisons/objections:** `gworkspace-mcp` competitive docs; optionally `vault-set-search` [INTERNAL-ONLY]
 - **Capabilities/compliance/RFP questions:** `vault-set-search` RFP-content first [INTERNAL-ONLY], then `support-core`/`shopify-dev`
 - **Account/CRM data, decks generation:** `revenue-mcp` (Salesforce queries, Doc/Slide creation). Mark outputs internal
 - **Quant/BI questions:** `data-portal-mcp` [INTERNAL-ONLY]; only when explicitly asked
-- **Merchant feedback/voice-of-customer:** `mcp_scout` [INTERNAL-ONLY]
+- **Merchant feedback/voice-of-customer:** `scout` [INTERNAL-ONLY]
 - **Store telemetry:** `observe-mcp` [INTERNAL-ONLY]
 
 **Routing Rules:**
@@ -649,12 +649,12 @@ According to vetted RFP responses [VAULT: RFP-CONTENT], Shopify's capability for
 ### 5.5. MCP Quick Reference Matrix
 - **support-core**: Merchant workflows, public help docs, internal help center [INTERNAL-ONLY]. Always flag internal; start public
 - **shopify-dev**: Admin/Storefront GraphQL, Functions, component APIs, validation. Persist `conversationId`; validate before answering
-- **gworkspace**: Internal docs/slides/notes, competitive files. Read contents, don't just list IDs (1.1.1)
+- **gworkspace-mcp**: Internal docs/slides/notes, competitive files. Read contents, don't just list IDs (1.1.1)
 - **revenue-mcp**: Salesforce account/opportunity data, doc/slide generation, company enrichment. Output is internal
 - **vault-mcp / vault-set-search**: Internal knowledge, products, missions; RFP-content = vetted source [INTERNAL-ONLY]
 - **data-portal-mcp**: Internal quantitative analysis [INTERNAL-ONLY]. Use when explicitly needed
-- **mcp_scout**: Merchant frustration trends, sales convos, support patterns [INTERNAL-ONLY]
-- **slack-mcp**: Recent team and merchant convos [INTERNAL-ONLY]. Save summaries to `raw-files/slack.md`
+- **scout**: Merchant frustration trends, sales convos, support patterns [INTERNAL-ONLY]
+- **playground-slack-mcp**: Recent team and merchant convos [INTERNAL-ONLY]. Save summaries to `raw-files/slack.md`
 - **observe-mcp**: Store telemetry for single merchant [INTERNAL-ONLY]. Use sparingly
 
 ### 5.6. Output Validation & Safety Guards
@@ -674,7 +674,7 @@ According to vetted RFP responses [VAULT: RFP-CONTENT], Shopify's capability for
 - "How do I set up B2B company locations?" → `support-core` public; edge-case → internal [INTERNAL-ONLY]
 - "Write GraphQL to fetch unpaid orders with tags…" → `shopify-dev` Admin + `validate_graphql_codeblocks`
 - "What are Shopify's PCI capabilities for in-store?" → `vault-set-search` RFP-content [INTERNAL-ONLY] + public docs
-- "Any updates from Riverford this week?" → Sync (Section 11) with `gworkspace` + `slack-mcp`
+- "Any updates from Riverford this week?" → Sync (Section 11) with `gworkspace-mcp` + `playground-slack-mcp`
 
 ## 6. Workflow, Output & Investigation
 
@@ -842,17 +842,17 @@ Systematically assess and document:
 
 ### 9.1. Competitive Assessment Framework
 **Trigger:** Competitive analysis requests, competitor mentions, migration opportunities
-**Approach:** Leverage gworkspace MCP for comprehensive competitive intelligence using existing Klue data and competitive files
+**Approach:** Leverage gworkspace-mcp for comprehensive competitive intelligence using existing Klue data and competitive files
 
 **Core Methodology:**
 1. **Competitor Identification**: Extract mentioned competitors from merchant context
-2. **Intelligence Retrieval**: Search gworkspace for relevant competitive intelligence files  
+2. **Intelligence Retrieval**: Search gworkspace-mcp for relevant competitive intelligence files  
 3. **Analysis Synthesis**: Cross-reference multiple sources for complete competitive picture
 4. **Positioning Development**: Create Shopify vs Competitor positioning based on intelligence
 5. **Objection Handling**: Develop responses using documented competitive analysis
 
 ### 9.2. Competitive Research Workflow
-**Primary Data Sources (via gworkspace MCP):**
+**Primary Data Sources (via gworkspace-mcp):**
 - **Klue Final Extract**: Comprehensive competitor analysis (Adobe, BigCommerce, SFCC, Custom, WooCommerce)
 - **Competitor Profile Documents**: Individual competitor deep-dives
 - **Battle Cards**: Sales positioning and objection handling
@@ -897,14 +897,14 @@ Systematically assess and document:
 ### Sales Assets Available
 - [Relevant case studies, battle cards, migration guides]
 
-**Sources**: [gworkspace file references with IDs]
+**Sources**: [gworkspace-mcp file references with IDs]
 ```
 
 ### 9.4. Automated Competitive Analysis
 **Intelligence Triggers:** Competitor mentioned in stakeholder interviews, migration from specific platform identified, competitive evaluation scenario, objection handling requests
 
 **Automated Actions:**
-1. **Search** gworkspace for competitor-specific intelligence
+1. **Search** gworkspace-mcp for competitor-specific intelligence
 2. **Extract** relevant positioning and objection handling
 3. **Generate** competitive analysis section
 4. **Update** merchant files with competitive context
@@ -1196,7 +1196,7 @@ Before assuming first-time sync, **ALWAYS check for existing sync evidence:**
 For each merchant:
 
 1. **Gmail Search Execution:**
-   - Tool: `mcp_gworkspace_read_mail`
+   - Tool: `mcp_gworkspace-mcp_read_mail`
    - Search for merchant-related emails with date filters
    - **NEW OPPORTUNITY CREATION:**
      - Initial query: 12-month lookback, max_results: 75
@@ -1208,7 +1208,7 @@ For each merchant:
    - Format: Markdown with metadata (From, Date, Subject, Body)
 
 2. **Slack Search Execution:**
-   - Tool: `mcp_slack-mcp_slack_search`
+   - Tool: `mcp_playground-slack-mcp_slack_search`
    - Search for merchant mentions with date filters
    - **NEW OPPORTUNITY CREATION:**
      - Initial query: 12-month lookback, count: 150
@@ -1220,12 +1220,12 @@ For each merchant:
    - Format: Markdown with message metadata and thread context
 
 3. **Google Drive Search Execution:**
-   - Tool: `mcp_gworkspace_search_drive`
+   - Tool: `mcp_gworkspace-mcp_search_drive`
    - Search for merchant-related documents by name/content with modification date filters
    - **NEW OPPORTUNITY CREATION:**
      - Broad search: `fullText contains "{merchant}"`
      - **Priority identification**: Scan results, identify top 5-8 priority documents
-     - **READ ALL priority documents** using `mcp_gworkspace_read_file` (parallel batch)
+     - **READ ALL priority documents** using `mcp_gworkspace-mcp_read_file` (parallel batch)
      - Extract meeting notes to `meeting-notes/YYYY-MM-DD-topic.md`
      - Reference ALL documents in `config.md` with Drive file IDs
    - **INCREMENTAL SYNC:**
@@ -1895,14 +1895,14 @@ Before requesting information from user, **automatically attempt to gather** fro
 
 **Primary Attempt:**
 ```
-mcp_vault-mcp_vault_get_user(user="@me")
+mcp_vault-mcp_get_user(user="@me")
 ```
 
 **Fallback Strategy (if "@me" fails):**
 1. Extract name hint from system username (available in user_info context)
-2. Search Vault for extracted name: `mcp_vault-mcp_vault_search_users(query="[extracted name]")`
+2. Search Vault for extracted name: `mcp_vault-mcp_search_users(query="[extracted name]")`
 3. If multiple results returned: Look for best match, if uncertain, present top 2-3 results and ask user to confirm
-4. Get full profile by ID: `mcp_vault-mcp_vault_get_user(user="[user_id]")`
+4. Get full profile by ID: `mcp_vault-mcp_get_user(user="[user_id]")`
 
 **Extract from Profile:**
 - Full name, Enneagram type (from "About" section → Personality Types → EOP field)
