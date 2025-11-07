@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "🔄 Update SE-ASSISTANT_HUB",
+      "label": "🔄 Update SE Assistant",
       "type": "shell",
       "command": "bash workflows/core/update-se-assistant.sh",
       "problemMatcher": [],
@@ -17,7 +17,7 @@
     {
       "label": "📊 Check for Updates",
       "type": "shell",
-      "command": "echo '🔍 Checking for updates...' && git fetch shopify-playground main && BEHIND=$(git rev-list --count HEAD..shopify-playground/main 2>/dev/null || echo '0') && if [ \"$BEHIND\" -gt 0 ]; then echo \"✅ $BEHIND update(s) available! Run '🔄 Update SE-ASSISTANT_HUB' task to update.\"; else echo \"✅ Already up to date!\"; fi",
+      "command": "echo '🔍 Checking for updates...' && git fetch shopify-playground main && BEHIND=$(git rev-list --count HEAD..shopify-playground/main 2>/dev/null || echo '0') && if [ \"$BEHIND\" -gt 0 ]; then echo \"✅ $BEHIND update(s) available! Run '🔄 Update SE Assistant' task to update.\"; else echo \"✅ Already up to date!\"; fi",
       "problemMatcher": [],
       "presentation": {
         "reveal": "always",

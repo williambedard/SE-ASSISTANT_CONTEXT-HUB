@@ -1,21 +1,10 @@
-# SE-ASSISTANT_CONTEXT-HUB
+# SE Assistant
 
 Your AI-powered research partner for Shopify SE work. Combines your merchant context with Shopify's internal tools (via MCPs) to help you research faster, prepare better, and prioritize smarter.
 
 **Built for SEs. Syncs to [SE-NTRAL](https://se-ntral.quick.shopify.io/) for team sharing.**
 
 ---
-
-## ⚡ What This Adds to SE Assistant
-
-Operational workflows and tooling built on top of the foundational SE Assistant rules:
-
-- **Work Prioritization** - Smart dashboards for opportunities and launch cases
-- **Post-Sales Support** - Launch case management with SE consultation tracking
-- **Account Organization** - Structured folders for pre-sales, post-sales, and shared context
-- **Personal Config** - Your Salesforce UserId, quarter dates, and preferences
-- **Salesforce Integration** - Bidirectional sync with validation protocols
-- **Team Collaboration** - GitHub-based structure that syncs to SE-NTRAL
 
 ## 🤖 How It Works
 
@@ -96,7 +85,7 @@ When you open the folder, Cursor automatically:
 
 Then run this to create your personal config:
 ```bash
-@se-assistant "Set up SE-ASSISTANT_HUB for me"
+@se-assistant "Set up SE Assistant for me"
 ```
 
 This creates `personal-config.md` with your Salesforce UserId and quarter dates (gitignored).
@@ -121,7 +110,7 @@ When the team pushes updates to [`shopify-playground/se-assistant/main`](https:/
 
 **Easiest method:** Cursor shows updates automatically in the bottom-left status bar (↓ icon) - just click "Sync Changes"!
 
-**Alternative:** Press `Cmd+Shift+P` → Type `Run Task: 🔄 Update SE-ASSISTANT_HUB` → Enter
+**Alternative:** Press `Cmd+Shift+P` → Type `Run Task: 🔄 Update SE Assistant` → Enter
 
 **Merge strategy:** Team agent updates always take precedence (ensures everyone has latest agent versions).
 
@@ -196,7 +185,7 @@ All organized in your `merchants/[Company Name]/` folder with:
 ## 📁 Project Structure
 
 ```
-SE-ASSISTANT_CONTEXT-HUB/
+se-assistant/
 ├── merchants/                # One folder per merchant
 │   └── [Merchant Name]/
 │       ├── pre-sales/        # Opportunities (briefing, discovery, technical)
@@ -252,7 +241,7 @@ SE-ASSISTANT_CONTEXT-HUB/
 
 Build your merchant context locally with this tool, then sync to [SE-NTRAL](https://se-ntral.quick.shopify.io/sync.html) for team-wide semantic search and knowledge sharing.
 
-**SE-ASSISTANT_CONTEXT-HUB** = Your personal research genius  
+**SE Assistant** = Your personal research genius  
 **SE-NTRAL** = Team's collective intelligence network
 
 *Shoutout to @Stephen.Brook and @Ben Homer for building this great tool!*

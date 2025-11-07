@@ -1,4 +1,4 @@
-# Updating SE-ASSISTANT_HUB from GitHub
+# Updating SE Assistant from GitHub
 
 **Purpose:** Get the latest updates from the team without needing to know git commands.
 
@@ -46,7 +46,7 @@ Cursor automatically checks `shopify-playground/main` for updates every 3 minute
 Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows/Linux), then type:
 
 ```
-Run Task: 🔄 Update SE-ASSISTANT_HUB
+Run Task: 🔄 Update SE Assistant
 ```
 
 Select it and hit Enter. The update script runs automatically in a terminal window.
@@ -60,7 +60,7 @@ Run Task: 📊 Check for Updates
 
 ### 🥉 Method 3: Terminal Script
 
-Open Terminal, navigate to SE-ASSISTANT_HUB folder, then:
+Open Terminal, navigate to se-assistant folder, then:
 
 ```bash
 bash workflows/core/update-se-assistant.sh
@@ -87,7 +87,7 @@ git pull shopify-playground main
 
 Or from anywhere:
 ```bash
-cd "/Users/[YourUsername]/Documents/GitHub Repos/SE-ASSISTANT_HUB"
+cd "/Users/[YourUsername]/Documents/GitHub Repos/se-assistant"
 git pull shopify-playground main
 ```
 
@@ -154,7 +154,7 @@ git pull shopify-playground main
 
 **Fix:**
 ```bash
-cd "/Users/[YourUsername]/Documents/GitHub Repos/SE-ASSISTANT_HUB"
+cd "/Users/[YourUsername]/Documents/GitHub Repos/se-assistant"
 git status
 ```
 
@@ -201,7 +201,7 @@ This shows which files will change. If you see your merchant folders or personal
 
 **When to update:**
 - ✅ **Monday mornings** - Weekly habit
-- ✅ **After team announcements** - When you see "SE-ASSISTANT_HUB updated!" in Slack
+- ✅ **After team announcements** - When you see "SE Assistant updated!" in Slack
 - ✅ **Before important work** - Pull latest before working on high-stakes merchants
 - ✅ **If seeing weird behavior** - Might be fixed in latest version
 
@@ -217,7 +217,7 @@ If you pulled and now things are broken:
 
 **Step 1: Undo the Pull**
 ```bash
-cd "/Users/[YourUsername]/Documents/GitHub Repos/SE-ASSISTANT_HUB"
+cd "/Users/[YourUsername]/Documents/GitHub Repos/se-assistant"
 git reset --hard HEAD@{1}
 ```
 
@@ -236,11 +236,11 @@ cp personal-config.md ~/Desktop/personal-config-backup.md
 
 # Re-clone (creates new folder)
 cd "/Users/[YourUsername]/Documents/GitHub Repos"
-mv SE-ASSISTANT_HUB SE-ASSISTANT_HUB-broken
-git clone [repository-url] SE-ASSISTANT_HUB
+mv se-assistant se-assistant-broken
+git clone https://github.com/shopify-playground/se-assistant.git
 
 # Restore your work
-cd SE-ASSISTANT_HUB
+cd se-assistant
 cp -r ~/Desktop/merchants-backup/* merchants/
 cp ~/Desktop/personal-config-backup.md personal-config.md
 ```
