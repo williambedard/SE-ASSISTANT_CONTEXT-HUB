@@ -160,9 +160,9 @@ This creates your first merchant folder with auto-populated context from:
 
 ## ✅ Setup Complete! What's Next?
 
-Your personal-config.md is configured. Now learn how to USE SE-ASSISTANT_CONTEXT-HUB:
+Your personal-config.md is configured. Now start using it:
 
-**👉 Next Step:** Read `workflows/core/quick-start.md`
+**👉 Next Step:** Type `@se-assistant "New Opportunity: [Company Name]"` to create your first merchant folder.
 
 That guide covers:
 - Creating your first merchant folder

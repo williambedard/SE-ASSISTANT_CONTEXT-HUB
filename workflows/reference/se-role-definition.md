@@ -121,7 +121,7 @@
 - Ad-hoc consultations: Answer platform questions as they arise
 - Launch day: Available for platform questions/escalations
 
-**See:** [`launch-case-management.md`](../core/launch-case-management.md)
+**Launch Cases:** SE provides technical consultation until launch completion (typically 60-90 days post-signature)
 
 ### Launch Day Support
 

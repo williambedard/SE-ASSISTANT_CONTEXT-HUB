@@ -245,8 +245,8 @@ SE-ASSISTANT_CONTEXT-HUB can help structure your notes into the proper sections.
 @se-assistant "What should I focus on this week?"
 ```
 This generates your priority dashboard showing:
-- **Pre-Sales**: Tier 1 deals (see `workflows/reference/opportunity-prioritization.md`)
-- **Post-Sales**: Active Launch Cases (see `workflows/core/launch-case-management.md`)
+- **Pre-Sales**: Tier 1 deals (ranked by revenue × probability × urgency)
+- **Post-Sales**: Active Launch Cases (Red > Yellow > Green health)
 
 **Query Launch Cases directly:**
 ```
@@ -489,7 +489,7 @@ for the technical requirements."
 
 **Result:** New person can continue seamlessly.
 
-**Note:** SE role typically ends at signature/handoff. See `workflows/reference/se-role-definition.md` for scope boundaries.
+**Note:** SE role typically ends at signature/handoff (pre-sales) or at launch completion (post-sales).
 
 ---
 
@@ -609,11 +609,11 @@ If checks pass, you're doing it right.
 
 **Learn more:**
 - Review `.cursor/rules/se-assistant.mdc` for complete SE-NTRAL rules and workflows
-- See `workflows/reference/opportunity-prioritization.md` for priority scoring methodology
+- Priority score = (Revenue × Probability) + Urgency weight
 - Check `README.md` troubleshooting section for common issues
 
 **Questions?**
-- Check workflow documentation in `workflows/` folder
+- Type `@se-assistant` for full command reference
 - Reference MCP guide in `mcp-integration/` folder
 - Ask fellow SEs who use this framework
 
@@ -637,7 +637,7 @@ Updates files from Gmail, Slack, and Google Drive per rules file Section 11.
 ```
 @se-assistant "Update my priority dashboard"
 ```
-Generates tiered opportunity list using scoring from `workflows/reference/opportunity-prioritization.md`.
+Generates tiered opportunity list using priority scoring algorithm.
 
 **Create technical assessment:**
 ```
@@ -649,7 +649,7 @@ Generates clean markdown technical assessment per rules file Section 3.1.
 ```
 @se-assistant "Update SE Next Steps in Salesforce for [Company Name]"
 ```
-Pushes Outstanding Actions to Salesforce SE Next Steps field via Gumloop. Format: Rich text with line returns between dates and empty line after "Next Steps" header. See `personal-config.md` Salesforce Field Formatting Rules section.
+Pushes Outstanding Actions to Salesforce SE Next Steps field via Gumloop webhook. Uses HTML formatting for rich text field.
 
 ---
 
