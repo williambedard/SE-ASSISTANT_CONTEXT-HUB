@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# SE-ASSISTANT_HUB Update Script
+# SE Assistant Update Script
 # Double-click this file (or run: bash update-se-assistant.sh) to get latest updates
 
 set -e  # Exit on error
@@ -12,8 +12,8 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 echo ""
-echo "🚀 SE-ASSISTANT_HUB Update Script"
-echo "=================================="
+echo "🚀 SE Assistant Update Script"
+echo "=============================="
 echo ""
 
 # Get the directory where this script is located, then navigate to repo root
@@ -25,7 +25,7 @@ cd "$REPO_ROOT"
 # Verify we're in a git repository
 if ! git rev-parse --git-dir > /dev/null 2>&1; then
     echo -e "${RED}❌ Error: Not in a git repository${NC}"
-    echo "Please run this script from the SE-ASSISTANT_HUB folder"
+    echo "Please run this script from the se-assistant folder"
     exit 1
 fi
 
@@ -113,7 +113,7 @@ if git pull "$REMOTE" "$TARGET_BRANCH" -X theirs 2>&1; then
     fi
     
     echo ""
-    echo -e "${GREEN}🎉 All done! Your SE-ASSISTANT_HUB is up to date.${NC}"
+    echo -e "${GREEN}🎉 All done! Your SE Assistant is up to date.${NC}"
     echo ""
     
 else

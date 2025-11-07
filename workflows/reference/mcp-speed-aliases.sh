@@ -2,7 +2,7 @@
 # MCP Speed Aliases - Add these to your ~/.zshrc (or ~/.bashrc)
 # 
 # Quick setup:
-# 1. Run: cat ~/Documents/GitHub\ Repos/SE-ASSISTANT_HUB/workflows/reference/mcp-speed-aliases.sh >> ~/.zshrc
+# 1. Run: cat ~/Documents/GitHub\ Repos/se-assistant/workflows/reference/mcp-speed-aliases.sh >> ~/.zshrc
 # 2. Then: source ~/.zshrc
 #
 # Or manually copy the aliases below into your shell config
