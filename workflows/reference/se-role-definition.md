@@ -5,7 +5,7 @@
 **Note:** Merchant Success Managers are now called Customer Success Managers (CSMs) as of July 1, 2025
 
 > **💡 MM SE Playbook:** For a comprehensive snapshot of the MM SE approach (sales process, discovery, demoing, tooling, etc.), see [`se-playbook-reference.md`](./se-playbook-reference.md) or access via:  
-> `@gworkspace Read file 1mhfgBFdrhrnxseelSJYUi2d7H_TVm50oIxok1tROtM4`
+> `@gworkspace-mcp Read file 1mhfgBFdrhrnxseelSJYUi2d7H_TVm50oIxok1tROtM4`
 
 ---
 
@@ -121,7 +121,7 @@
 - Ad-hoc consultations: Answer platform questions as they arise
 - Launch day: Available for platform questions/escalations
 
-**See:** [`launch-case-management.md`](../core/launch-case-management.md)
+**Launch Cases:** SE provides technical consultation until launch completion (typically 60-90 days post-signature)
 
 ### Launch Day Support
 

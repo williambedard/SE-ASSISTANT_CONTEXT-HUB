@@ -1,7 +1,7 @@
 # MCP Troubleshooting Guide
 
-**Last Updated:** November 3, 2025  
-**Version:** 1.1
+**Last Updated:** November 7, 2025  
+**Version:** 1.3
 
 ---
 
@@ -9,10 +9,10 @@
 
 | Issue | Solution | Time |
 |-------|----------|------|
-| PII permission errors after CloudDo permit claimed | Kill MCP processes + Restart MCP server | 2 min |
-| "Not connected" errors | Restart specific MCP server in Cursor | 30 sec |
-| OAuth/authentication failures | Full Cursor restart + MCP server restart | 2 min |
-| Stale cached tokens | Kill processes + Clear keychain (rare) | 3 min |
+| PII permission errors after CloudDo permit claimed | Wait 5 min (auth cache TTL) → `mcp-refresh` → retry | 5 min |
+| "Not connected" errors | `mcp-refresh` then retry query | 10 sec |
+| OAuth/authentication failures | `mcp-refresh` + Cursor restart if needed | 30 sec |
+| Stale cached tokens | `mcp-full` (kills all + clears locks) | 15 sec |
 | Merchant sync failures | Check auth, try alternate spellings, expand date range | 1-5 min |
 | Gumloop/Salesforce write failures | Check Opp ID, validate format, re-query Salesforce | 2 min |
 
@@ -27,40 +27,95 @@ To access PII tools, you need the 'sdp-pii' CloudDo permit
 ```
 
 **Even after:**
-- ✅ Claiming the permit from CloudDo (https://clouddo.shopify.io/permits)
+- ✅ Claiming the permit from CloudDo (https://clouddo.shopify.io/permits?claim=sdp-pii)
 - ✅ Restarting Cursor completely
 - ✅ Restarting MCP servers via Command Palette
 
-### Root Cause
-The `shopify-mcp-bridge` process continues running with the **old OAuth token** (from before you claimed the permit). Simply restarting Cursor doesn't kill this background process - it persists across Cursor sessions.
+**⚠️ IMPORTANT: Permit expires every 6 hours**
+You'll need to re-claim the permit multiple times per day. If you claimed it in the morning, expect to claim again in the afternoon.
+
+**💡 Pro Tip:** [Automate daily claims with Apple Shortcuts](https://shopify.slack.com/archives/C087X4TK5DJ/p1760540597748919?thread_ts=1760527490.088809&cid=C087X4TK5DJ) to save time (setup takes 2 minutes, saves 10+ min/day)
+
+### Root Cause (Confirmed by Revenue Team)
+
+**1. Authorization Layer Cache (~5 minute TTL)**
+- CloudDo updates permits immediately, but the **authorization layer** keeps a short cache of entitlements
+- Cache TTL: **~300 seconds (5 minutes)**, sometimes up to 10 minutes
+- New OAuth tokens minted during this window won't include the new permits until cache refreshes
+- **No self-serve cache invalidation endpoint exists** - you must wait for cache to expire
+
+**Architecture:**
+```
+CloudDo (permits) → Auth Layer (cached ~5 min) → Minerva OAuth (token minting)
+                         ↑ THIS IS THE BOTTLENECK
+```
+
+**2. Local Token Cache (MCP process)**
+- The `shopify-mcp-bridge` process holds the OAuth token in memory
+- Simply restarting Cursor doesn't kill this process - it persists
+- Must kill process to force fresh OAuth, but **only helps after upstream cache expires**
+
+**Why both matter:**
+- Kill process **before** cache expires → still get old permissions
+- Wait 5+ minutes but **don't** kill process → still using old cached token
+- **Best practice:** Wait 5 minutes after claiming permit, THEN run `mcp-refresh`
 
 ### Solution (Proven Fix)
 
-**Step 1: Kill Running MCP Bridge Processes**
+**Official Workflow (Based on Revenue Team Guidance)**
+
 ```bash
-ps aux | grep -i "[s]hopify-mcp-bridge\|[u]vx.*shopify" | awk '{print $2}' | xargs kill -9 2>/dev/null
+# Step 1: Claim permit at https://clouddo.shopify.io/permits
+
+# Step 2: WAIT ~5 MINUTES for authorization cache to expire
+# This is NOT optional - there's a ~300 second cache TTL on the auth layer
+# No workaround exists to speed this up
+
+# Step 3: Kill the old MCP process to force fresh OAuth
+pkill -9 -f "shopify-mcp-bridge"
+
+# Or use the alias:
+mcp-refresh
 ```
 
-This kills all shopify-mcp-bridge processes that are holding old tokens.
+**What happens:**
+- CloudDo updates permit instantly ✅
+- Authorization layer cache expires after ~5 min ✅
+- Kill MCP process to force new OAuth token request ✅
+- New token is minted with updated permits ✅
 
-**Step 2: Restart the MCP Server in Cursor**
-1. Open Command Palette: `Cmd+Shift+P`
-2. Type: "MCP: Restart Server"
-3. Select: `mcp_revenue-mcp` (or whichever MCP you're troubleshooting)
-
-**Step 3: Test Immediately**
-Try your query again. The MCP server will:
-- Start fresh with a new process
-- Initiate a new OAuth flow
-- Pick up your new CloudDo permit
-- Cache the new token with proper permissions
+**Why you can't skip the wait:**
+- Killing the process immediately doesn't help - the upstream auth cache still has old permits
+- The only guaranteed fix is: **wait for cache expiry + obtain brand new token**
+- Platform teams can force refresh in urgent cases, but it's not scalable/standard
 
 ### Why This Works
-- `shopify-mcp-bridge` uses OAuth tokens cached in macOS Keychain
-- The running process holds the token in memory
-- Killing the process forces a fresh OAuth flow
-- The new flow sees your updated CloudDo permits
-- New token is cached with correct permissions
+- **Authorization cache TTL**: Auth layer refreshes entitlements every ~300 seconds (5 min)
+- **Token caching**: `shopify-mcp-bridge` holds OAuth tokens in memory + macOS Keychain
+- **Process persistence**: Running process persists across Cursor restarts
+- **Fresh OAuth required**: Must obtain brand new token after cache expiry
+- **No shortcuts**: No self-serve cache invalidation endpoint exists
+
+### Why Multiple Cursor Restarts Don't Work
+People restart Cursor multiple times because:
+1. Cursor restart doesn't kill the MCP process ❌
+2. Process still has old token cached ❌
+3. Authorization layer cache hasn't expired yet (still ~5 min) ❌
+4. Eventually cache expires (5 min) ✅ + some restart kills process ✅
+5. Looks like "Cursor fixed it" but was actually **waiting for auth cache TTL**
+
+### Future Improvements (Per Revenue Team)
+Potential fixes being considered:
+- Lower cache TTL for dev/SE clients
+- Event-driven push/refresh of entitlements to auth layer
+- Controlled "refresh entitlements" endpoint or UI action
+- No ETA yet, but this is known friction
+
+### Historical Context (From Slack)
+- **Sept 25, 2025**: Keji (Revenue team) confirmed "5-7 mins before permit kicks in"
+- **Oct 17, 2025**: Multiple users (Rohan, Andy, Mary) reported same "CloudDo shows permit but revenue-mcp doesn't see it" issue
+- **Common pattern**: People restart Cursor multiple times, doesn't help until cache expires
+- **This troubleshooting guide**: Documents the confirmed root cause and optimal workflow
 
 ### Verification
 After the fix, you should see successful queries instead of permission errors.
@@ -76,14 +131,14 @@ After the fix, you should see successful queries instead of permission errors.
 
 ### Solution
 **Quick Fix:**
-1. `Cmd+Shift+P` → "MCP: Restart Server"
-2. Select the affected MCP server
-3. Wait 5-10 seconds
-4. Retry your query
+```bash
+pkill -9 -f "shopify-mcp-bridge"
+```
+Then retry your query - the MCP will auto-restart with fresh connection.
 
 **If that fails:**
 - Full Cursor restart (`Cmd+Q` → Reopen)
-- Check MCP server logs in Cursor's Output panel
+- Check Cursor's Output panel for MCP error logs
 
 ---
 
@@ -96,11 +151,10 @@ After the fix, you should see successful queries instead of permission errors.
 
 ### Solution
 **Full Reset:**
-1. Quit Cursor completely (`Cmd+Q`)
-2. Kill MCP processes (see Step 1 above)
+1. Kill MCP processes: `pkill -9 -f "shopify-mcp-bridge"`
+2. Quit Cursor completely (`Cmd+Q`)
 3. Reopen Cursor
-4. Restart affected MCP servers
-5. If prompted, complete OAuth flow in browser
+4. Use any MCP tool - it will auto-restart and prompt for OAuth if needed
 
 **Manual Token Clearing (Advanced):**
 ```bash
@@ -137,11 +191,11 @@ Only if the above solutions don't work and you suspect corrupted cache.
 # Clear lock files
 rm -f /tmp/shopify-mcp-bridge-*.lock
 
-# Kill all processes
-ps aux | grep -i "[s]hopify-mcp-bridge" | awk '{print $2}' | xargs kill -9 2>/dev/null
+# Kill all processes (use alias if configured)
+pkill -9 -f "shopify-mcp-bridge"
 
 # Restart Cursor
-# Then restart MCP servers via Command Palette
+# MCPs will auto-restart on next use with fresh auth
 ```
 
 ---
@@ -152,7 +206,7 @@ ps aux | grep -i "[s]hopify-mcp-bridge" | awk '{print $2}' | xargs kill -9 2>/de
 - **Auth**: Minerva OAuth via CloudDo permits
 - **Required Permit**: `sdp-pii` for Salesforce queries
 - **Client ID**: `0oa1ao6npm85AT2Hr0x8`
-- **Config**: `~/.cursor/mcp.json` → `mcp_revenue-mcp`
+- **Config**: `~/.cursor/mcp.json` → `revenue-mcp`
 
 ### support-core (Help Center, Zendesk)
 - **Auth**: Minerva OAuth
@@ -194,8 +248,10 @@ In Cursor, run a simple query for the MCP you're testing:
 ## Prevention Tips
 
 1. **After Claiming New CloudDo Permits:**
-   - Always kill MCP processes before testing
-   - Don't assume Cursor restart is enough
+   - **Wait ~5 minutes** for authorization cache to expire (NOT optional - no workaround)
+   - Run: `mcp-refresh` (or `pkill -9 -f "shopify-mcp-bridge"`)
+   - Don't assume Cursor restart is enough - must kill process AND wait
+   - If still getting errors, wait full 10 minutes (worst case cache TTL)
 
 2. **Before Important Work:**
    - Test MCP connectivity with simple queries
@@ -203,7 +259,25 @@ In Cursor, run a simple query for the MCP you're testing:
 
 3. **Regular Maintenance:**
    - Clear `/tmp/shopify-mcp-bridge-*.lock` files weekly
-   - Monitor MCP server logs in Cursor Output panel
+   - If MCPs feel slow, run `mcp-refresh` to clear stale processes
+
+4. **Shell Aliases for Speed:**
+   Add to `~/.zshrc` (or `~/.bashrc`):
+   ```bash
+   alias mcp-refresh='pkill -9 -f "shopify-mcp-bridge" && echo "✓ MCP refresh complete"'
+   alias mcp-full='pkill -9 -f "shopify-mcp-bridge|uvx|node.*mcp" && rm -f /tmp/shopify-mcp-bridge-*.lock && echo "✓ Full MCP reset complete"'
+   ```
+   Then reload: `source ~/.zshrc`
+
+5. **Reduce Permit Toggling Friction:**
+   - **💡 Automate daily claims with Apple Shortcuts** ([see Boris Jovic's setup](https://shopify.slack.com/archives/C087X4TK5DJ/p1760540597748919?thread_ts=1760527490.088809&cid=C087X4TK5DJ)):
+     - Create Shortcut: Open `https://clouddo.shopify.io/permits?claim=sdp-pii`
+     - Set automation: Run at 8am daily (+ optional 2pm renewal)
+     - Add desktop widget for quick re-claiming
+     - **This saves 10+ minutes per day** of manual permit claiming
+   - Consider a dedicated sandbox user with stable superset role for testing
+   - Separate Cursor profiles for PII vs non-PII work (keeps one "warmed up")
+   - Claim permits at start of day, not mid-workflow
 
 ---
 
@@ -211,15 +285,13 @@ In Cursor, run a simple query for the MCP you're testing:
 
 When MCPs completely stop working:
 
-- [ ] Quit Cursor (`Cmd+Q`)
-- [ ] Kill all MCP processes: `killall -9 uvx node npx 2>/dev/null`
+- [ ] Kill all MCP processes: `pkill -9 -f "shopify-mcp-bridge|uvx|node.*mcp"`
 - [ ] Clear lock files: `rm -f /tmp/shopify-mcp-bridge-*.lock`
+- [ ] Quit Cursor (`Cmd+Q`)
 - [ ] Reopen Cursor
-- [ ] Restart all MCP servers: `Cmd+Shift+P` → "MCP: Restart All Servers"
-- [ ] Wait 30 seconds
-- [ ] Test with simple query
-- [ ] If still failing: Check CloudDo permit status
-- [ ] If still failing: Re-authenticate Google OAuth for gworkspace-mcp
+- [ ] Test with simple query (MCPs auto-restart)
+- [ ] If still failing: Check CloudDo permit status at https://clouddo.shopify.io/permits
+- [ ] If still failing: Re-authenticate Google OAuth (for gworkspace-mcp issues)
 
 ---
 
@@ -237,11 +309,11 @@ Problems during merchant context synchronization (Gmail, Slack, Drive).
 
 **Auth failures during sync**
 - **Symptom**: "Authentication failed" or "Not authorized" errors
-- **Solution**: Re-authenticate specific MCP in Cursor
+- **Solution**: Kill and restart MCP process
 - **Steps**:
-  1. `Cmd+Shift+P` → "MCP: Restart Server"
-  2. Select failing MCP (gworkspace-mcp, slack-mcp, etc.)
-  3. Complete OAuth flow if prompted
+  1. Run: `pkill -9 -f "shopify-mcp-bridge"` (or `mcp-refresh` if alias configured)
+  2. Retry the failing operation - MCP will auto-restart
+  3. Complete OAuth flow if prompted in browser
 
 **Email previews only (no full content)**
 - **Symptom**: Gmail search returns truncated emails
@@ -274,7 +346,7 @@ Failures when updating SE Next Steps field via Gumloop webhook.
 
 ### 🚨 MANDATORY VALIDATION PROTOCOL
 
-**See:** `workflows/reference/gumloop-validation-protocol.md` for complete validation workflow.
+**Validation:** Cursor will show current vs proposed changes and ask for confirmation before any Salesforce write.
 
 **Quick summary:** MUST show current → proposed → get confirmation → execute.
 
@@ -323,19 +395,29 @@ This prevents unintended data modifications and ensures data integrity.
 
 - **MCP Configuration**: `~/.cursor/mcp.json`
 - **CloudDo Permits**: https://clouddo.shopify.io/permits
-- **Onboarding Setup**: `workflows/core/onboarding-setup.md`
-- **SE Assistant Rules**: `.cursor/rules/se-assistant.mdc` (Section 0.4 - MCP Environment)
-- **SE Next Steps Sync**: `workflows/reference/se-next-steps-sync.md` (Webhook format, batch processing)
-- **Gumloop Validation**: `workflows/reference/gumloop-validation-protocol.md` (Pre-execution validation)
+- **Apple Shortcuts Automation**: [Boris Jovic's setup for daily permit claims](https://shopify.slack.com/archives/C087X4TK5DJ/p1760540597748919?thread_ts=1760527490.088809&cid=C087X4TK5DJ)
+- **Setup & Commands**: Type `@se-assistant` in Cursor for full reference
 
 ---
 
 ## Version History
 
+**v1.2 (Nov 6, 2025)**
+- **OFFICIAL CONFIRMATION**: Revenue team confirmed ~300 second auth cache TTL causes 5-10 min delay
+- **No workaround**: No self-serve cache invalidation endpoint exists (must wait for cache expiry)
+- **Root cause clarified**: CloudDo → Auth Layer (cached ~5 min) → Minerva OAuth → revenue-mcp
+- **Updated workflow**: Wait 5 min (not optional) → `mcp-refresh` → retry
+- **CRITICAL**: Added permit expiry info (6 hours) - must re-claim multiple times per day
+- **Slack insights**: Added historical context from #help-revenue-funnel conversations
+- **Automation**: Added Boris Jovic's Apple Shortcuts automation for daily claims
+- Removed non-existent "MCP: Restart Server" command references
+- Added future improvement notes from Revenue team (lower TTL, event-driven refresh)
+- Confirmed why multiple Cursor restarts appear to work (time + lucky process refresh)
+
 **v1.1 (Nov 3, 2025)**
 - Added Issue 5: Merchant Sync Troubleshooting (moved from se-assistant.mdc Section 11.10)
 - Added Issue 6: Salesforce Write Operations troubleshooting (moved from se-assistant.mdc Section 12)
-- Updated Quick Reference table with all 6 issue categories
+- Updated Quick Reference table with all issue categories
 - Consolidated all troubleshooting content into single reference doc
 
 **v1.0 (Nov 3, 2025)**

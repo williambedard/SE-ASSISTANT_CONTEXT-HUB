@@ -7,16 +7,20 @@ presentation/
 # Auto-generated priority dashboard (contains personal opportunities, revenue, meeting schedules)
 # Generated via: @se-assistant "Update my priority dashboard"
 current-q-priorities.md
+current-w-priorities.md
 
 # Personal merchant work
 merchants/
+daily-logs
 
 # OS files
 .DS_Store
 Thumbs.db
 
-# Editor files
-.vscode/
+# Cursor workspace files (keep shared tasks and settings)
+.cursor/workspace/*
+!.cursor/workspace/tasks.json
+!.cursor/workspace/settings.json
 *.swp
 *.swo
 *~

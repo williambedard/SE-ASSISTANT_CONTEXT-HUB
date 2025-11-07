@@ -69,7 +69,7 @@ SELECT
   ClosedDate
 FROM Case
 WHERE RecordType.Name = 'Launch'
-  AND OwnerId = '[Your Salesforce User ID from personal-config.md]'
+  AND OwnerId = '[Your Salesforce User ID]'
   AND IsClosed = false
 ORDER BY 
   CASE Health__c WHEN 'Red' THEN 1 WHEN 'Yellow' THEN 2 WHEN 'Green' THEN 3 ELSE 4 END,
@@ -88,7 +88,7 @@ SELECT
   Account.Name
 FROM Case
 WHERE RecordType.Name = 'Launch'
-  AND OwnerId = '[Your Salesforce User ID from personal-config.md]'
+  AND OwnerId = '[Your Salesforce User ID]'
   AND Status = 'Build'
 ORDER BY LastModifiedDate DESC
 ```
@@ -105,7 +105,7 @@ SELECT
   ClosedDate
 FROM Case
 WHERE RecordType.Name = 'Launch'
-  AND OwnerId = '[Your Salesforce User ID from personal-config.md]'
+  AND OwnerId = '[Your Salesforce User ID]'
   AND IsClosed = true
   AND ClosedDate = LAST_N_DAYS:30
 ORDER BY ClosedDate DESC
@@ -296,5 +296,5 @@ Show Launch Cases in Test or Launch status (high priority)
 Find Launch Cases closing this month
 ```
 
-The Revenue MCP will automatically filter by your Salesforce User ID (from personal-config.md).
+The Revenue MCP automatically filters by your Salesforce User ID.
 

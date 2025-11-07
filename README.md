@@ -1,4 +1,4 @@
-# SE-ASSISTANT_CONTEXT-HUB
+# SE Assistant
 
 Your AI-powered research partner for Shopify SE work. Combines your merchant context with Shopify's internal tools (via MCPs) to help you research faster, prepare better, and prioritize smarter.
 
@@ -6,20 +6,21 @@ Your AI-powered research partner for Shopify SE work. Combines your merchant con
 
 ---
 
-## ⚡ What This Adds to SE Assistant
+## 🤖 How It Works
 
-Operational workflows and tooling built on top of the foundational SE Assistant rules:
+SE Assistant uses a **4-agent architecture** for optimal performance:
 
-- **Work Prioritization** - Smart dashboards for opportunities and launch cases
-- **Post-Sales Support** - Launch case management with SE consultation tracking
-- **Account Organization** - Structured folders for pre-sales, post-sales, and shared context
-- **Personal Config** - Your Salesforce UserId, quarter dates, and preferences
-- **Salesforce Integration** - Bidirectional sync with validation protocols
-- **Team Collaboration** - GitHub-based structure that syncs to SE-NTRAL
+- **Orchestrator** - Always active, automatically routes your requests to the right specialist
+- **Account Manager** - Handles merchant folders, Salesforce, context sync
+- **SE Coach** - Provides discovery frameworks, demo methodology, craft coaching
+- **Solutions Architect** - Designs architectures, researches platform capabilities, writes technical assessments
 
-**tl;dr:** Base SE Assistant = foundational rules. This repo = daily workflows + tooling + team collaboration.
+**You don't need to know which agent handles what** - just ask naturally and the orchestrator routes automatically. Use `@account-manager`, `@se-coach`, or `@solutions-architect` if you want to override routing.
 
-For complete feature list and version history, see [CHANGELOG.md](CHANGELOG.md)
+**Benefits:**
+- ⚡ ~40% faster responses (loads only what's needed)
+- 🎯 Better accuracy (specialized agents for specialized tasks)
+- 📈 Scalable (easy to add new capabilities)
 
 ---
 
@@ -58,30 +59,36 @@ If this returns your UserId, MCPs are configured correctly.
 
 ---
 
-### Step 1: Clone & Setup
+### Step 1: Clone Repository
 
-**First time setting up your work locally?**
+**First time setup?** In Terminal:
 
-1. Create an empty project folder
-2. Open a terminal window at that folder
-3. Run:
-   ```bash
-   git init
-   git clone https://github.com/williambedard/SE-ASSISTANT_CONTEXT-HUB
-   ```
-4. Open the `SE-ASSISTANT_CONTEXT-HUB` folder in Cursor
+```bash
+cd ~/Documents  # Or wherever you keep projects
+git clone https://github.com/shopify-playground/se-assistant.git
+cd se-assistant
+```
 
-**Already have the repo?** Just open it in Cursor and continue to Step 2.
+Then open the folder in Cursor.
+
+**Already cloned?** Just open the folder in Cursor and skip to Step 2.
 
 ---
 
 ### Step 2: Run Setup in Cursor
 
-In Cursor, open the cloned folder and run:
+When you open the folder, Cursor automatically:
+- ✅ Loads SE Assistant with all agents
+- ✅ Configures git to track shopify-playground/main for updates
+- ✅ Auto-fetches updates (status bar shows ↓ when available)
+- ✅ Adds one-click update tasks to Command Palette
+
+Then run this to create your personal config:
 ```bash
-@se-assistant "Set up SE-ASSISTANT_CONTEXT-HUB for me"
+@se-assistant "Set up SE Assistant for me"
 ```
-This creates your `personal-config.md` with your Salesforce UserId and quarter dates (gitignored).
+
+This creates `personal-config.md` with your Salesforce UserId and quarter dates (gitignored).
 
 ---
 
@@ -93,7 +100,23 @@ This creates your `personal-config.md` with your Salesforce UserId and quarter d
 
 Done, prompt away! 🎉
 
-**Full details:** See [Quick Start Guide](workflows/core/quick-start.md) for daily workflows.
+**Tip:** Type `@se-assistant` to see all available commands.
+
+---
+
+## 🔄 Getting Updates from the Team
+
+When the team pushes updates to [`shopify-playground/se-assistant/main`](https://github.com/shopify-playground/se-assistant/tree/main), you'll get them automatically.
+
+**Easiest method:** Cursor shows updates automatically in the bottom-left status bar (↓ icon) - just click "Sync Changes"!
+
+**Alternative:** Press `Cmd+Shift+P` → Type `Run Task: 🔄 Update SE Assistant` → Enter
+
+**Merge strategy:** Team agent updates always take precedence (ensures everyone has latest agent versions).
+
+**Your personal files are protected** - `merchants/*`, `personal-config.md`, and priority dashboards won't be overwritten.
+
+**Full guide with all methods:** [`workflows/core/updating-from-github.md`](workflows/core/updating-from-github.md)
 
 ---
 
@@ -110,6 +133,13 @@ Auto-creates merchant folder with pre-sales structure and pulls context from Gma
 @se-assistant "New Launch Case: Acme Corp"
 ```
 Auto-creates post-sales structure, pulls Launch Case data from Salesforce, links to pre-sales context.
+
+### Start & End Your Day
+```bash
+"start my day"
+"end my day"
+```
+Natural language daily automation - pulls calendar, Slack, Revenue MCPs → updates briefing docs → lean chat briefing (CEO-style: focus + actions only)
 
 ### Get Priorities & Pipeline Insights
 ```bash
@@ -155,7 +185,7 @@ All organized in your `merchants/[Company Name]/` folder with:
 ## 📁 Project Structure
 
 ```
-SE-ASSISTANT_CONTEXT-HUB/
+se-assistant/
 ├── merchants/                # One folder per merchant
 │   └── [Merchant Name]/
 │       ├── pre-sales/        # Opportunities (briefing, discovery, technical)
@@ -166,7 +196,7 @@ SE-ASSISTANT_CONTEXT-HUB/
 └── workflows/                # How-to guides
 ```
 
-**See:** [Quick Start Guide](workflows/core/quick-start.md) for folder structure details and daily workflows.
+**Tip:** Use `@se-assistant` to access full workflow commands and context.
 
 ---
 
@@ -177,7 +207,7 @@ SE-ASSISTANT_CONTEXT-HUB/
 - **Technical assessments** - Generate from templates with merchant-specific details
 - **Priority scoring** - Revenue + Probability + Urgency formula with tiered dashboards
 - **Anti-hallucination** - Only references verified data, never synthesizes capabilities
-- **Write operation safety** - 🚨 MANDATORY validation before any Salesforce updates (see `workflows/reference/gumloop-validation-protocol.md`)
+- **Write operation safety** - 🚨 MANDATORY validation before any Salesforce updates
 - **MCP-powered** - Direct access to Salesforce, Vault, Scout, Shopify Dev tools
 
 ---
@@ -201,8 +231,8 @@ SE-ASSISTANT_CONTEXT-HUB/
 → Test with: `@se-assistant "Get my Salesforce UserId"` - should return your UserId
 
 **More help:** 
-- [Onboarding Setup Guide](workflows/core/onboarding-setup.md)
-- [MCP Troubleshooting Guide](workflows/reference/mcp-troubleshooting.md) - Auth failures, permission errors, sync issues
+- Type `@se-assistant "help"` for command reference
+- MCP issues: Check Cursor settings → Features → Model Context Protocol
 - Ping @william.bedard in Slack
 
 ---
@@ -211,7 +241,7 @@ SE-ASSISTANT_CONTEXT-HUB/
 
 Build your merchant context locally with this tool, then sync to [SE-NTRAL](https://se-ntral.quick.shopify.io/sync.html) for team-wide semantic search and knowledge sharing.
 
-**SE-ASSISTANT_CONTEXT-HUB** = Your personal research genius  
+**SE Assistant** = Your personal research genius  
 **SE-NTRAL** = Team's collective intelligence network
 
 *Shoutout to @Stephen.Brook and @Ben Homer for building this great tool!*
@@ -220,13 +250,16 @@ Build your merchant context locally with this tool, then sync to [SE-NTRAL](http
 
 ## 📚 Learn More
 
-- **Version history:** [CHANGELOG.md](CHANGELOG.md) - Latest updates and version changes
-- **Daily workflows:** [Quick Start Guide](workflows/core/quick-start.md)
-- **First-time setup:** [Onboarding Setup](workflows/core/onboarding-setup.md)
-- **Prioritization:** [Opportunity Prioritization Guide](workflows/reference/opportunity-prioritization.md)
-- **Salesforce writes:** [SE Next Steps Sync](workflows/reference/se-next-steps-sync.md) + [Validation Protocol](workflows/reference/gumloop-validation-protocol.md)
-- **MCP Troubleshooting:** [MCP Troubleshooting Guide](workflows/reference/mcp-troubleshooting.md)
-- **Complete rules:** `.cursor/rules/se-assistant.mdc` (loaded via `@se-assistant`)
+- **Version history:** [CHANGELOG.md](CHANGELOG.md)
+- **Agent architecture:** 4-agent system for optimal performance
+  - **Orchestrator** (`se-assistant.mdc`) - Always loaded, routes requests automatically
+  - **Account Manager** (`agents/account-manager.mdc`) - Merchant lifecycle, Salesforce, context sync
+  - **SE Coach** (`agents/se-coach.mdc`) - Discovery frameworks, demo methodology, craft coaching
+  - **Solutions Architect** (`agents/solutions-architect.mdc`) - Architecture design, platform capabilities, API research
+- **Complete rules & commands:** Type `@se-assistant` in Cursor (orchestrator automatically loads specialized agents as needed)
+- **MCP setup:** [Shopify MCP Documentation](https://vault.shopify.io/ai/mcp_servers)
+- **How routing works:** Orchestrator detects intent and loads the right agent automatically - no need to know agent names
+- **Explicit agent access:** Use `@account-manager`, `@se-coach`, or `@solutions-architect` to override automatic routing
 
 ---
 

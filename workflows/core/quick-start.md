@@ -1,8 +1,8 @@
 # Quick Start Guide
 
-**Purpose:** Daily workflows for using SE-ASSISTANT_CONTEXT-HUB after initial setup
+**Purpose:** Daily workflows for using SE Assistant after initial setup
 
-**Haven't set up yet?** Run `@se-assistant "Set up SE-ASSISTANT_CONTEXT-HUB for me"` or see `onboarding-setup.md` first.
+**Haven't set up yet?** Run `@se-assistant "Set up SE Assistant for me"` or see `onboarding-setup.md` first.
 
 ---
 
@@ -41,9 +41,9 @@
 
 **You've been assigned a new opportunity. Now what?**
 
-#### Step 1: Let SE-ASSISTANT_CONTEXT-HUB Create Everything (2 minutes)
+#### Step 1: Let SE Assistant Create Everything (2 minutes)
 
-**RECOMMENDED:** Use SE-ASSISTANT_CONTEXT-HUB's automated merchant creation:
+**RECOMMENDED:** Use SE Assistant's automated merchant creation:
 
 ```
 @se-assistant "New Opportunity: [Company Name]"
@@ -140,7 +140,7 @@ merchants/[Company-Name]/
 
 ### Step 3: Manual Updates (If Needed)
 
-**If SE-ASSISTANT_CONTEXT-HUB didn't find everything:**
+**If SE Assistant didn't find everything:**
 
 ```
 @se-assistant "Sync merchant context for [Company Name]"
@@ -179,7 +179,7 @@ This re-searches Gmail, Slack, and Drive with expanded date ranges.
 @se-assistant "Update briefing-document.md and discovery-assessment.md with today's discovery call notes"
 ```
 
-SE-ASSISTANT_CONTEXT-HUB can help structure your notes into the proper sections.
+SE Assistant can help structure your notes into the proper sections.
 
 ---
 
@@ -205,7 +205,7 @@ SE-ASSISTANT_CONTEXT-HUB can help structure your notes into the proper sections.
 
 ## Quick Reference: Which Document When?
 
-**SE-ASSISTANT_CONTEXT-HUB Core Documents (Rules File Sections 1.1.1 & 2.1):**
+**SE Assistant Core Documents (Rules File Sections 1.1.1 & 2.1):**
 
 | Activity | Document to Use | Location | Rules Reference |
 |----------|----------------|----------|-----------------|
@@ -245,8 +245,8 @@ SE-ASSISTANT_CONTEXT-HUB can help structure your notes into the proper sections.
 @se-assistant "What should I focus on this week?"
 ```
 This generates your priority dashboard showing:
-- **Pre-Sales**: Tier 1 deals (see `workflows/reference/opportunity-prioritization.md`)
-- **Post-Sales**: Active Launch Cases (see `workflows/core/launch-case-management.md`)
+- **Pre-Sales**: Tier 1 deals (ranked by revenue × probability × urgency)
+- **Post-Sales**: Active Launch Cases (Red > Yellow > Green health)
 
 **Query Launch Cases directly:**
 ```
@@ -291,7 +291,7 @@ ORDER BY Health__c, LastModifiedDate DESC
 1. **Keep `briefing-document.md` open** in a split view
 2. **Take notes in real-time** in the relevant document
 3. **Update as you go** - don't wait until later
-4. **Use SE-ASSISTANT_CONTEXT-HUB to help structure:**
+4. **Use SE Assistant to help structure:**
    ```
    @se-assistant "Update briefing-document.md with these notes: [paste notes]"
    ```
@@ -325,7 +325,7 @@ ORDER BY Health__c, LastModifiedDate DESC
 
 ### Switching Between Merchants
 
-**SE-ASSISTANT_CONTEXT-HUB enforces context isolation (rules file Section 1):**
+**SE Assistant enforces context isolation (rules file Section 1):**
 
 1. **Close all files** for current merchant
 2. **Open new merchant's folder**
@@ -489,7 +489,7 @@ for the technical requirements."
 
 **Result:** New person can continue seamlessly.
 
-**Note:** SE role typically ends at signature/handoff. See `workflows/reference/se-role-definition.md` for scope boundaries.
+**Note:** SE role typically ends at signature/handoff (pre-sales) or at launch completion (post-sales).
 
 ---
 
@@ -501,7 +501,7 @@ for the technical requirements."
 - Links to discovery-assessment.md and technical-assessment.md
 - Update it after every session
 
-### 2. **Follow SE-ASSISTANT_CONTEXT-HUB Structure**
+### 2. **Follow SE Assistant Structure**
 - briefing-document.md = executive summary, always up-to-date
 - discovery-assessment.md = 5Cs framework, EPoV readiness
 - technical-assessment.md = solution architecture, migration strategy
@@ -550,7 +550,7 @@ for the technical requirements."
 
 ### "I don't have time to fill out all these templates"
 
-**Response:** Start minimal - SE-ASSISTANT_CONTEXT-HUB core structure:
+**Response:** Start minimal - SE Assistant core structure:
 1. Always do: briefing-document.md (executive summary, status, next steps)
 2. Discovery: discovery-assessment.md (5Cs framework)
 3. Technical: technical-assessment.md (solution architecture)
@@ -609,11 +609,11 @@ If checks pass, you're doing it right.
 
 **Learn more:**
 - Review `.cursor/rules/se-assistant.mdc` for complete SE-NTRAL rules and workflows
-- See `workflows/reference/opportunity-prioritization.md` for priority scoring methodology
+- Priority score = (Revenue × Probability) + Urgency weight
 - Check `README.md` troubleshooting section for common issues
 
 **Questions?**
-- Check workflow documentation in `workflows/` folder
+- Type `@se-assistant` for full command reference
 - Reference MCP guide in `mcp-integration/` folder
 - Ask fellow SEs who use this framework
 
@@ -637,7 +637,7 @@ Updates files from Gmail, Slack, and Google Drive per rules file Section 11.
 ```
 @se-assistant "Update my priority dashboard"
 ```
-Generates tiered opportunity list using scoring from `workflows/reference/opportunity-prioritization.md`.
+Generates tiered opportunity list using priority scoring algorithm.
 
 **Create technical assessment:**
 ```
@@ -649,10 +649,10 @@ Generates clean markdown technical assessment per rules file Section 3.1.
 ```
 @se-assistant "Update SE Next Steps in Salesforce for [Company Name]"
 ```
-Pushes Outstanding Actions to Salesforce SE Next Steps field via Gumloop. Format: Rich text with line returns between dates and empty line after "Next Steps" header. See `personal-config.md` Salesforce Field Formatting Rules section.
+Pushes Outstanding Actions to Salesforce SE Next Steps field via Gumloop webhook. Uses HTML formatting for rich text field.
 
 ---
 
-**You're all set! The SE-ASSISTANT_CONTEXT-HUB automation handles folder creation, context gathering, and file management. Just focus on the merchant work.**
+**You're all set! The SE Assistant automation handles folder creation, context gathering, and file management. Just focus on the merchant work.**
 
 

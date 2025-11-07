@@ -185,20 +185,6 @@ STEP 5: Generate Output
 
 ## 📊 QUERY PATTERNS
 
-### Salesforce Opportunity Query Template (Pre-Sales)
-```soql
-SELECT OpportunityId, Opportunity.Name, Opportunity.Total_Revenue__c 
-FROM OpportunityTeamMember 
-WHERE UserId = '[YOUR_SALESFORCE_USER_ID]' 
-  AND TeamMemberRole = 'Solutions Engineer' 
-  AND Primary__c = true
-  AND Opportunity.IsClosed = false
-  AND Opportunity.StageName != 'Closed Lost'
-  AND Opportunity.StageName != 'Pre-Qualified'
-  AND Opportunity.CloseDate >= [QUARTER_START_DATE]
-  AND Opportunity.CloseDate <= [QUARTER_END_DATE]
-```
-
 ### Salesforce Launch Case Query Template (Post-Sales)
 ```soql
 SELECT 

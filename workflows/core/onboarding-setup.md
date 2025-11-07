@@ -1,4 +1,4 @@
-# SE-ASSISTANT_CONTEXT-HUB Setup - Interactive Onboarding
+# SE Assistant Setup - Interactive Onboarding
 
 **Purpose:** ONE-TIME setup to create your personal-config.md
 
@@ -11,7 +11,7 @@
 
 ## Setup Workflow (Automated)
 
-When a user triggers setup, SE-ASSISTANT_CONTEXT-HUB should:
+When a user triggers setup, SE Assistant should:
 
 ### Step 1: Check Existing Setup
 ```bash
@@ -63,7 +63,7 @@ Expected result: Returns ONLY opportunities where user is Primary SE.
 ```
 ✅ Setup Complete!
 
-Your SE-ASSISTANT_CONTEXT-HUB workspace is ready. Here's what you can do now:
+Your SE Assistant workspace is ready. Here's what you can do now:
 
 📋 Essential Commands:
 - "New Opportunity: [Company Name]" - Create merchant folder with auto-context
@@ -120,7 +120,7 @@ After setup, verify:
 ## Common Setup Issues
 
 ### "Can't find personal-config.md"
-→ File must be in workspace root: `/Users/[you]/SE-ASSISTANT_CONTEXT-HUB/personal-config.md`  
+→ File must be in workspace root: `/Users/[you]/se-assistant/personal-config.md`  
 → Not in merchants/ or workflows/ subfolders
 
 ### "Query returns other SEs' opportunities"
@@ -160,9 +160,9 @@ This creates your first merchant folder with auto-populated context from:
 
 ## ✅ Setup Complete! What's Next?
 
-Your personal-config.md is configured. Now learn how to USE SE-ASSISTANT_CONTEXT-HUB:
+Your personal-config.md is configured. Now start using it:
 
-**👉 Next Step:** Read `workflows/core/quick-start.md`
+**👉 Next Step:** Type `@se-assistant "New Opportunity: [Company Name]"` to create your first merchant folder.
 
 That guide covers:
 - Creating your first merchant folder
