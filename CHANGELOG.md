@@ -2,6 +2,34 @@
 
 All notable changes to the SE Assistant will be documented in this file.
 
+## [8.0.1] - 2025-11-07
+
+### Enhanced - Weekend-Aware End of Day Workflow
+
+**User Experience Improvement:** End-of-day automation now intelligently detects weekends and adjusts messaging accordingly.
+
+### Changed
+- **Weekend Detection Logic:** Automatically detects Friday vs Monday-Thursday when running end-of-day workflow
+- **Friday End of Day Format:**
+  - "Accomplishments This Week" (instead of just today)
+  - "Next Week Preview" section with Monday focus + week overview
+  - "Top 3 priorities for next week" (instead of tomorrow)
+  - "Action Items Before Next Week" (instead of before EOD)
+- **Monday-Thursday Format:** Unchanged - focuses on tomorrow as next business day
+- **Trigger Phrases:** Added "finishing my day", "wrapping up for the day", "wrapping up for the weekend"
+
+### Technical Details
+- User doesn't work weekends - system now respects this boundary
+- Mon-Thu: Queries tomorrow's calendar (next business day)
+- Friday: Queries next week's calendar (Monday-Friday preview)
+- Updated output templates with day-specific formatting
+
+### Benefits
+- ✅ No more "tomorrow" confusion on Fridays
+- ✅ Natural weekly rhythm (week recap on Fridays vs daily recap Mon-Thu)
+- ✅ Better work-life boundaries (respects weekends)
+- ✅ More relevant next-week planning on Fridays
+
 ## [8.0.0] - 2025-11-06
 
 ### Major Architecture Refactor: 4-Agent System

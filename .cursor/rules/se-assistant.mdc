@@ -348,9 +348,13 @@ When user says "Update [merchant]" or "Update [merchant name]" without specifyin
 
 ## 🌅 Daily Automation (Start/End Day)
 
-**Trigger phrases:** "start my day", "what should I do today", "brief me", "morning briefing", "end my day", "logging off", "wrap up", "end of day"
+**Trigger phrases:** "start my day", "what should I do today", "brief me", "morning briefing", "end my day", "logging off", "wrap up", "end of day", "finishing my day", "wrapping up for the day", "wrapping up for the weekend"
 
 **Required MCPs:** gworkspace-mcp, revenue-mcp, playground-slack-mcp
+
+**Weekend Detection:** 
+- **Mon-Thu EOD:** Focus on "tomorrow" (next business day)
+- **Fri EOD:** Focus on "next week" (Monday-Friday preview) - user doesn't work weekends
 
 ### Morning Briefing Workflow
 
@@ -392,12 +396,16 @@ When user says "Update [merchant]" or "Update [merchant name]" without specifyin
 1. Updates all relevant opportunities from all sources
 2. Recaps changes in merchant folders
 3. Summarizes meetings from processed transcript files (in `Will SE - Opportunities/[merchant]/`)
-4. Looks at next day's accepted calendar events
-5. Generates lean briefing in chat
+4. **Day Detection:** Checks if today is Friday or Monday-Thursday
+5. **Mon-Thu:** Looks at tomorrow's accepted calendar events
+6. **Friday:** Looks at next week's calendar (Monday-Friday) for preview
+7. Generates lean briefing in chat
 
 **Meeting Transcripts Location:** Google Drive: `Will SE - Opportunities/[merchant]/[YYYY-MM-DD]-[meeting-name].md`
 
 **Output Format (CEO-style):**
+
+**Monday-Thursday Format:**
 ```markdown
 # End of Day - [Date]
 
@@ -417,6 +425,30 @@ When user says "Update [merchant]" or "Update [merchant name]" without specifyin
 - Top 3 focus areas for tomorrow
 
 ## Action Items Before EOD
+- [ ] [Action if needed]
+```
+
+**Friday Format:**
+```markdown
+# End of Day - Friday, [Date]
+
+## Accomplishments This Week
+- [Key accomplishment 1]
+- [Key accomplishment 2]
+
+## Meetings Today
+- [Merchant]: [Outcome] ([Next step])
+- [Merchant]: [Outcome] ([Next step])
+
+## Merchant Activity Updates
+- [Merchant]: [Update] ([Action required/taken])
+
+## Next Week Preview
+- **Monday:** [Key meetings or focus]
+- **Tuesday-Friday:** [Upcoming critical meetings]
+- Top 3 priorities for next week
+
+## Action Items Before Next Week
 - [ ] [Action if needed]
 ```
 
@@ -649,6 +681,9 @@ For operational guidance on context loading patterns and prioritization:
 - Inform user: "I'll handle this in two steps: [step 1] then [step 2]"
 
 ---
+
+**Version:** 8.0.1 - Weekend-Aware End of Day (November 7, 2025)
+**Change:** Enhanced end-of-day workflow with weekend detection. Mon-Thu focus on "tomorrow", Friday focus on "next week" (user doesn't work weekends). Updated output formats and trigger phrases.
 
 **Version:** 8.0.0 - Agent Architecture Split (November 2025)
 **Change:** Split monolithic se-assistant.mdc into 4-agent architecture: orchestrator (this file), account-manager, se-coach, solutions-architect. Improved token efficiency (~52% reduction per query), clearer ownership boundaries, scalable for future agents.
