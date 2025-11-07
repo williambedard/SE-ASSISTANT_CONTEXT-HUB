@@ -1,0 +1,25 @@
+{
+  // Enable Git integration for update notifications
+  "git.enabled": true,
+  "git.autofetch": true,
+  "git.autofetchPeriod": 180,
+  "git.showPushSuccessNotification": true,
+  
+  // Show git status in status bar (bottom-left ↓ indicator)
+  "git.decorations.enabled": true,
+  
+  // Task settings
+  "task.autoDetect": "on",
+  "task.problemMatchers.autoDetect": true,
+  
+  // Recommended: Show git graph in Source Control
+  "scm.showChangesSummary": true,
+  
+  // Files to exclude from file explorer (keeps workspace clean)
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/*.pyc": true,
+    "**/__pycache__": true
+  }
+}
+

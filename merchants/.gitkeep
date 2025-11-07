@@ -1,0 +1,4 @@
+# This file ensures the merchants/ folder exists in fresh clones
+# Your merchant folders will be created here automatically
+# They are gitignored for privacy
+

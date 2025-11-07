@@ -2,6 +2,59 @@
 
 All notable changes to the SE Assistant will be documented in this file.
 
+## [8.1.0] - 2025-11-07
+
+### Added - One-Click Update System
+
+**User Experience:** Automatic update notifications and one-click updates for team members.
+
+### Added
+- **Cursor Workspace Configuration** (`.cursor/workspace/`)
+  - `tasks.json`: Command Palette tasks for updates (🔄 Update, 📊 Check for Updates)
+  - `settings.json`: Git auto-fetch every 3 minutes, status bar notifications
+- **Update Script** (`workflows/core/update-se-assistant.sh`)
+  - Automatic stash/restore of local changes
+  - Merge strategy with `-X theirs` (team agent versions take precedence)
+  - Clear progress messages and error handling
+  - Pulls from `shopify-playground/main` (correct remote)
+- **Comprehensive Update Guide** (`workflows/core/updating-from-github.md`)
+  - 4 methods: Cursor built-in, Command Palette, script, git command
+  - Merge strategy documentation
+  - Troubleshooting scenarios
+- **Folder Structure Guarantee** (`merchants/.gitkeep`)
+  - Ensures merchants folder exists in fresh clones
+
+### Changed
+- **Repository Source:** Updated from `williambedard/SE-ASSISTANT_HUB` to `shopify-playground/se-assistant`
+- **Remote Configuration:** All git operations use `shopify-playground/main` instead of `origin/main`
+- **Workspace Folder:** Moved `.vscode/` to `.cursor/workspace/` (Cursor-native structure)
+- **Merge Strategy:** Team agent/workflow updates always take precedence in conflicts
+- **Documentation:** README simplified with correct clone URL and update instructions
+
+### Removed (De-bloated)
+- `.vscode/README.md` - Redundant documentation (consolidated into main docs)
+- `TEAM-UPDATE-GUIDE.md` - Consolidated into `workflows/core/updating-from-github.md`
+- `PROJECT-AUDIT.md` - Internal analysis document (not needed in repo)
+
+### Technical Details
+- **Update Notification:** Cursor status bar shows `↓ X` when X commits behind
+- **Merge Strategy:** `-X theirs` ensures consistent agent versions across team
+- **Protected Files:** Personal data (merchants/, personal-config.md) gitignored, never conflict
+- **Auto-fetch:** Checks `shopify-playground/main` every 3 minutes via workspace settings
+
+### Benefits
+- ✅ App-like update experience (automatic notifications)
+- ✅ One-click updates from Command Palette
+- ✅ Team agent consistency (merge strategy prevents drift)
+- ✅ Protected personal data (gitignored)
+- ✅ Correct repository source (shopify-playground)
+- ✅ Cursor-native workspace structure
+
+### User Impact
+- **New Users:** Clone → Open → Auto-configured for updates
+- **Existing Users:** Update once to get new system, then one-click updates forever
+- **Merge to Main:** All team members auto-notified when updates available
+
 ## [8.0.1] - 2025-11-07
 
 ### Enhanced - Weekend-Aware End of Day Workflow

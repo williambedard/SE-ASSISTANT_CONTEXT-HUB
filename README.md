@@ -70,30 +70,36 @@ If this returns your UserId, MCPs are configured correctly.
 
 ---
 
-### Step 1: Clone & Setup
+### Step 1: Clone Repository
 
-**First time setting up your work locally?**
+**First time setup?** In Terminal:
 
-1. Create an empty project folder
-2. Open a terminal window at that folder
-3. Run:
-   ```bash
-   git init
-   git clone https://github.com/williambedard/SE-ASSISTANT_CONTEXT-HUB
-   ```
-4. Open the `SE-ASSISTANT_CONTEXT-HUB` folder in Cursor
+```bash
+cd ~/Documents  # Or wherever you keep projects
+git clone https://github.com/shopify-playground/se-assistant.git
+cd se-assistant
+```
 
-**Already have the repo?** Just open it in Cursor and continue to Step 2.
+Then open the folder in Cursor.
+
+**Already cloned?** Just open the folder in Cursor and skip to Step 2.
 
 ---
 
 ### Step 2: Run Setup in Cursor
 
-In Cursor, open the cloned folder and run:
+When you open the folder, Cursor automatically:
+- ✅ Loads SE Assistant with all agents
+- ✅ Configures git to track shopify-playground/main for updates
+- ✅ Auto-fetches updates (status bar shows ↓ when available)
+- ✅ Adds one-click update tasks to Command Palette
+
+Then run this to create your personal config:
 ```bash
-@se-assistant "Set up SE-ASSISTANT_CONTEXT-HUB for me"
+@se-assistant "Set up SE-ASSISTANT_HUB for me"
 ```
-This creates your `personal-config.md` with your Salesforce UserId and quarter dates (gitignored).
+
+This creates `personal-config.md` with your Salesforce UserId and quarter dates (gitignored).
 
 ---
 
@@ -106,6 +112,22 @@ This creates your `personal-config.md` with your Salesforce UserId and quarter d
 Done, prompt away! 🎉
 
 **Tip:** Type `@se-assistant` to see all available commands.
+
+---
+
+## 🔄 Getting Updates from the Team
+
+When the team pushes updates to [`shopify-playground/se-assistant/main`](https://github.com/shopify-playground/se-assistant/tree/main), you'll get them automatically.
+
+**Easiest method:** Cursor shows updates automatically in the bottom-left status bar (↓ icon) - just click "Sync Changes"!
+
+**Alternative:** Press `Cmd+Shift+P` → Type `Run Task: 🔄 Update SE-ASSISTANT_HUB` → Enter
+
+**Merge strategy:** Team agent updates always take precedence (ensures everyone has latest agent versions).
+
+**Your personal files are protected** - `merchants/*`, `personal-config.md`, and priority dashboards won't be overwritten.
+
+**Full guide with all methods:** [`workflows/core/updating-from-github.md`](workflows/core/updating-from-github.md)
 
 ---
 

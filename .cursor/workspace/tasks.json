@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🔄 Update SE-ASSISTANT_HUB",
+      "type": "shell",
+      "command": "bash workflows/core/update-se-assistant.sh",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "focus": true,
+        "showReuseMessage": false
+      },
+      "detail": "Pull latest updates from GitHub (protects your personal files)"
+    },
+    {
+      "label": "📊 Check for Updates",
+      "type": "shell",
+      "command": "echo '🔍 Checking for updates...' && git fetch shopify-playground main && BEHIND=$(git rev-list --count HEAD..shopify-playground/main 2>/dev/null || echo '0') && if [ \"$BEHIND\" -gt 0 ]; then echo \"✅ $BEHIND update(s) available! Run '🔄 Update SE-ASSISTANT_HUB' task to update.\"; else echo \"✅ Already up to date!\"; fi",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": false,
+        "showReuseMessage": false
+      },
+      "detail": "Check if updates are available from shopify-playground/main"
+    }
+  ]
+}
+

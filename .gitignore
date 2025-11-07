@@ -17,8 +17,10 @@ daily-logs
 .DS_Store
 Thumbs.db
 
-# Editor files
-.vscode/
+# Cursor workspace files (keep shared tasks and settings)
+.cursor/workspace/*
+!.cursor/workspace/tasks.json
+!.cursor/workspace/settings.json
 *.swp
 *.swo
 *~
