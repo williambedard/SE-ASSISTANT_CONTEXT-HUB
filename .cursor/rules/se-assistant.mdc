@@ -252,7 +252,9 @@ When user says "Update [merchant]" or "Update [merchant name]" without specifyin
    - Current quarter dates (focuses on actionable opportunities)
 
 2. ✅ **Query Salesforce Opportunities** using revenue-mcp:
-   ```
+
+   **For Priority Dashboard (filtered by user/quarter):**
+   ```soql
    SELECT Account.Name, Total_Revenue__c, Close_Probability__c, CloseDate, 
           StageName, Merchant_Intent__c, Primary__c, SE_Next_Steps__c, Id, Name
    FROM Opportunity
@@ -267,6 +269,16 @@ When user says "Update [merchant]" or "Update [merchant name]" without specifyin
    AND RecordType.Name = 'Sales'
    AND IsClosed = false
    ```
+
+   **For Direct Opportunity Update (already have Opp ID from config.md):**
+   ```soql
+   SELECT Account.Name, Total_Revenue__c, Close_Probability__c, CloseDate, 
+          StageName, Merchant_Intent__c, SE_Next_Steps__c, Id, Name,
+          RecordType.Name, IsClosed
+   FROM Opportunity
+   WHERE Id = '[Opportunity ID from merchant config.md]'
+   ```
+   *Note: No filters needed - bypasses team membership checks when refreshing known opportunity*
 
 3. ✅ **Calculate priority scores** for each opportunity:
    - **Formula:** Priority Score = Revenue Points + (Close Probability × 2) + Urgency Points

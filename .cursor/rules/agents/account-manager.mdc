@@ -119,7 +119,7 @@ When orchestrator routes ambiguous "Update [merchant]" query (no file specified,
     - Save each TA to `raw-files/documents/{product}-technical-assessment.md` (e.g., `pos-technical-assessment.md`, `d2c-technical-assessment.md`)
     - Multiple TAs per account is normal (one per opportunity)
   - **Gmail MCP**: Search emails (enhanced strategy: company name, stakeholder addresses, domains, cross-team comms)
-  - **Revenue MCP**: Query Salesforce account/opportunity data (CRITICAL: Always pull Opportunity Id AND Name fields from Salesforce)
+  - **Revenue MCP**: Query Salesforce account/opportunity data
   - **Vault MCP**: Search internal knowledge base
   - Auto-populate files with discovered information, mark sources appropriately
 4. **Complete External Research:**
@@ -1004,6 +1004,29 @@ LEFT JOIN se_launch_cases lc ON acc.account_id = lc.account_id
 WHERE acc.name = '[MERCHANT_NAME]'
 ORDER BY merchant_status, o.close_date DESC, lc.expected_launch_date;
 ```
+
+**Direct Opportunity Query (When Opp ID Already Known):**
+
+Use this pattern when you have the Opportunity ID from `config.md` and just need to refresh opportunity data without filtering by team membership or quarter dates:
+
+```soql
+SELECT Account.Name, Total_Revenue__c, Close_Probability__c, CloseDate, 
+       StageName, Merchant_Intent__c, SE_Next_Steps__c, Id, Name,
+       RecordType.Name, IsClosed
+FROM Opportunity
+WHERE Id = '[Opportunity ID from merchant config.md]'
+```
+
+**When to use:**
+- Updating existing merchant opportunity data
+- Opportunity ID already captured in `merchants/[name]/raw-files/config.md`
+- No need to filter by team membership (ID provides direct access if permitted)
+- Bypasses quarter date filtering for historical opportunities
+
+**Advantages:**
+- Simple, fast query with no subqueries
+- Works even when SE is not primary team member (supporting role)
+- No false negatives from team membership security filters
 
 ### 12.6. Status Update Workflow
 

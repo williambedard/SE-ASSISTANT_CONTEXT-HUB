@@ -1,7 +1,7 @@
 # MCP Troubleshooting Guide
 
-**Last Updated:** November 6, 2025  
-**Version:** 1.2
+**Last Updated:** November 7, 2025  
+**Version:** 1.3
 
 ---
 
@@ -417,7 +417,7 @@ This prevents unintended data modifications and ensures data integrity.
 **v1.1 (Nov 3, 2025)**
 - Added Issue 5: Merchant Sync Troubleshooting (moved from se-assistant.mdc Section 11.10)
 - Added Issue 6: Salesforce Write Operations troubleshooting (moved from se-assistant.mdc Section 12)
-- Updated Quick Reference table with all 6 issue categories
+- Updated Quick Reference table with all issue categories
 - Consolidated all troubleshooting content into single reference doc
 
 **v1.0 (Nov 3, 2025)**
